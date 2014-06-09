@@ -114,21 +114,39 @@ def findAllPathsAtoB():
 	# nx.draw_networkx_edges(testApprenticeDG, pos, edge_color = 'b')
 	plt.show()
 
+def makeDistribution(numHops):
+	statsArray = []
+	for i in range (0,len(DG.nodes())):
+		statsArray.append(0)
+
+	done = False
+	for node in DG.nodes():
+		listOfReachables = []
+		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
+		numberOfNodesReachable = len(listOfReachables)
+		if numberOfNodesReachable == 18 and  numHops == 1:
+			print node
+			#done = True
+
+		statsArray[numberOfNodesReachable] += 1
+
+	print statsArray[0:50]
+
 def printReachableInNHops(numHops):
 
-	listOfRechables = []
+	listOfReachables = []
 	node = subDG.nodes()[16]
-	listOfRechables.append(node)
+	listOfReachables.append(node)
 	print "the start node is %s" %node
 
-	#getReachableInNHops(numberOfHops, depth, listOfRechables, node)
-	getReachableInNHops(numHops, 0, listOfRechables, node)
+	#getReachableInNHops(numberOfHops, depth, listOfReachables, node)
+	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 
-	reachableWithin3HopsGraph  = subDG.subgraph(listOfRechables)
+	reachableWithin3HopsGraph  = subDG.subgraph(listOfReachables)
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
-	print listOfRechables
-	print "The length of the list is %d" %len(listOfRechables)
+	print listOfReachables
+	print "The length of the list is %d" %len(listOfReachables)
 	nx.draw(reachableWithin3HopsGraph, with_labels = True)	
 	plt.show()
 
@@ -136,20 +154,22 @@ def printReachableInNHops(numHops):
 #specified distance of the specified node
 
 #returns a list containing all the nodes within numberOfHops 
-def getReachableInNHops(numberOfHops, currentDepth, listOfRechables, node):
+def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
 	if currentDepth == numberOfHops:
-		return listOfRechables
+		return listOfReachables
 	
-	for n in subDG.neighbors(node):
-		if not n in listOfRechables:
+	for n in DG.neighbors(node):
+		if not n in listOfReachables:
 			#print "appending %s" % n
-			listOfRechables.append(n)
-			getReachableInNHops(numberOfHops, currentDepth+1, listOfRechables, n)
+			listOfReachables.append(n)
+			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
 
 
 readFile()
 createSubgraphs()
-findAllPathsAtoB()
+makeDistribution(1)
+makeDistribution(2)
+makeDistribution(3)
 
 
 
