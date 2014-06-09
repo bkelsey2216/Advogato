@@ -124,13 +124,14 @@ def makeDistribution(numHops):
 		listOfReachables = []
 		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 		numberOfNodesReachable = len(listOfReachables)
-		if numberOfNodesReachable == 18 and  numHops == 1:
-			print node
+		#if numberOfNodesReachable == 18 and  numHops == 1:
+		#	print node
 			#done = True
 
 		statsArray[numberOfNodesReachable] += 1
 
-	print statsArray[0:50]
+	#print statsArray[0:50]
+	return statsArray
 
 def printReachableInNHops(numHops):
 
@@ -164,12 +165,26 @@ def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables,
 			listOfReachables.append(n)
 			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
 
+##distWrite creates a file with the given filename and writes
+##one element of the given array into one line of the file. These
+##files will be used to create data vectors for a distribution.
+## 	Parameters: 
+##		distArray - an array
+##		filename - a string containing the user-specified filename
+def distWrite(distArray, filename):
+
+	outFile = open(filename, 'w')
+	x = len(distArray)
+	for index in range(0, x):
+		outFile.write(str(distArray[index]) + '\n')
+
+	outFile.close()
 
 readFile()
 createSubgraphs()
-makeDistribution(1)
-makeDistribution(2)
-makeDistribution(3)
+distWrite(makeDistribution(1), "distribution1.txt")
+distWrite(makeDistribution(2), "distribution2.txt")
+distWrite(makeDistribution(3), "distribution3.txt")
 
 
 
