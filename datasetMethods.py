@@ -86,11 +86,18 @@ def drawSubgraphs():
 	plt.show()
 
 
-def findAllPathsAtoB():
+#This function draws a graph of all paths from the source node and the destination node
+#found in the dataset. Parameters 'source' and 'destination' refer to node numbers in the
+#subGraph[] list of nodes.
+#Example usage:
+#	findAllPathsAtoB(9, 17) will find all paths from the 9th name in the username file
+# 	to the 17th node in the username file. At present, these names are 'sh' and 'MikeCamel',
+#	respectively.
+def findAllPathsAtoB(source, destination):
 	pathList = []
 	testPath = nx.DiGraph()
 
-	for item in nx.all_simple_paths(subDG, subGraph[9], subGraph[17]):
+	for item in nx.all_simple_paths(subDG, subGraph[source], subGraph[destination]):
 		pathList.append(item)
 		print item
 
@@ -99,6 +106,9 @@ def findAllPathsAtoB():
 
 		for y in range(1, iterator):
 			testPath.add_edge(x[y-1], x[y])
+
+			#code segment attempting to identify the weights of the edges. 
+			#currently it does not work.
 			 # for i in edge2DList:
 			 # 	if x[y-1] == edge2DList[i][0]:
 			 # 		if x[y] == edge2DList[i][1]:
@@ -109,10 +119,14 @@ def findAllPathsAtoB():
 	nx.draw_networkx_nodes(testPath, pos, node_size = 75)
 	nx.draw_networkx_labels(testPath, pos)
 	nx.draw_networkx_edges(testPath, pos)
+	plt.show()
+	
+	# code to draw overlaying subgraphs based on weight. excluded because
+	# currently cannot calculate weight of each edge.
 	# nx.draw_networkx_edges(testMasterDG, pos)
 	# nx.draw_networkx_edges(testJourneyerDG, pos, edge_color = 'g')
 	# nx.draw_networkx_edges(testApprenticeDG, pos, edge_color = 'b')
-	plt.show()
+
 
 #This returns an array of integers of size number of nodes. The integer at 
 #each position in the array represents the number of nodes which can reach this many
