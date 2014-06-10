@@ -3,6 +3,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+# global variables
 DG = nx.DiGraph()
 masterDG = nx.DiGraph()
 journeyerDG = nx.DiGraph()
@@ -14,7 +15,8 @@ subJourneyerDG = nx.DiGraph()
 subApprenticeDG = nx.DiGraph()
 
 
-
+# opens the username and edgelist files from the advogato dataset
+# to read in and store graph data
 def readFile():
 	names = open('advogato/ent.advogato.user.name', 'r')
 	edges = open('advogato/out.advogato', 'r')
@@ -63,7 +65,8 @@ def readFile():
 	names.close()
 	edges.close()
 
-
+# create subgraphs based on certification, using lists of edges distingushed by
+# weight and NetworkX's subgraph function
 def createSubgraphs():
 	global subDG
 	global subMasterDG
@@ -74,6 +77,10 @@ def createSubgraphs():
 	subJourneyerDG = journeyerDG.subgraph(subGraph)
 	subApprenticeDG = apprenticeDG.subgraph(subGraph)
 
+# Draws the subGraph of the whole dataset using different colors to specify
+# certification levels on the directed edges (black = master, green = journeyman,
+# blue = apprentice). Any nodes appearing unconnected on this graph is due to
+# the fact that the subGraph only contains the first 50(ish) edges in the dataset.
 def drawSubgraphs():
 	plt.figure(figsize=(10,10))
 	pos=nx.spring_layout(subDG)
@@ -120,7 +127,7 @@ def findAllPathsAtoB(source, destination):
 	nx.draw_networkx_labels(testPath, pos)
 	nx.draw_networkx_edges(testPath, pos)
 	plt.show()
-	
+
 	# code to draw overlaying subgraphs based on weight. excluded because
 	# currently cannot calculate weight of each edge.
 	# nx.draw_networkx_edges(testMasterDG, pos)
