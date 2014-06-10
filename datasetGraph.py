@@ -1,5 +1,6 @@
 ## advogato graph attempt 1
 
+import pygraphviz
 import networkx as nx
 import matplotlib.pyplot as plt
 

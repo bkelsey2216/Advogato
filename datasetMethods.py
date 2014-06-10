@@ -1,5 +1,6 @@
 ## advogato graph attempt 1
 
+import pygraphviz
 import networkx as nx
 import matplotlib.pyplot as plt
 
@@ -212,9 +213,11 @@ createSubgraphs()
 #distWrite(makeDistribution(1), "distribution1.txt")
 #distWrite(makeDistribution(2), "distribution2.txt")
 #distWrite(makeDistribution(3), "distribution3.txt")
-distWrite(makeDistribution(4), "distribution4.txt")
+#distWrite(makeDistribution(4), "distribution4.txt")
 
-testReachableInNHops(2, DG.nodes()[59])
+#testReachableInNHops(2, DG.nodes()[59])
+
+print nx.get_edge_attributes(DG,'weight')[0]
 
 
 

@@ -1,0 +1,10 @@
+digraph G {
+main -> parse -> execute [level="Journeyer"];
+main -> init [level="Journeyer"];
+main -> cleanup [level="Journeyer"];
+execute -> make_string [level="Journeyer"];
+execute -> printf [level="Journeyer"]
+init -> make_string [level="Journeyer"];
+main -> printf [level="Journeyer"];
+execute -> compare [level="Journeyer"];
+}
