@@ -25,7 +25,7 @@ def readFile():
 	lineArray = []
 
 	for line in names:
-		namesList.append(line)
+		namesList.append(line.strip())
 
 	for i in range(0,30):
 		global subGraph
@@ -151,22 +151,32 @@ def makeDistribution(numHops):
 
 		statsArray[numberOfNodesReachable] += 1
 
-	#print statsArray[0:50]
+	print statsArray[0:50]
 	return statsArray
 
 #This method tests reachable in n hops by printing out all the nodes reachable
 #within numHops of node and displaying a graph of these nodes
+#Even if the user has not rated themselves they will still appear in the 
+#displayed network
 def testReachableInNHops(numHops, node):
 
 	listOfReachables = []
 	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 
-	reachableWithin3HopsGraph  = subDG.subgraph(listOfReachables)
+
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
 	print listOfReachables
 	print "The number of nodes reachable is %d" %len(listOfReachables)
-	nx.draw(reachableWithin3HopsGraph, with_labels = True)	
+
+	#add node to list of reachables before making the subgraph to display
+	#(because otherwise it looks funny)
+	if not node in listOfReachables:
+		listOfReachables.append(node)
+
+	reachableGraph  = DG.subgraph(listOfReachables)
+
+	nx.draw(reachableGraph, with_labels = True)	
 	plt.show()
 
 #This method performs a recursive depth first search to add all the nodes within a 
@@ -199,9 +209,12 @@ def distWrite(distArray, filename):
 
 readFile()
 createSubgraphs()
-distWrite(makeDistribution(1), "distribution1.txt")
-distWrite(makeDistribution(2), "distribution2.txt")
-distWrite(makeDistribution(3), "distribution3.txt")
+#distWrite(makeDistribution(1), "distribution1.txt")
+#distWrite(makeDistribution(2), "distribution2.txt")
+#distWrite(makeDistribution(3), "distribution3.txt")
+distWrite(makeDistribution(4), "distribution4.txt")
+
+testReachableInNHops(2, DG.nodes()[59])
 
 
 
