@@ -114,54 +114,50 @@ def findAllPathsAtoB():
 	# nx.draw_networkx_edges(testApprenticeDG, pos, edge_color = 'b')
 	plt.show()
 
+#This returns an array of integers of size number of nodes. The integer at 
+#each position in the array represents the number of nodes which can reach this many
+#other nodes
+#For example statsArray[5] == 50 indicates that there are 50 nodes that can reach exactly 5 other nodes
 def makeDistribution(numHops):
 	statsArray = []
 	for i in range (0,len(DG.nodes())):
 		statsArray.append(0)
 
-	done = False
 	for node in DG.nodes():
 		listOfReachables = []
 		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 		numberOfNodesReachable = len(listOfReachables)
-		#if numberOfNodesReachable == 18 and  numHops == 1:
-		#	print node
-			#done = True
 
 		statsArray[numberOfNodesReachable] += 1
 
 	#print statsArray[0:50]
 	return statsArray
 
-def printReachableInNHops(numHops):
+#This method tests reachable in n hops by printing out all the nodes reachable
+#within numHops of node and displaying a graph of these nodes
+def testReachableInNHops(numHops, node):
 
 	listOfReachables = []
-	node = subDG.nodes()[16]
-	listOfReachables.append(node)
-	print "the start node is %s" %node
-
-	#getReachableInNHops(numberOfHops, depth, listOfReachables, node)
 	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 
 	reachableWithin3HopsGraph  = subDG.subgraph(listOfReachables)
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
 	print listOfReachables
-	print "The length of the list is %d" %len(listOfReachables)
+	print "The number of nodes reachable is %d" %len(listOfReachables)
 	nx.draw(reachableWithin3HopsGraph, with_labels = True)	
 	plt.show()
 
 #This method performs a recursive depth first search to add all the nodes within a 
-#specified distance of the specified node
-
-#returns a list containing all the nodes within numberOfHops 
+#specified distance of the specified node to the listOfReachables
+#current depth should be set to zero
+#listOfReachables should be an empty list
 def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
 	if currentDepth == numberOfHops:
 		return listOfReachables
 	
 	for n in DG.neighbors(node):
 		if not n in listOfReachables:
-			#print "appending %s" % n
 			listOfReachables.append(n)
 			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
 
