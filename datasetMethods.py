@@ -1,5 +1,4 @@
-## advogato graph attempt 1
-
+## Natalie Pollard & Brooke Kelsey
 
 import networkx as nx
 import pygraphviz
@@ -131,7 +130,8 @@ def makeDistribution(numHops):
 
 		statsArray[numberOfNodesReachable] += 1
 
-	print statsArray[0:50]
+	##prints the first 50 items of stats array -- uncomment to check our algorithm output
+	#print statsArray[0:50]
 	return statsArray
 
 #This method tests reachable in n hops by printing out all the nodes reachable
@@ -187,6 +187,7 @@ def distWrite(distArray, filename):
 
 readCleanDotFile()
 
+#calls DFS search to get 4 distribution data files
 distWrite(makeDistribution(1), "distribution1.txt")
 distWrite(makeDistribution(2), "distribution2.txt")
 distWrite(makeDistribution(3), "distribution3.txt")

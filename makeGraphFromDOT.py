@@ -1,3 +1,5 @@
+## Natalie Pollard & Brooke Kelsey
+
 import pygraphviz
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -23,13 +25,11 @@ def removeNumbers():
 		o.write(line)
 
 
-G = nx.read_dot('exampleDotFile.dot')
-
 ##This function creates a graph of the latest advogato dataset
 ##and outputs a new .dot file with the loops and unconnected nodes
 ##removed from the original .dot file
 def makeCleanDOT():
-	global G
+	G = nx.DiGraph(nx.read_dot('temp-fixed-numbers.dot'))
 	nodeList = G.nodes()
 	for node in nodeList:
 		if G.has_edge(node, node):
@@ -37,25 +37,9 @@ def makeCleanDOT():
 			neighborsList = G.neighbors(node)
 			if len(neighborsList) == 0:
 				G.remove_node(node)
-	nx.write_dot(G, 'testOutputDot.dot')
+	nx.write_dot(G, 'CLEAN-advogato-graph-latest.dot')
 
-DG = nx.DiGraph()
-masterDG = nx.DiGraph()
-journeyerDG = nx.DiGraph()
-apprenticeDG = nx.DiGraph()
-observerDG = nx.DiGraph()
+removeNumbers()
+makeCleanDOT()
 
-
-
-
-
-
-# uncomment if you want to use it, or just ignore it: (SUPER SLOW)
-# pos=nx.spring_layout(G)
-# nx.draw(G)
-# plt.show()
-#removeNumbers()
-#G = nx.read_dot('new.dot')
-#makeCleanDOT()
-removeKeys()
 
