@@ -11,7 +11,7 @@ masterDG = nx.DiGraph()
 journeyerDG = nx.DiGraph()
 apprenticeDG = nx.DiGraph()
 observerDG = nx.DiGraph()
-subGraph = []
+listOfNodesForSubgraph = []
 subDG = nx.DiGraph()
 subMasterDG = nx.DiGraph()
 subJourneyerDG = nx.DiGraph()
@@ -20,17 +20,16 @@ subObserverDG = nx.DiGraph()
 
 def readCleanDotFile():
 	global DG
+	global subDG
+	global listOfNodesForSubgraph
+
 	DG = nx.DiGraph(nx.read_dot('CLEAN-advogato-graph-latest.dot'))
 	levels = nx.get_edge_attributes(DG,'level')
-
 
 	global journeyerDG
 	global apprenticeDG
 	global observerDG
 	global masterDG
-
-	global subDG
-	global subGraph
 	global subMasterDG
 	global subJourneyerDG
 	global subApprenticeDG
@@ -48,87 +47,18 @@ def readCleanDotFile():
 		else:
 			print "oooops problem reading file"
 
-	subGraph = DG.nodes()[0:100]
-	subDG = DG.subgraph(subGraph)
-	subMasterDG = masterDG.subgraph(subGraph)
-	subJourneyerDG = journeyerDG.subgraph(subGraph)
-	subApprenticeDG = apprenticeDG.subgraph(subGraph)
-	subObserverDG = observerDG.subgraph(subGraph)
-
-	plt.figure(figsize=(10,10))
-	pos=nx.random_layout(subDG)
-	nx.draw_networkx_nodes(subDG, pos, node_size = 75)
-	nx.draw_networkx_labels(subDG, pos)
-	nx.draw_networkx_edges(subMasterDG, pos)
-	nx.draw_networkx_edges(subJourneyerDG, pos, edge_color = 'g')
-	nx.draw_networkx_edges(subApprenticeDG, pos, edge_color = 'b')
-	nx.draw_networkx_edges(subObserverDG, pos, edge_color = 'y')
-	plt.show()
+	listOfNodesForSubgraph = DG.nodes()[0:200]
+	subDG = DG.subgraph(listOfNodesForSubgraph)
+	subMasterDG = masterDG.subgraph(listOfNodesForSubgraph)
+	subJourneyerDG = journeyerDG.subgraph(listOfNodesForSubgraph)
+	subApprenticeDG = apprenticeDG.subgraph(listOfNodesForSubgraph)
+	subObserverDG = observerDG.subgraph(listOfNodesForSubgraph)
 
 
-	print "done read clean dot"
-
-
-# opens the username and edgelist files from the tab seperated advogato dataset
-# to read in and store graph data
-# This method is now invalid because we now read from a .dot file for more 
-# recent data
-def readTSVFile():
-	names = open('advogato/ent.advogato.user.name', 'r')
-	edges = open('advogato/out.advogato', 'r')
-
-	namesList = []
-	lineArray = []
-
-	for line in names:
-		namesList.append(line.strip())
-
-	for i in range(0,30):
-		global subGraph
-		subGraph.append(namesList[i-1])
-
-	#declare 2D array and a counter variable, for storing 
-	#source node, dest node, and their weights
-	edge2DList = []
-	count = 0
-	for line in edges:
-		edge2DList.append([])
-		lineArray = line.split(' ', 3)
-
-		sourceNode = namesList[int(lineArray[0]) - 1]
-		destNode = namesList[int(lineArray[1]) - 1]
-		rank = float(lineArray[2])
-		global DG
-		DG.add_weighted_edges_from([(sourceNode, destNode, rank)])
-
-		# create a 2D array of all edges and weights
-		for i in xrange(3):
-			edge2DList[count].append(sourceNode)
-			edge2DList[count].append(destNode)
-			edge2DList[count].append(rank)
-		count = count + 1
-
-		if rank == 1:
-			global masterDG
-			masterDG.add_weighted_edges_from([(sourceNode, destNode, rank)])
-		elif rank == .8:
-			global journeyerDG
-			journeyerDG.add_weighted_edges_from([(sourceNode, destNode, rank)])
-		elif rank == .6:
-			global apprenticeDG
-			apprenticeDG.add_weighted_edges_from([(sourceNode, destNode, rank)])
-
-	names.close()
-	edges.close()
-
-
-
-
-
-# Draws the subGraph of the whole dataset using different colors to specify
+# Draws the listOfNodesForSubgraph of the whole dataset using different colors to specify
 # certification levels on the directed edges (black = master, green = journeyman,
 # blue = apprentice). Any nodes appearing unconnected on this graph is due to
-# the fact that the subGraph only contains the first 50(ish) edges in the dataset.
+# the fact that the listOfNodesForSubgraph only contains the first 50(ish) edges in the dataset.
 def drawSubgraphs():
 	plt.figure(figsize=(10,10))
 	pos=nx.spring_layout(subDG)
@@ -138,13 +68,12 @@ def drawSubgraphs():
 	nx.draw_networkx_edges(subJourneyerDG, pos, edge_color = 'g')
 	nx.draw_networkx_edges(subApprenticeDG, pos, edge_color = 'b')
 	nx.draw_networkx_edges(subObserverDG, pos, edge_color = 'y')
-	#nx.draw_networkx_labels(subDG, pos)
 	plt.show()
 
 
 #This function draws a graph of all paths from the source node and the destination node
 #found in the dataset. Parameters 'source' and 'destination' refer to node numbers in the
-#subGraph[] list of nodes.
+#listOfNodesForSubgraph[] list of nodes.
 #Example usage:
 #	findAllPathsAtoB(9, 17) will find all paths from the 9th name in the username file
 # 	to the 17th node in the username file. At present, these names are 'sh' and 'MikeCamel',
@@ -153,7 +82,7 @@ def findAllPathsAtoB(source, destination):
 	pathList = []
 	testPath = nx.DiGraph()
 
-	for item in nx.all_simple_paths(subDG, subGraph[source], subGraph[destination]):
+	for item in nx.all_simple_paths(subDG, listOfNodesForSubgraph[source], listOfNodesForSubgraph[destination]):
 		pathList.append(item)
 		print item
 
@@ -162,13 +91,6 @@ def findAllPathsAtoB(source, destination):
 
 		for y in range(1, iterator):
 			testPath.add_edge(x[y-1], x[y])
-
-			#code segment attempting to identify the weights of the edges. 
-			#currently it does not work.
-			 # for i in edge2DList:
-			 # 	if x[y-1] == edge2DList[i][0]:
-			 # 		if x[y] == edge2DList[i][1]:
-				# 		testPath.add_weighted_edges_from([(x[y-1], x[y], edge2DList[i][2])])
 								
 	plt.figure(figsize=(10,10))
 	pos=nx.spring_layout(testPath)
@@ -176,12 +98,6 @@ def findAllPathsAtoB(source, destination):
 	nx.draw_networkx_labels(testPath, pos)
 	nx.draw_networkx_edges(testPath, pos)
 	plt.show()
-
-	# code to draw overlaying subgraphs based on weight. excluded because
-	# currently cannot calculate weight of each edge.
-	# nx.draw_networkx_edges(testMasterDG, pos)
-	# nx.draw_networkx_edges(testJourneyerDG, pos, edge_color = 'g')
-	# nx.draw_networkx_edges(testApprenticeDG, pos, edge_color = 'b')
 
 
 #This returns an array of integers of size number of nodes. The integer at 
@@ -211,8 +127,6 @@ def testReachableInNHops(numHops, node):
 
 	listOfReachables = []
 	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
-
-
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
 	print listOfReachables
@@ -257,22 +171,13 @@ def distWrite(distArray, filename):
 	outFile.close()
 
 readCleanDotFile()
-# print masterDG.edges()[0:50]
 
+distWrite(makeDistribution(1), "distribution1.txt")
+distWrite(makeDistribution(2), "distribution2.txt")
+distWrite(makeDistribution(3), "distribution3.txt")
+distWrite(makeDistribution(4), "distribution4.txt")
 
-# createSubgraphs()
-# print "submasterDG edges:"
-# print subMasterDG.edges()[0:50]
-# print "sub DG"
-# print subMasterDG.edges()[0:50]
-#distWrite(makeDistribution(1), "distribution1.txt")
-#distWrite(makeDistribution(2), "distribution2.txt")
-#distWrite(makeDistribution(3), "distribution3.txt")
-#distWrite(makeDistribution(4), "distribution4.txt")
-
-#testReachableInNHops(2, DG.nodes()[59])
-
-# drawSubgraphs()
+drawSubgraphs()
 
 
 
