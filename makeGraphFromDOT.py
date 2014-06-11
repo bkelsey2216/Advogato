@@ -3,9 +3,11 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import string
 
+#This code removes numerical values from the .dot file because 
+#the networkx read_dot method does not play well with numerical values
 def removeNumbers():
 	f = open('advogato-graph-latest.dot', 'r')
-	o = open('new.dot', 'w')
+	o = open('temp-fixed-numbers.dot', 'w')
 
 	for line in f:
 		line = string.replace(line, "0","zero")
@@ -27,14 +29,14 @@ G = nx.read_dot('exampleDotFile.dot')
 ##and outputs a new .dot file with the loops and unconnected nodes
 ##removed from the original .dot file
 def makeCleanDOT():
-	# global G
-	# nodeList = G.nodes()
-	# for node in nodeList:
-	# 	if G.has_edge(node, node):
-	# 		G.remove_edge(node, node)
-	# 		neighborsList = G.neighbors(node)
-	# 		if len(neighborsList) == 0:
-	# 			G.remove_node(node)
+	global G
+	nodeList = G.nodes()
+	for node in nodeList:
+		if G.has_edge(node, node):
+			G.remove_edge(node, node)
+			neighborsList = G.neighbors(node)
+			if len(neighborsList) == 0:
+				G.remove_node(node)
 	nx.write_dot(G, 'testOutputDot.dot')
 
 DG = nx.DiGraph()
@@ -43,29 +45,7 @@ journeyerDG = nx.DiGraph()
 apprenticeDG = nx.DiGraph()
 observerDG = nx.DiGraph()
 
-def removeKeys():
 
-	testG = nx.DiGraph(nx.read_dot('exampleDotFile.dot'))
-
-	levels = nx.get_edge_attributes(testG, 'level')
-
-	print levels
-
-	global journeyerDG
-	global apprenticeDG
-	global observerDG
-	global masterDG
-	for i in DG.edges():
-		if levels[i] == "Master":
-			masterDG.add_edge(i[0],i[1], i[2])
-		elif levels[i] == "Journeyer":
-			journeyerDG.add_edge(i[0],i[1], i[2])
-		elif levels[i] == "Apprentice":
-			apprenticeDG.add_edge(i[0],i[1], i[2])
-		elif levels[i] == "Observer":
-			observerDG.add_edge(i[0],i[1], i[2])
-		else:
-			print "oooops problem reading file"
 
 
 
