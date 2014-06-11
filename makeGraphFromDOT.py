@@ -1,9 +1,27 @@
+import pygraphviz
 import networkx as nx
 import matplotlib.pyplot as plt
-import pygraphviz as pgv
+import string
+
+def removeNumbers():
+	f = open('advogato-graph-latest.dot', 'r')
+	o = open('new.dot', 'w')
+
+	for line in f:
+		line = string.replace(line, "0","zero")
+		line = string.replace(line, "1","one")
+		line = string.replace(line, "2","two")
+		line = string.replace(line, "3","three")
+		line = string.replace(line, "4","four")
+		line = string.replace(line, "5","five")
+		line = string.replace(line, "6","six")
+		line = string.replace(line, "7","seven")
+		line = string.replace(line, "8","eight")
+		line = string.replace(line, "9","nine")
+		o.write(line)
 
 
-G = nx.read_dot('advogato-graph-latest.dot')
+
 
 ##This function creates a graph of the latest advogato dataset
 ##and outputs a new .dot file with the loops and unconnected nodes
@@ -23,3 +41,7 @@ def makeCleanDOT():
 # pos=nx.spring_layout(G)
 # nx.draw(G)
 # plt.show()
+removeNumbers()
+G = nx.read_dot('new.dot')
+makeCleanDOT()
+

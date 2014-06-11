@@ -1,7 +1,8 @@
 ## advogato graph attempt 1
 
-import pygraphviz
+
 import networkx as nx
+import pygraphviz
 import matplotlib.pyplot as plt
 
 # global variables
@@ -9,16 +10,58 @@ DG = nx.DiGraph()
 masterDG = nx.DiGraph()
 journeyerDG = nx.DiGraph()
 apprenticeDG = nx.DiGraph()
+observerDG = nx.DiGraph()
 subGraph = []
 subDG = nx.DiGraph()
 subMasterDG = nx.DiGraph()
 subJourneyerDG = nx.DiGraph()
 subApprenticeDG = nx.DiGraph()
+subObserverDG = nx.DiGraph()
+
+def readCleanDotFile():
+	global DG
+	DG = nx.read_dot('CLEAN-advogato-graph-latest.dot')
+	levels = nx.get_edge_attributes(DG,'level')
+
+	global journeyerDG
+	global apprenticeDG
+	global observerDG
+	global masterDG
+	for i in DG.edges():
+		if levels[i] == "Master":
+			masterDG.add_node(i[0])
+			masterDG.add_node(i[1])
+			masterDG.add_edge(i[0],i[1])
+		elif levels[i] == "Journeyer":
+			journeyerDG.add_edge(i[0],i[1])
+		elif levels[i] == "Apprentice":
+			apprenticeDG.add_edge(i[0],i[1])
+		elif levels[i] == "Observer":
+			observerDG.add_edge(i[0],i[1])
+		else:
+			print "oooops problem reading file"
 
 
-# opens the username and edgelist files from the advogato dataset
+	for i in range (0,30):
+		global subGraph		
+		subGraph.append(DG.nodes()[i])
+
+	print "master"
+	print masterDG
+
+
+	print "done read clean dot"
+
+
+
+
+
+
+# opens the username and edgelist files from the tab seperated advogato dataset
 # to read in and store graph data
-def readFile():
+# This method is now invalid because we now read from a .dot file for more 
+# recent data
+def readTSVFile():
 	names = open('advogato/ent.advogato.user.name', 'r')
 	edges = open('advogato/out.advogato', 'r')
 
@@ -66,17 +109,25 @@ def readFile():
 	names.close()
 	edges.close()
 
+
+
 # create subgraphs based on certification, using lists of edges distingushed by
 # weight and NetworkX's subgraph function
 def createSubgraphs():
 	global subDG
-	global subMasterDG
+	global subGraph
+	subDG = DG.subgraph(subGraph)
 	global subJourneyerDG
 	global subApprenticeDG 
-	subDG = DG.subgraph(subGraph)
+	global subObserverDG
+	global observerDG
+	
+	global subMasterDG
+	global masterDG	
 	subMasterDG = masterDG.subgraph(subGraph)
 	subJourneyerDG = journeyerDG.subgraph(subGraph)
 	subApprenticeDG = apprenticeDG.subgraph(subGraph)
+	subObserverDG = observerDG.subgraph(subGraph)
 
 # Draws the subGraph of the whole dataset using different colors to specify
 # certification levels on the directed edges (black = master, green = journeyman,
@@ -90,7 +141,8 @@ def drawSubgraphs():
 	nx.draw_networkx_edges(subMasterDG, pos)
 	nx.draw_networkx_edges(subJourneyerDG, pos, edge_color = 'g')
 	nx.draw_networkx_edges(subApprenticeDG, pos, edge_color = 'b')
-	nx.draw_networkx_labels(subDG, pos)
+	nx.draw_networkx_edges(subObserverDG, pos, edge_color = 'y')
+	#nx.draw_networkx_labels(subDG, pos)
 	plt.show()
 
 
@@ -208,8 +260,14 @@ def distWrite(distArray, filename):
 
 	outFile.close()
 
-readFile()
+readCleanDotFile()
+print masterDG.edges()[0:50]
+
+
 createSubgraphs()
+print subMasterDG.edges()[0:50]
+print "sub DG"
+print subMasterDG.edges()[0:50]
 #distWrite(makeDistribution(1), "distribution1.txt")
 #distWrite(makeDistribution(2), "distribution2.txt")
 #distWrite(makeDistribution(3), "distribution3.txt")
@@ -217,7 +275,7 @@ createSubgraphs()
 
 #testReachableInNHops(2, DG.nodes()[59])
 
-print nx.get_edge_attributes(DG,'weight')[0]
+drawSubgraphs()
 
 
 
