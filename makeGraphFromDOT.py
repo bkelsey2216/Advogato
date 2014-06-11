@@ -21,27 +21,61 @@ def removeNumbers():
 		o.write(line)
 
 
-
+G = nx.read_dot('exampleDotFile.dot')
 
 ##This function creates a graph of the latest advogato dataset
 ##and outputs a new .dot file with the loops and unconnected nodes
 ##removed from the original .dot file
 def makeCleanDOT():
-	global G
-	nodeList = G.nodes()
-	for node in nodeList:
-		if G.has_edge(node, node):
-			G.remove_edge(node, node)
-			neighborsList = G.neighbors(node)
-			if len(neighborsList) == 0:
-				G.remove_node(node)
-	nx.write_dot(G, 'CLEAN-advogato-graph-latest.dot')
+	# global G
+	# nodeList = G.nodes()
+	# for node in nodeList:
+	# 	if G.has_edge(node, node):
+	# 		G.remove_edge(node, node)
+	# 		neighborsList = G.neighbors(node)
+	# 		if len(neighborsList) == 0:
+	# 			G.remove_node(node)
+	nx.write_dot(G, 'testOutputDot.dot')
+
+DG = nx.DiGraph()
+masterDG = nx.DiGraph()
+journeyerDG = nx.DiGraph()
+apprenticeDG = nx.DiGraph()
+observerDG = nx.DiGraph()
+
+def removeKeys():
+
+	testG = nx.DiGraph(nx.read_dot('exampleDotFile.dot'))
+
+	levels = nx.get_edge_attributes(testG, 'level')
+
+	print levels
+
+	global journeyerDG
+	global apprenticeDG
+	global observerDG
+	global masterDG
+	for i in DG.edges():
+		if levels[i] == "Master":
+			masterDG.add_edge(i[0],i[1], i[2])
+		elif levels[i] == "Journeyer":
+			journeyerDG.add_edge(i[0],i[1], i[2])
+		elif levels[i] == "Apprentice":
+			apprenticeDG.add_edge(i[0],i[1], i[2])
+		elif levels[i] == "Observer":
+			observerDG.add_edge(i[0],i[1], i[2])
+		else:
+			print "oooops problem reading file"
+
+
+
 
 # uncomment if you want to use it, or just ignore it: (SUPER SLOW)
 # pos=nx.spring_layout(G)
 # nx.draw(G)
 # plt.show()
-removeNumbers()
-G = nx.read_dot('new.dot')
-makeCleanDOT()
+#removeNumbers()
+#G = nx.read_dot('new.dot')
+#makeCleanDOT()
+removeKeys()
 
