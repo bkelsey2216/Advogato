@@ -17,24 +17,37 @@ subMasterDG = nx.DiGraph()
 subJourneyerDG = nx.DiGraph()
 subApprenticeDG = nx.DiGraph()
 subObserverDG = nx.DiGraph()
+numberOfNodesToPlot = 200
 
+##This method reads a "clean" (no self loops or nodes which point to nothing) .dot file
+##from 'CLEAN-advogato-graph-latest.dot'
+##When finished
+##DG = a DiGraph of all the edges
+##masterDG = a DiGraph of all of the edges ranked master
+##journeyerDG, apprenticeDG, observerDG = similar to masterDG
+##listOfNodesForSubgraph = a list of the first numberOfNodesToPlot nodes in the graph
+##	this is used to create graphs of suitable size for viewing
+##subDG = a graph of the nodes in listOfNodesForSubgraph for display purposes
+##subMasterDG = a graph containing the master edges between nodes in listOfNodesForSubgraph
+##subJourneyerDG, subApprenticeDG, subObserverDG = similar to subMasterDG
 def readCleanDotFile():
 	global DG
-	global subDG
-	global listOfNodesForSubgraph
-
-	DG = nx.DiGraph(nx.read_dot('CLEAN-advogato-graph-latest.dot'))
-	levels = nx.get_edge_attributes(DG,'level')
-
+	global masterDG
 	global journeyerDG
 	global apprenticeDG
 	global observerDG
-	global masterDG
+	global numberOfNodesToPlot
+	global listOfNodesForSubgraph
+	global subDG
 	global subMasterDG
 	global subJourneyerDG
 	global subApprenticeDG
 	global subObserverDG
+	
+	DG = nx.DiGraph(nx.read_dot('CLEAN-advogato-graph-latest.dot'))
+	levels = nx.get_edge_attributes(DG,'level')
 
+	#sorts the edges into different graphs based on their levels for display purposes
 	for i in DG.edges():
 		if levels[(i[0], i[1])] == "Master":
 			masterDG.add_edge(i[0],i[1])
@@ -45,9 +58,10 @@ def readCleanDotFile():
 		elif levels[(i[0], i[1])] == "Observer":
 			observerDG.add_edge(i[0],i[1])
 		else:
-			print "oooops problem reading file"
+			print "problem reading file"
 
-	listOfNodesForSubgraph = DG.nodes()[0:200]
+	#creates smaller subgraphs for display purposes
+	listOfNodesForSubgraph = DG.nodes()[0:numberOfNodesToPlot]
 	subDG = DG.subgraph(listOfNodesForSubgraph)
 	subMasterDG = masterDG.subgraph(listOfNodesForSubgraph)
 	subJourneyerDG = journeyerDG.subgraph(listOfNodesForSubgraph)
@@ -57,8 +71,9 @@ def readCleanDotFile():
 
 # Draws the listOfNodesForSubgraph of the whole dataset using different colors to specify
 # certification levels on the directed edges (black = master, green = journeyman,
-# blue = apprentice). Any nodes appearing unconnected on this graph is due to
-# the fact that the listOfNodesForSubgraph only contains the first 50(ish) edges in the dataset.
+# blue = apprentice, yellow = observer). Any nodes appearing unconnected on this graph is due to
+# the fact that the listOfNodesForSubgraph only contains the first numberOfNodesToPlot nodes in the dataset.
+# ie. they are connected to nodes which are not being displayed
 def drawSubgraphs():
 	plt.figure(figsize=(10,10))
 	pos=nx.spring_layout(subDG)
