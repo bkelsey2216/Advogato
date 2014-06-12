@@ -1,0 +1,1492 @@
+['aegis', 'scc']
+aegis,scc
+['fixxxer', 'gwolf']
+fixxxer,gwolf
+['bkkx', 'zhp']
+bkkx,zhp
+['pkiforum', 'digitect']
+pkiforum,digitect
+['pkiforum', 'rachel']
+pkiforum,rachel
+['pkiforum', 'eckes']
+pkiforum,eckes
+['pkiforum', 'aleksey']
+pkiforum,aleksey
+['pkiforum', 'sponge']
+pkiforum,sponge
+['pkiforum', 'raph']
+pkiforum,raph
+['pkiforum', 'ottawaDave']
+pkiforum,ottawaDave
+['pkiforum', 'zoke']
+pkiforum,zoke
+['pkiforum', 'rkarl']
+pkiforum,rkarl
+['munizao', 'jacob']
+munizao,jacob
+['munizao', 'raph', 'jacob']
+munizao,raph
+raph,jacob
+['munizao', 'jtraub']
+munizao,jtraub
+['munizao', 'raph']
+munizao,raph
+['munizao', 'pat', 'raph']
+munizao,pat
+pat,raph
+['munizao', 'Adrian', 'raph']
+munizao,Adrian
+Adrian,raph
+['munizao', 'raph', 'pat']
+munizao,raph
+raph,pat
+['munizao', 'pat']
+munizao,pat
+['munizao', 'Adrian', 'pat']
+munizao,Adrian
+Adrian,pat
+['munizao', 'pat', 'Adrian']
+munizao,pat
+pat,Adrian
+['munizao', 'Adrian']
+munizao,Adrian
+['superant', 'ariya']
+superant,ariya
+['superant', 'fxn', 'ariya']
+superant,fxn
+fxn,ariya
+['superant', 'mascot', 'ariya']
+superant,mascot
+mascot,ariya
+['superant', 'jLoki', 'ariya']
+superant,jLoki
+jLoki,ariya
+['superant', 'mattbradshaw', 'ariya']
+superant,mattbradshaw
+mattbradshaw,ariya
+['superant', 'superuser']
+superant,superuser
+['superant', 'fxn', 'superuser']
+superant,fxn
+fxn,superuser
+['superant', 'xcyber', 'superuser']
+superant,xcyber
+xcyber,superuser
+['superant', 'neoneye']
+superant,neoneye
+['superant', 'whytheluckystiff', 'neoneye']
+superant,whytheluckystiff
+whytheluckystiff,neoneye
+['superant', 'mirwin']
+superant,mirwin
+['superant', 'redowl', 'mirwin']
+superant,redowl
+redowl,mirwin
+['superant', 'csm', 'mirwin']
+superant,csm
+csm,mirwin
+['superant', 'jao', 'mirwin']
+superant,jao
+jao,mirwin
+['superant', 'fxn', 'mirwin']
+superant,fxn
+fxn,mirwin
+['superant', 'chipx86', 'mirwin']
+superant,chipx86
+chipx86,mirwin
+['superant', 'jLoki', 'mirwin']
+superant,jLoki
+jLoki,mirwin
+['superant', 'fuzzyping']
+superant,fuzzyping
+['superant', 'fxn', 'fuzzyping']
+superant,fxn
+fxn,fuzzyping
+['superant', 'yosh']
+superant,yosh
+['superant', 'proski', 'yosh']
+superant,proski
+proski,yosh
+['superant', 'beppu', 'yosh']
+superant,beppu
+beppu,yosh
+['superant', 'cinamod', 'yosh']
+superant,cinamod
+cinamod,yosh
+['superant', 'xcyber', 'yosh']
+superant,xcyber
+xcyber,yosh
+['superant', 'jLoki', 'yosh']
+superant,jLoki
+jLoki,yosh
+['superant', 'weasel']
+superant,weasel
+['superant', 'khazad', 'weasel']
+superant,khazad
+khazad,weasel
+['superant', 'fuzzyping', 'proski']
+superant,fuzzyping
+fuzzyping,proski
+['superant', 'proski']
+superant,proski
+['superant', 'fxn', 'proski']
+superant,fxn
+fxn,proski
+['superant', 'mirwin', 'redowl']
+superant,mirwin
+mirwin,redowl
+['superant', 'redowl']
+superant,redowl
+['superant', 'jao', 'redowl']
+superant,jao
+jao,redowl
+['superant', 'fxn', 'redowl']
+superant,fxn
+fxn,redowl
+['superant', 'mirwin', 'rupert']
+superant,mirwin
+mirwin,rupert
+['superant', 'rupert']
+superant,rupert
+['superant', 'csm', 'rupert']
+superant,csm
+csm,rupert
+['superant', 'fxn', 'rupert']
+superant,fxn
+fxn,rupert
+['superant', 'chipx86', 'rupert']
+superant,chipx86
+chipx86,rupert
+['superant', 'async', 'rupert']
+superant,async
+async,rupert
+['superant', 'proski', 'andersee']
+superant,proski
+proski,andersee
+['superant', 'andersee']
+superant,andersee
+['superant', 'taj']
+superant,taj
+['superant', 'fxn', 'taj']
+superant,fxn
+fxn,taj
+['superant', 'jLoki', 'taj']
+superant,jLoki
+jLoki,taj
+['superant', 'mirwin', 'csm']
+superant,mirwin
+mirwin,csm
+['superant', 'csm']
+superant,csm
+['superant', 'jao', 'csm']
+superant,jao
+jao,csm
+['superant', 'fxn', 'csm']
+superant,fxn
+fxn,csm
+['superant', 'kgb', 'csm']
+superant,kgb
+kgb,csm
+['superant', 'chipx86', 'csm']
+superant,chipx86
+chipx86,csm
+['superant', 'async', 'csm']
+superant,async
+async,csm
+['superant', 'yosh', 'beppu']
+superant,yosh
+yosh,beppu
+['superant', 'andersee', 'beppu']
+superant,andersee
+andersee,beppu
+['superant', 'beppu']
+superant,beppu
+['superant', 'hship']
+superant,hship
+['superant', 'jao', 'hship']
+superant,jao
+jao,hship
+['superant', 'fxn', 'hship']
+superant,fxn
+fxn,hship
+['superant', 'jLoki', 'hship']
+superant,jLoki
+jLoki,hship
+['superant', 'mirwin', 'MichaelCrawford']
+superant,mirwin
+mirwin,MichaelCrawford
+['superant', 'MichaelCrawford']
+superant,MichaelCrawford
+['superant', 'fxn', 'MichaelCrawford']
+superant,fxn
+fxn,MichaelCrawford
+['superant', 'aero6dof', 'MichaelCrawford']
+superant,aero6dof
+aero6dof,MichaelCrawford
+['superant', 'robocoder', 'MichaelCrawford']
+superant,robocoder
+robocoder,MichaelCrawford
+['superant', 'mascot', 'MichaelCrawford']
+superant,mascot
+mascot,MichaelCrawford
+['superant', 'jLoki', 'MichaelCrawford']
+superant,jLoki
+jLoki,MichaelCrawford
+['superant', 'mirwin', 'brouhaha']
+superant,mirwin
+mirwin,brouhaha
+['superant', 'brouhaha']
+superant,brouhaha
+['superant', 'fxn', 'brouhaha']
+superant,fxn
+fxn,brouhaha
+['superant', 'jarod']
+superant,jarod
+['superant', 'jao', 'jarod']
+superant,jao
+jao,jarod
+['superant', 'khazad', 'jarod']
+superant,khazad
+khazad,jarod
+['superant', 'mascot', 'jarod']
+superant,mascot
+mascot,jarod
+['superant', 'neoneye', 'tcopeland']
+superant,neoneye
+neoneye,tcopeland
+['superant', 'tcopeland']
+superant,tcopeland
+['superant', 'whytheluckystiff', 'tcopeland']
+superant,whytheluckystiff
+whytheluckystiff,tcopeland
+['superant', 'ade', 'tcopeland']
+superant,ade
+ade,tcopeland
+['superant', 'nicku']
+superant,nicku
+['superant', 'mirwin', 'jao']
+superant,mirwin
+mirwin,jao
+['superant', 'redowl', 'jao']
+superant,redowl
+redowl,jao
+['superant', 'jao']
+superant,jao
+['superant', 'fxn', 'jao']
+superant,fxn
+fxn,jao
+['superant', 'khazad', 'jao']
+superant,khazad
+khazad,jao
+['superant', 'mascot', 'jao']
+superant,mascot
+mascot,jao
+['superant', 'ariya', 'fxn']
+superant,ariya
+ariya,fxn
+['superant', 'mirwin', 'fxn']
+superant,mirwin
+mirwin,fxn
+['superant', 'fuzzyping', 'fxn']
+superant,fuzzyping
+fuzzyping,fxn
+['superant', 'redowl', 'fxn']
+superant,redowl
+redowl,fxn
+['superant', 'rupert', 'fxn']
+superant,rupert
+rupert,fxn
+['superant', 'MichaelCrawford', 'fxn']
+superant,MichaelCrawford
+MichaelCrawford,fxn
+['superant', 'brouhaha', 'fxn']
+superant,brouhaha
+brouhaha,fxn
+['superant', 'jao', 'fxn']
+superant,jao
+jao,fxn
+['superant', 'fxn']
+superant,fxn
+['superant', 'whytheluckystiff', 'fxn']
+superant,whytheluckystiff
+whytheluckystiff,fxn
+['superant', 'chipx86', 'fxn']
+superant,chipx86
+chipx86,fxn
+['superant', 'mascot', 'fxn']
+superant,mascot
+mascot,fxn
+['superant', 'xcyber', 'fxn']
+superant,xcyber
+xcyber,fxn
+['superant', 'jLoki', 'fxn']
+superant,jLoki
+jLoki,fxn
+['superant', 'fzort', 'fxn']
+superant,fzort
+fzort,fxn
+['superant', 'esteve', 'fxn']
+superant,esteve
+esteve,fxn
+['superant', 'vtamara']
+superant,vtamara
+['superant', 'uweo', 'vtamara']
+superant,uweo
+uweo,vtamara
+['superant', 'vtamara', 'uweo']
+superant,vtamara
+vtamara,uweo
+['superant', 'uweo']
+superant,uweo
+['superant', 'mirwin', 'aero6dof']
+superant,mirwin
+mirwin,aero6dof
+['superant', 'rupert', 'aero6dof']
+superant,rupert
+rupert,aero6dof
+['superant', 'aero6dof']
+superant,aero6dof
+['superant', 'whytheluckystiff', 'aero6dof']
+superant,whytheluckystiff
+whytheluckystiff,aero6dof
+['superant', 'robocoder']
+superant,robocoder
+['superant', 'chipx86', 'robocoder']
+superant,chipx86
+chipx86,robocoder
+['superant', 'ade', 'robocoder']
+superant,ade
+ade,robocoder
+['superant', 'hiddenpower']
+superant,hiddenpower
+['superant', 'mirwin', 'chakie']
+superant,mirwin
+mirwin,chakie
+['superant', 'rupert', 'chakie']
+superant,rupert
+rupert,chakie
+['superant', 'csm', 'chakie']
+superant,csm
+csm,chakie
+['superant', 'fxn', 'chakie']
+superant,fxn
+fxn,chakie
+['superant', 'chakie']
+superant,chakie
+['superant', 'xcyber', 'chakie']
+superant,xcyber
+xcyber,chakie
+['superant', 'fxn', 'kgb']
+superant,fxn
+fxn,kgb
+['superant', 'kgb']
+superant,kgb
+['superant', 'khazad', 'kgb']
+superant,khazad
+khazad,kgb
+['superant', 'async', 'kgb']
+superant,async
+async,kgb
+['superant', 'mirwin', 'RoUS']
+superant,mirwin
+mirwin,RoUS
+['superant', 'brouhaha', 'RoUS']
+superant,brouhaha
+brouhaha,RoUS
+['superant', 'fxn', 'RoUS']
+superant,fxn
+fxn,RoUS
+['superant', 'RoUS']
+superant,RoUS
+['superant', 'xcyber', 'RoUS']
+superant,xcyber
+xcyber,RoUS
+['superant', 'jLoki', 'RoUS']
+superant,jLoki
+jLoki,RoUS
+['superant', 'crudman']
+superant,crudman
+['superant', 'codedbliss']
+superant,codedbliss
+['superant', 'whytheluckystiff', 'codedbliss']
+superant,whytheluckystiff
+whytheluckystiff,codedbliss
+['superant', 'mirwin', 'khazad']
+superant,mirwin
+mirwin,khazad
+['superant', 'jarod', 'khazad']
+superant,jarod
+jarod,khazad
+['superant', 'jao', 'khazad']
+superant,jao
+jao,khazad
+['superant', 'fxn', 'khazad']
+superant,fxn
+fxn,khazad
+['superant', 'khazad']
+superant,khazad
+['superant', 'neoneye', 'whytheluckystiff']
+superant,neoneye
+neoneye,whytheluckystiff
+['superant', 'mirwin', 'whytheluckystiff']
+superant,mirwin
+mirwin,whytheluckystiff
+['superant', 'fxn', 'whytheluckystiff']
+superant,fxn
+fxn,whytheluckystiff
+['superant', 'whytheluckystiff']
+superant,whytheluckystiff
+['superant', 'chipx86', 'whytheluckystiff']
+superant,chipx86
+chipx86,whytheluckystiff
+['superant', 'ib', 'whytheluckystiff']
+superant,ib
+ib,whytheluckystiff
+['superant', 'xcyber', 'whytheluckystiff']
+superant,xcyber
+xcyber,whytheluckystiff
+['superant', 'esteve', 'whytheluckystiff']
+superant,esteve
+esteve,whytheluckystiff
+['superant', 'dotSphinx']
+superant,dotSphinx
+['superant', 'ade', 'dotSphinx']
+superant,ade
+ade,dotSphinx
+['superant', 'mirwin', 'chipx86']
+superant,mirwin
+mirwin,chipx86
+['superant', 'rupert', 'chipx86']
+superant,rupert
+rupert,chipx86
+['superant', 'jao', 'chipx86']
+superant,jao
+jao,chipx86
+['superant', 'fxn', 'chipx86']
+superant,fxn
+fxn,chipx86
+['superant', 'robocoder', 'chipx86']
+superant,robocoder
+robocoder,chipx86
+['superant', 'whytheluckystiff', 'chipx86']
+superant,whytheluckystiff
+whytheluckystiff,chipx86
+['superant', 'chipx86']
+superant,chipx86
+['superant', 'mascot', 'chipx86']
+superant,mascot
+mascot,chipx86
+['superant', 'fxn', 'ib']
+superant,fxn
+fxn,ib
+['superant', 'whytheluckystiff', 'ib']
+superant,whytheluckystiff
+whytheluckystiff,ib
+['superant', 'ib']
+superant,ib
+['superant', 'jLoki', 'ib']
+superant,jLoki
+jLoki,ib
+['superant', 'esteve', 'ib']
+superant,esteve
+esteve,ib
+['superant', 'mrbill']
+superant,mrbill
+['superant', 'jarod', 'mascot']
+superant,jarod
+jarod,mascot
+['superant', 'jao', 'mascot']
+superant,jao
+jao,mascot
+['superant', 'chipx86', 'mascot']
+superant,chipx86
+chipx86,mascot
+['superant', 'mascot']
+superant,mascot
+['superant', 'ariya', 'cinamod']
+superant,ariya
+ariya,cinamod
+['superant', 'fxn', 'cinamod']
+superant,fxn
+fxn,cinamod
+['superant', 'whytheluckystiff', 'cinamod']
+superant,whytheluckystiff
+whytheluckystiff,cinamod
+['superant', 'cinamod']
+superant,cinamod
+['superant', 'AlanHorkan', 'cinamod']
+superant,AlanHorkan
+AlanHorkan,cinamod
+['superant', 'superuser', 'xcyber']
+superant,superuser
+superuser,xcyber
+['superant', 'fxn', 'xcyber']
+superant,fxn
+fxn,xcyber
+['superant', 'khazad', 'xcyber']
+superant,khazad
+khazad,xcyber
+['superant', 'xcyber']
+superant,xcyber
+['superant', 'ggoebel']
+superant,ggoebel
+['superant', 'fzort', 'ggoebel']
+superant,fzort
+fzort,ggoebel
+['superant', 'ariya', 'jLoki']
+superant,ariya
+ariya,jLoki
+['superant', 'mirwin', 'jLoki']
+superant,mirwin
+mirwin,jLoki
+['superant', 'fxn', 'jLoki']
+superant,fxn
+fxn,jLoki
+['superant', 'jLoki']
+superant,jLoki
+['superant', 'ariya', 'mattbradshaw']
+superant,ariya
+ariya,mattbradshaw
+['superant', 'superuser', 'mattbradshaw']
+superant,superuser
+superuser,mattbradshaw
+['superant', 'csm', 'mattbradshaw']
+superant,csm
+csm,mattbradshaw
+['superant', 'hiddenpower', 'mattbradshaw']
+superant,hiddenpower
+hiddenpower,mattbradshaw
+['superant', 'chakie', 'mattbradshaw']
+superant,chakie
+chakie,mattbradshaw
+['superant', 'mattbradshaw']
+superant,mattbradshaw
+['superant', 'whytheluckystiff', 'ade']
+superant,whytheluckystiff
+whytheluckystiff,ade
+['superant', 'ade']
+superant,ade
+['superant', 'ariya', 'AlanHorkan']
+superant,ariya
+ariya,AlanHorkan
+['superant', 'mirwin', 'AlanHorkan']
+superant,mirwin
+mirwin,AlanHorkan
+['superant', 'fxn', 'AlanHorkan']
+superant,fxn
+fxn,AlanHorkan
+['superant', 'AlanHorkan']
+superant,AlanHorkan
+['superant', 'mirwin', 'fzort']
+superant,mirwin
+mirwin,fzort
+['superant', 'fxn', 'fzort']
+superant,fxn
+fxn,fzort
+['superant', 'whytheluckystiff', 'fzort']
+superant,whytheluckystiff
+whytheluckystiff,fzort
+['superant', 'fzort']
+superant,fzort
+['superant', 'mirwin', 'async']
+superant,mirwin
+mirwin,async
+['superant', 'rupert', 'async']
+superant,rupert
+rupert,async
+['superant', 'chipx86', 'async']
+superant,chipx86
+chipx86,async
+['superant', 'mascot', 'async']
+superant,mascot
+mascot,async
+['superant', 'async']
+superant,async
+['superant', 'fxn', 'esteve']
+superant,fxn
+fxn,esteve
+['superant', 'whytheluckystiff', 'esteve']
+superant,whytheluckystiff
+whytheluckystiff,esteve
+['superant', 'esteve']
+superant,esteve
+['wjp', 'jameson']
+wjp,jameson
+['wjp', 'DrCode', 'jameson']
+wjp,DrCode
+DrCode,jameson
+['wjp', 'fingolfin', 'jameson']
+wjp,fingolfin
+fingolfin,jameson
+['wjp', 'jameson', 'dancer']
+wjp,jameson
+jameson,dancer
+['wjp', 'dancer']
+wjp,dancer
+['wjp', 'DrCode', 'dancer']
+wjp,DrCode
+DrCode,dancer
+['wjp', 'Nadir', 'dancer']
+wjp,Nadir
+Nadir,dancer
+['wjp', 'fingolfin', 'dancer']
+wjp,fingolfin
+fingolfin,dancer
+['wjp', 'jameson', 'DrCode']
+wjp,jameson
+jameson,DrCode
+['wjp', 'dancer', 'DrCode']
+wjp,dancer
+dancer,DrCode
+['wjp', 'DrCode']
+wjp,DrCode
+['wjp', 'fingolfin', 'DrCode']
+wjp,fingolfin
+fingolfin,DrCode
+['wjp', 'jameson', 'Nadir']
+wjp,jameson
+jameson,Nadir
+['wjp', 'Nadir']
+wjp,Nadir
+['wjp', 'jameson', 'fingolfin']
+wjp,jameson
+jameson,fingolfin
+['wjp', 'dancer', 'fingolfin']
+wjp,dancer
+dancer,fingolfin
+['wjp', 'DrCode', 'fingolfin']
+wjp,DrCode
+DrCode,fingolfin
+['wjp', 'Nadir', 'fingolfin']
+wjp,Nadir
+Nadir,fingolfin
+['wjp', 'fingolfin']
+wjp,fingolfin
+['habes', 'rms']
+habes,rms
+['habes', 'mbrubeck']
+habes,mbrubeck
+['habes', 'wingo']
+habes,wingo
+['habes', 'gilbertt']
+habes,gilbertt
+['habes', 'Verement']
+habes,Verement
+['ianmacd', 'rms']
+ianmacd,rms
+['ianmacd', 'Fyodor', 'rms']
+ianmacd,Fyodor
+Fyodor,rms
+['ianmacd', 'ruud', 'rms']
+ianmacd,ruud
+ruud,rms
+['ianmacd', 'dsifry']
+ianmacd,dsifry
+['ianmacd', 'jimd', 'dsifry']
+ianmacd,jimd
+jimd,dsifry
+['ianmacd', 'elise', 'dsifry']
+ianmacd,elise
+elise,dsifry
+['ianmacd', 'bneely', 'dsifry']
+ianmacd,bneely
+bneely,dsifry
+['ianmacd', 'mbp', 'dsifry']
+ianmacd,mbp
+mbp,dsifry
+['ianmacd', 'dhd', 'dsifry']
+ianmacd,dhd
+dhd,dsifry
+['ianmacd', 'davidw', 'dsifry']
+ianmacd,davidw
+davidw,dsifry
+['ianmacd', 'mperry', 'dsifry']
+ianmacd,mperry
+mperry,dsifry
+['ianmacd', 'dyork', 'dsifry']
+ianmacd,dyork
+dyork,dsifry
+['ianmacd', 'crackmonkey', 'dsifry']
+ianmacd,crackmonkey
+crackmonkey,dsifry
+['ianmacd', 'chip']
+ianmacd,chip
+['ianmacd', 'jimd', 'chip']
+ianmacd,jimd
+jimd,chip
+['ianmacd', 'dhd', 'chip']
+ianmacd,dhd
+dhd,chip
+['ianmacd', 'ruud', 'chip']
+ianmacd,ruud
+ruud,chip
+['ianmacd', 'cdegroot']
+ianmacd,cdegroot
+['ianmacd', 'ruud', 'cdegroot']
+ianmacd,ruud
+ruud,cdegroot
+['ianmacd', 'jimd']
+ianmacd,jimd
+['ianmacd', 'bneely', 'jimd']
+ianmacd,bneely
+bneely,jimd
+['ianmacd', 'mbp', 'jimd']
+ianmacd,mbp
+mbp,jimd
+['ianmacd', 'lukeh', 'jimd']
+ianmacd,lukeh
+lukeh,jimd
+['ianmacd', 'grog', 'jimd']
+ianmacd,grog
+grog,jimd
+['ianmacd', 'davidw', 'jimd']
+ianmacd,davidw
+davidw,jimd
+['ianmacd', 'dyork', 'jimd']
+ianmacd,dyork
+dyork,jimd
+['ianmacd', 'crackmonkey', 'jimd']
+ianmacd,crackmonkey
+crackmonkey,jimd
+['ianmacd', 'jimd', 'elise']
+ianmacd,jimd
+jimd,elise
+['ianmacd', 'elise']
+ianmacd,elise
+['ianmacd', 'bneely', 'elise']
+ianmacd,bneely
+bneely,elise
+['ianmacd', 'star', 'elise']
+ianmacd,star
+star,elise
+['ianmacd', 'davidw', 'elise']
+ianmacd,davidw
+davidw,elise
+['ianmacd', 'dyork', 'elise']
+ianmacd,dyork
+dyork,elise
+['ianmacd', 'crackmonkey', 'elise']
+ianmacd,crackmonkey
+crackmonkey,elise
+['ianmacd', 'tobi']
+ianmacd,tobi
+['ianmacd', 'chip', 'riel']
+ianmacd,chip
+chip,riel
+['ianmacd', 'jimd', 'riel']
+ianmacd,jimd
+jimd,riel
+['ianmacd', 'riel']
+ianmacd,riel
+['ianmacd', 'dhd', 'riel']
+ianmacd,dhd
+dhd,riel
+['ianmacd', 'jules', 'riel']
+ianmacd,jules
+jules,riel
+['ianmacd', 'alan', 'riel']
+ianmacd,alan
+alan,riel
+['ianmacd', 'corbet', 'riel']
+ianmacd,corbet
+corbet,riel
+['ianmacd', 'ruud', 'riel']
+ianmacd,ruud
+ruud,riel
+['ianmacd', 'dsifry', 'jes']
+ianmacd,dsifry
+dsifry,jes
+['ianmacd', 'jimd', 'jes']
+ianmacd,jimd
+jimd,jes
+['ianmacd', 'jes']
+ianmacd,jes
+['ianmacd', 'dhd', 'jes']
+ianmacd,dhd
+dhd,jes
+['ianmacd', 'grog', 'jes']
+ianmacd,grog
+grog,jes
+['ianmacd', 'alan', 'jes']
+ianmacd,alan
+alan,jes
+['ianmacd', 'davidw', 'jes']
+ianmacd,davidw
+davidw,jes
+['ianmacd', 'Fyodor']
+ianmacd,Fyodor
+['ianmacd', 'alan', 'Fyodor']
+ianmacd,alan
+alan,Fyodor
+['ianmacd', 'jimd', 'bneely']
+ianmacd,jimd
+jimd,bneely
+['ianmacd', 'elise', 'bneely']
+ianmacd,elise
+elise,bneely
+['ianmacd', 'bneely']
+ianmacd,bneely
+['ianmacd', 'mbp', 'bneely']
+ianmacd,mbp
+mbp,bneely
+['ianmacd', 'star', 'bneely']
+ianmacd,star
+star,bneely
+['ianmacd', 'davidw', 'bneely']
+ianmacd,davidw
+davidw,bneely
+['ianmacd', 'mperry', 'bneely']
+ianmacd,mperry
+mperry,bneely
+['ianmacd', 'pompeiisneaks', 'bneely']
+ianmacd,pompeiisneaks
+pompeiisneaks,bneely
+['ianmacd', 'crackmonkey', 'bneely']
+ianmacd,crackmonkey
+crackmonkey,bneely
+['ianmacd', 'dsifry', 'Dunc']
+ianmacd,dsifry
+dsifry,Dunc
+['ianmacd', 'bneely', 'Dunc']
+ianmacd,bneely
+bneely,Dunc
+['ianmacd', 'Dunc']
+ianmacd,Dunc
+['ianmacd', 'dhd', 'Dunc']
+ianmacd,dhd
+dhd,Dunc
+['ianmacd', 'hacker', 'Dunc']
+ianmacd,hacker
+hacker,Dunc
+['ianmacd', 'davidw', 'Dunc']
+ianmacd,davidw
+davidw,Dunc
+['ianmacd', 'mperry', 'Dunc']
+ianmacd,mperry
+mperry,Dunc
+['ianmacd', 'jimd', 'mbp']
+ianmacd,jimd
+jimd,mbp
+['ianmacd', 'elise', 'mbp']
+ianmacd,elise
+elise,mbp
+['ianmacd', 'bneely', 'mbp']
+ianmacd,bneely
+bneely,mbp
+['ianmacd', 'mbp']
+ianmacd,mbp
+['ianmacd', 'lukeh', 'mbp']
+ianmacd,lukeh
+lukeh,mbp
+['ianmacd', 'davidw', 'mbp']
+ianmacd,davidw
+davidw,mbp
+['ianmacd', 'mperry', 'mbp']
+ianmacd,mperry
+mperry,mbp
+['ianmacd', 'rasmus', 'mbp']
+ianmacd,rasmus
+rasmus,mbp
+['ianmacd', 'pompeiisneaks', 'mbp']
+ianmacd,pompeiisneaks
+pompeiisneaks,mbp
+['ianmacd', 'crackmonkey', 'mbp']
+ianmacd,crackmonkey
+crackmonkey,mbp
+['ianmacd', 'dsifry', 'dhd']
+ianmacd,dsifry
+dsifry,dhd
+['ianmacd', 'jes', 'dhd']
+ianmacd,jes
+jes,dhd
+['ianmacd', 'mbp', 'dhd']
+ianmacd,mbp
+mbp,dhd
+['ianmacd', 'dhd']
+ianmacd,dhd
+['ianmacd', 'alan', 'dhd']
+ianmacd,alan
+alan,dhd
+['ianmacd', 'davidw', 'dhd']
+ianmacd,davidw
+davidw,dhd
+['ianmacd', 'Ryan', 'dhd']
+ianmacd,Ryan
+Ryan,dhd
+['ianmacd', 'ruud', 'dhd']
+ianmacd,ruud
+ruud,dhd
+['ianmacd', 'jules']
+ianmacd,jules
+['ianmacd', 'elise', 'stephane']
+ianmacd,elise
+elise,stephane
+['ianmacd', 'bneely', 'stephane']
+ianmacd,bneely
+bneely,stephane
+['ianmacd', 'mbp', 'stephane']
+ianmacd,mbp
+mbp,stephane
+['ianmacd', 'stephane']
+ianmacd,stephane
+['ianmacd', 'davidw', 'stephane']
+ianmacd,davidw
+davidw,stephane
+['ianmacd', 'rasmus', 'stephane']
+ianmacd,rasmus
+rasmus,stephane
+['ianmacd', 'crackmonkey', 'stephane']
+ianmacd,crackmonkey
+crackmonkey,stephane
+['ianmacd', 'dsifry', 'hacker']
+ianmacd,dsifry
+dsifry,hacker
+['ianmacd', 'mbp', 'hacker']
+ianmacd,mbp
+mbp,hacker
+['ianmacd', 'hacker']
+ianmacd,hacker
+['ianmacd', 'grog', 'hacker']
+ianmacd,grog
+grog,hacker
+['ianmacd', 'davidw', 'hacker']
+ianmacd,davidw
+davidw,hacker
+['ianmacd', 'mperry', 'hacker']
+ianmacd,mperry
+mperry,hacker
+['ianmacd', 'whytheluckystiff', 'hacker']
+ianmacd,whytheluckystiff
+whytheluckystiff,hacker
+['ianmacd', 'rasmus', 'hacker']
+ianmacd,rasmus
+rasmus,hacker
+['ianmacd', 'pompeiisneaks', 'hacker']
+ianmacd,pompeiisneaks
+pompeiisneaks,hacker
+['ianmacd', 'dyork', 'hacker']
+ianmacd,dyork
+dyork,hacker
+['ianmacd', 'dsifry', 'star']
+ianmacd,dsifry
+dsifry,star
+['ianmacd', 'elise', 'star']
+ianmacd,elise
+elise,star
+['ianmacd', 'bneely', 'star']
+ianmacd,bneely
+bneely,star
+['ianmacd', 'mbp', 'star']
+ianmacd,mbp
+mbp,star
+['ianmacd', 'star']
+ianmacd,star
+['ianmacd', 'davidw', 'star']
+ianmacd,davidw
+davidw,star
+['ianmacd', 'jimd', 'lukeh']
+ianmacd,jimd
+jimd,lukeh
+['ianmacd', 'lukeh']
+ianmacd,lukeh
+['ianmacd', 'jimd', 'grog']
+ianmacd,jimd
+jimd,grog
+['ianmacd', 'bneely', 'grog']
+ianmacd,bneely
+bneely,grog
+['ianmacd', 'hacker', 'grog']
+ianmacd,hacker
+hacker,grog
+['ianmacd', 'grog']
+ianmacd,grog
+['ianmacd', 'crackmonkey', 'grog']
+ianmacd,crackmonkey
+crackmonkey,grog
+['ianmacd', 'cdegroot', 'alan']
+ianmacd,cdegroot
+cdegroot,alan
+['ianmacd', 'jimd', 'alan']
+ianmacd,jimd
+jimd,alan
+['ianmacd', 'riel', 'alan']
+ianmacd,riel
+riel,alan
+['ianmacd', 'jes', 'alan']
+ianmacd,jes
+jes,alan
+['ianmacd', 'Fyodor', 'alan']
+ianmacd,Fyodor
+Fyodor,alan
+['ianmacd', 'dhd', 'alan']
+ianmacd,dhd
+dhd,alan
+['ianmacd', 'jules', 'alan']
+ianmacd,jules
+jules,alan
+['ianmacd', 'alan']
+ianmacd,alan
+['ianmacd', 'rasmus', 'alan']
+ianmacd,rasmus
+rasmus,alan
+['ianmacd', 'davem', 'alan']
+ianmacd,davem
+davem,alan
+['ianmacd', 'ruud', 'alan']
+ianmacd,ruud
+ruud,alan
+['ianmacd', 'BrucePerens', 'alan']
+ianmacd,BrucePerens
+BrucePerens,alan
+['ianmacd', 'dsifry', 'davidw']
+ianmacd,dsifry
+dsifry,davidw
+['ianmacd', 'bneely', 'davidw']
+ianmacd,bneely
+bneely,davidw
+['ianmacd', 'mbp', 'davidw']
+ianmacd,mbp
+mbp,davidw
+['ianmacd', 'dhd', 'davidw']
+ianmacd,dhd
+dhd,davidw
+['ianmacd', 'star', 'davidw']
+ianmacd,star
+star,davidw
+['ianmacd', 'davidw']
+ianmacd,davidw
+['ianmacd', 'mperry', 'davidw']
+ianmacd,mperry
+mperry,davidw
+['ianmacd', 'pompeiisneaks', 'davidw']
+ianmacd,pompeiisneaks
+pompeiisneaks,davidw
+['ianmacd', 'dyork', 'davidw']
+ianmacd,dyork
+dyork,davidw
+['ianmacd', 'crackmonkey', 'davidw']
+ianmacd,crackmonkey
+crackmonkey,davidw
+['ianmacd', 'ruud', 'davidw']
+ianmacd,ruud
+ruud,davidw
+['ianmacd', 'dsifry', 'mperry']
+ianmacd,dsifry
+dsifry,mperry
+['ianmacd', 'bneely', 'mperry']
+ianmacd,bneely
+bneely,mperry
+['ianmacd', 'mbp', 'mperry']
+ianmacd,mbp
+mbp,mperry
+['ianmacd', 'hacker', 'mperry']
+ianmacd,hacker
+hacker,mperry
+['ianmacd', 'davidw', 'mperry']
+ianmacd,davidw
+davidw,mperry
+['ianmacd', 'mperry']
+ianmacd,mperry
+['ianmacd', 'dyork', 'mperry']
+ianmacd,dyork
+dyork,mperry
+['ianmacd', 'jimd', 'jkh']
+ianmacd,jimd
+jimd,jkh
+['ianmacd', 'bneely', 'jkh']
+ianmacd,bneely
+bneely,jkh
+['ianmacd', 'grog', 'jkh']
+ianmacd,grog
+grog,jkh
+['ianmacd', 'alan', 'jkh']
+ianmacd,alan
+alan,jkh
+['ianmacd', 'davidw', 'jkh']
+ianmacd,davidw
+davidw,jkh
+['ianmacd', 'jkh']
+ianmacd,jkh
+['ianmacd', 'dsifry', 'Ryan']
+ianmacd,dsifry
+dsifry,Ryan
+['ianmacd', 'jes', 'Ryan']
+ianmacd,jes
+jes,Ryan
+['ianmacd', 'dhd', 'Ryan']
+ianmacd,dhd
+dhd,Ryan
+['ianmacd', 'alan', 'Ryan']
+ianmacd,alan
+alan,Ryan
+['ianmacd', 'Ryan']
+ianmacd,Ryan
+['ianmacd', 'whytheluckystiff']
+ianmacd,whytheluckystiff
+['ianmacd', 'riel', 'corbet']
+ianmacd,riel
+riel,corbet
+['ianmacd', 'bneely', 'corbet']
+ianmacd,bneely
+bneely,corbet
+['ianmacd', 'alan', 'corbet']
+ianmacd,alan
+alan,corbet
+['ianmacd', 'davidw', 'corbet']
+ianmacd,davidw
+davidw,corbet
+['ianmacd', 'corbet']
+ianmacd,corbet
+['ianmacd', 'dyork', 'corbet']
+ianmacd,dyork
+dyork,corbet
+['ianmacd', 'dsifry', 'rasmus']
+ianmacd,dsifry
+dsifry,rasmus
+['ianmacd', 'jimd', 'rasmus']
+ianmacd,jimd
+jimd,rasmus
+['ianmacd', 'elise', 'rasmus']
+ianmacd,elise
+elise,rasmus
+['ianmacd', 'bneely', 'rasmus']
+ianmacd,bneely
+bneely,rasmus
+['ianmacd', 'mbp', 'rasmus']
+ianmacd,mbp
+mbp,rasmus
+['ianmacd', 'jules', 'rasmus']
+ianmacd,jules
+jules,rasmus
+['ianmacd', 'grog', 'rasmus']
+ianmacd,grog
+grog,rasmus
+['ianmacd', 'alan', 'rasmus']
+ianmacd,alan
+alan,rasmus
+['ianmacd', 'davidw', 'rasmus']
+ianmacd,davidw
+davidw,rasmus
+['ianmacd', 'mperry', 'rasmus']
+ianmacd,mperry
+mperry,rasmus
+['ianmacd', 'rasmus']
+ianmacd,rasmus
+['ianmacd', 'dyork', 'rasmus']
+ianmacd,dyork
+dyork,rasmus
+['ianmacd', 'crackmonkey', 'rasmus']
+ianmacd,crackmonkey
+crackmonkey,rasmus
+['ianmacd', 'bneely', 'pompeiisneaks']
+ianmacd,bneely
+bneely,pompeiisneaks
+['ianmacd', 'hacker', 'pompeiisneaks']
+ianmacd,hacker
+hacker,pompeiisneaks
+['ianmacd', 'davidw', 'pompeiisneaks']
+ianmacd,davidw
+davidw,pompeiisneaks
+['ianmacd', 'pompeiisneaks']
+ianmacd,pompeiisneaks
+['ianmacd', 'bneely', 'dyork']
+ianmacd,bneely
+bneely,dyork
+['ianmacd', 'davidw', 'dyork']
+ianmacd,davidw
+davidw,dyork
+['ianmacd', 'mperry', 'dyork']
+ianmacd,mperry
+mperry,dyork
+['ianmacd', 'corbet', 'dyork']
+ianmacd,corbet
+corbet,dyork
+['ianmacd', 'dyork']
+ianmacd,dyork
+['ianmacd', 'riel', 'davem']
+ianmacd,riel
+riel,davem
+['ianmacd', 'jules', 'davem']
+ianmacd,jules
+jules,davem
+['ianmacd', 'alan', 'davem']
+ianmacd,alan
+alan,davem
+['ianmacd', 'davidw', 'davem']
+ianmacd,davidw
+davidw,davem
+['ianmacd', 'davem']
+ianmacd,davem
+['ianmacd', 'ruud', 'davem']
+ianmacd,ruud
+ruud,davem
+['ianmacd', 'BrucePerens', 'davem']
+ianmacd,BrucePerens
+BrucePerens,davem
+['ianmacd', 'scoop']
+ianmacd,scoop
+['ianmacd', 'dsifry', 'crackmonkey']
+ianmacd,dsifry
+dsifry,crackmonkey
+['ianmacd', 'jimd', 'crackmonkey']
+ianmacd,jimd
+jimd,crackmonkey
+['ianmacd', 'elise', 'crackmonkey']
+ianmacd,elise
+elise,crackmonkey
+['ianmacd', 'bneely', 'crackmonkey']
+ianmacd,bneely
+bneely,crackmonkey
+['ianmacd', 'mbp', 'crackmonkey']
+ianmacd,mbp
+mbp,crackmonkey
+['ianmacd', 'dhd', 'crackmonkey']
+ianmacd,dhd
+dhd,crackmonkey
+['ianmacd', 'davidw', 'crackmonkey']
+ianmacd,davidw
+davidw,crackmonkey
+['ianmacd', 'rasmus', 'crackmonkey']
+ianmacd,rasmus
+rasmus,crackmonkey
+['ianmacd', 'dyork', 'crackmonkey']
+ianmacd,dyork
+dyork,crackmonkey
+['ianmacd', 'crackmonkey']
+ianmacd,crackmonkey
+['ianmacd', 'dhd', 'ruud']
+ianmacd,dhd
+dhd,ruud
+['ianmacd', 'davidw', 'ruud']
+ianmacd,davidw
+davidw,ruud
+['ianmacd', 'ruud']
+ianmacd,ruud
+['ianmacd', 'jules', 'BrucePerens']
+ianmacd,jules
+jules,BrucePerens
+['ianmacd', 'alan', 'BrucePerens']
+ianmacd,alan
+alan,BrucePerens
+['ianmacd', 'davidw', 'BrucePerens']
+ianmacd,davidw
+davidw,BrucePerens
+['ianmacd', 'ruud', 'BrucePerens']
+ianmacd,ruud
+ruud,BrucePerens
+['ianmacd', 'BrucePerens']
+ianmacd,BrucePerens
+['jgbillings', 'mako']
+jgbillings,mako
+['jgbillings', 'sussman']
+jgbillings,sussman
+['nospamplease', 'nospampleaser']
+nospamplease,nospampleaser
+['nullspace', 'fejj']
+nullspace,fejj
+['nullspace', 'notzed', 'fejj']
+nullspace,notzed
+notzed,fejj
+['nullspace', 'dobey', 'fejj']
+nullspace,dobey
+dobey,fejj
+['nullspace', 'fejj', 'dto']
+nullspace,fejj
+fejj,dto
+['nullspace', 'dto']
+nullspace,dto
+['nullspace', 'fejj', 'campd']
+nullspace,fejj
+fejj,campd
+['nullspace', 'campd']
+nullspace,campd
+['nullspace', 'notzed', 'campd']
+nullspace,notzed
+notzed,campd
+['nullspace', 'lilo']
+nullspace,lilo
+['nullspace', 'fejj', 'raph']
+nullspace,fejj
+fejj,raph
+['nullspace', 'lilo', 'raph']
+nullspace,lilo
+lilo,raph
+['nullspace', 'raph']
+nullspace,raph
+['nullspace', 'notzed', 'raph']
+nullspace,notzed
+notzed,raph
+['nullspace', 'federico', 'raph']
+nullspace,federico
+federico,raph
+['nullspace', 'lewing', 'raph']
+nullspace,lewing
+lewing,raph
+['nullspace', 'alan', 'raph']
+nullspace,alan
+alan,raph
+['nullspace', 'itp', 'raph']
+nullspace,itp
+itp,raph
+['nullspace', 'avi', 'raph']
+nullspace,avi
+avi,raph
+['nullspace', 'advogato']
+nullspace,advogato
+['nullspace', 'fejj', 'notzed']
+nullspace,fejj
+fejj,notzed
+['nullspace', 'campd', 'notzed']
+nullspace,campd
+campd,notzed
+['nullspace', 'raph', 'notzed']
+nullspace,raph
+raph,notzed
+['nullspace', 'notzed']
+nullspace,notzed
+['nullspace', 'federico', 'notzed']
+nullspace,federico
+federico,notzed
+['nullspace', 'lewing', 'notzed']
+nullspace,lewing
+lewing,notzed
+['nullspace', 'alan', 'notzed']
+nullspace,alan
+alan,notzed
+['nullspace', 'Telsa', 'notzed']
+nullspace,Telsa
+Telsa,notzed
+['nullspace', 'jacob', 'notzed']
+nullspace,jacob
+jacob,notzed
+['nullspace', 'fejj', 'federico']
+nullspace,fejj
+fejj,federico
+['nullspace', 'raph', 'federico']
+nullspace,raph
+raph,federico
+['nullspace', 'notzed', 'federico']
+nullspace,notzed
+notzed,federico
+['nullspace', 'federico']
+nullspace,federico
+['nullspace', 'lewing', 'federico']
+nullspace,lewing
+lewing,federico
+['nullspace', 'alan', 'federico']
+nullspace,alan
+alan,federico
+['nullspace', 'miguel', 'federico']
+nullspace,miguel
+miguel,federico
+['nullspace', 'dobey']
+nullspace,dobey
+['nullspace', 'fejj', 'lewing']
+nullspace,fejj
+fejj,lewing
+['nullspace', 'campd', 'lewing']
+nullspace,campd
+campd,lewing
+['nullspace', 'raph', 'lewing']
+nullspace,raph
+raph,lewing
+['nullspace', 'notzed', 'lewing']
+nullspace,notzed
+notzed,lewing
+['nullspace', 'lewing']
+nullspace,lewing
+['nullspace', 'alan', 'lewing']
+nullspace,alan
+alan,lewing
+['nullspace', 'wsanchez']
+nullspace,wsanchez
+['nullspace', 'campd', 'alan']
+nullspace,campd
+campd,alan
+['nullspace', 'lilo', 'alan']
+nullspace,lilo
+lilo,alan
+['nullspace', 'lewing', 'alan']
+nullspace,lewing
+lewing,alan
+['nullspace', 'alan']
+nullspace,alan
+['nullspace', 'miguel', 'alan']
+nullspace,miguel
+miguel,alan
+['nullspace', 'fejj', 'Telsa']
+nullspace,fejj
+fejj,Telsa
+['nullspace', 'alan', 'Telsa']
+nullspace,alan
+alan,Telsa
+['nullspace', 'Telsa']
+nullspace,Telsa
+['nullspace', 'fejj', 'jacob']
+nullspace,fejj
+fejj,jacob
+['nullspace', 'campd', 'jacob']
+nullspace,campd
+campd,jacob
+['nullspace', 'raph', 'jacob']
+nullspace,raph
+raph,jacob
+['nullspace', 'notzed', 'jacob']
+nullspace,notzed
+notzed,jacob
+['nullspace', 'federico', 'jacob']
+nullspace,federico
+federico,jacob
+['nullspace', 'jacob']
+nullspace,jacob
+['nullspace', 'itp', 'jacob']
+nullspace,itp
+itp,jacob
+['nullspace', 'fejj', 'miguel']
+nullspace,fejj
+fejj,miguel
+['nullspace', 'campd', 'miguel']
+nullspace,campd
+campd,miguel
+['nullspace', 'lilo', 'miguel']
+nullspace,lilo
+lilo,miguel
+['nullspace', 'raph', 'miguel']
+nullspace,raph
+raph,miguel
+['nullspace', 'notzed', 'miguel']
+nullspace,notzed
+notzed,miguel
+['nullspace', 'federico', 'miguel']
+nullspace,federico
+federico,miguel
+['nullspace', 'lewing', 'miguel']
+nullspace,lewing
+lewing,miguel
+['nullspace', 'wsanchez', 'miguel']
+nullspace,wsanchez
+wsanchez,miguel
+['nullspace', 'alan', 'miguel']
+nullspace,alan
+alan,miguel
+['nullspace', 'miguel']
+nullspace,miguel
+['nullspace', 'itp', 'miguel']
+nullspace,itp
+itp,miguel
+['nullspace', 'igspectre']
+nullspace,igspectre
+['nullspace', 'fejj', 'itp']
+nullspace,fejj
+fejj,itp
+['nullspace', 'jacob', 'itp']
+nullspace,jacob
+jacob,itp
+['nullspace', 'itp']
+nullspace,itp
+['nullspace', 'avi']
+nullspace,avi
+['bitstream', 'vektor']
+bitstream,vektor
+['ngel', '4']
+ngel,4
