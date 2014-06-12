@@ -107,11 +107,12 @@ def TVSLTran(trust):     #transfer edge attribute to opinion
 # G - the DiGraph of the population, edge weights representing trust levels
 # src - source node
 # tgt - destination node
-# MaxHop - maximum path length (from src to tgt)
+# MaxHop - maximum path length (from src to tgt) TO IGNORE PATHS THAT ARE TOO LONG...?
+# preHop - NOT SURE??? ITERATOR/HOP COUNT???
 def TVSLAlgr(G, src, tgt, MaxHop, preHop):     #assess trust algr
     curHop = preHop + 1
     if curHop > MaxHop:    #check whether maxhop has been reached, if so, return numb
-        return [-1, -1,-1,-1]
+        return [-1, -1,-1,-1]   # how does this 
     
     nlist = G.neighbors(src)     #check the edges connected to current node
     if len(nlist) == 1:    #if there is only one edge, take it as original opinion and proceed forward. 
