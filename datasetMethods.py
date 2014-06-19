@@ -43,7 +43,25 @@ def readCleanDotFile():
 	global subApprenticeDG
 	global subObserverDG
 	
-	DG = nx.DiGraph(nx.read_dot('CLEAN-advogato-graph-latest.dot'))
+	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+
+	print "number of nodes %d" %DG.number_of_nodes()
+	print "number of edges %d" %DG.number_of_edges()
+	print ""
+	
+	#remove all of the self loop edges
+	DG.remove_edges_from(DG.selfloop_edges())
+	#remove all nodes with no incoming edges
+
+	toRemove = []
+	for node in DG:
+		if DG.in_degree(node) == 0 and DG.out_degree(node) == 0:
+			toRemove.append(node)
+	DG.remove_nodes_from(toRemove)
+
+	print "number of nodes %d" %DG.number_of_nodes()
+	print "number of edges %d" %DG.number_of_edges()
+
 	levels = nx.get_edge_attributes(DG,'level')
 
 	#sorts the edges into different graphs based on their levels for display purposes
@@ -201,10 +219,10 @@ def makeDegreeDistribution():
 readCleanDotFile()
 
 #calls DFS search to get 4 distribution data files
-distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
-distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
-distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
-distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
+#distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
+#distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
+#distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
+#distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
 #distWrite(makeDegreeDistribution(), "degree_distribution.txt")
 
 #drawSubgraphs()

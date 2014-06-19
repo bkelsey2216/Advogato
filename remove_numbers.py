@@ -24,22 +24,6 @@ def removeNumbers():
 		line = string.replace(line, "9","nine")
 		o.write(line)
 
-
-##This function creates a graph of the latest advogato dataset
-##and outputs a new .dot file with the loops and unconnected nodes
-##removed from the original .dot file
-def makeCleanDOT():
-	G = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
-	nodeList = G.nodes()
-	for node in nodeList:
-		if G.has_edge(node, node):
-			G.remove_edge(node, node)
-			neighborsList = G.neighbors(node)
-			if len(neighborsList) == 0:
-				G.remove_node(node)
-	nx.write_dot(G, 'CLEAN-advogato-graph-latest.dot')
-
 removeNumbers()
-makeCleanDOT()
 
 
