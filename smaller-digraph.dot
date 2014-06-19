@@ -1,0 +1,5 @@
+digraph G {
+	a -> b [level = "Jorneyer"];
+	a -> c [level = "Master"];
+	c -> b [level = "Apprentice"];
+}

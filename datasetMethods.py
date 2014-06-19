@@ -118,7 +118,7 @@ def findAllPathsAtoB(source, destination):
 #each position in the array represents the number of nodes which can reach this many
 #other nodes
 #For example statsArray[5] == 50 indicates that there are 50 nodes that can reach exactly 5 other nodes
-def makeDistribution(numHops):
+def makeReachableDistribution(numHops):
 	statsArray = []
 	for i in range (0,len(DG.nodes())):
 		statsArray.append(0)
@@ -185,15 +185,31 @@ def distWrite(distArray, filename):
 
 	outFile.close()
 
+def makeDegreeDistribution():
+	statsArray = []
+	for i in range (0,len(DG.nodes())):
+		statsArray.append(0)
+
+	# DG.in_degree returns a dictionary with the nodes as
+	# keys and in degrees as values
+	for node in DG:		
+		statsArray[DG.in_degree(node)] += 1
+
+	##prints the first 50 items of stats array -- uncomment to check our algorithm output
+	print statsArray[0:50]
+	return statsArray
+
+
 readCleanDotFile()
 
 #calls DFS search to get 4 distribution data files
-distWrite(makeDistribution(1), "distribution1.txt")
-distWrite(makeDistribution(2), "distribution2.txt")
-distWrite(makeDistribution(3), "distribution3.txt")
-distWrite(makeDistribution(4), "distribution4.txt")
+#distWrite(makeReachableDistribution(1), "distribution1.txt")
+#distWrite(makeReachableDistribution(2), "distribution2.txt")
+#distWrite(makeReachableDistribution(3), "distribution3.txt")
+#distWrite(makeReachableDistribution(4), "distribution4.txt")
+distWrite(makeDegreeDistribution(), "degree_distribution.txt")
 
-drawSubgraphs()
+#drawSubgraphs()
 
 
 

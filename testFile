@@ -1,2 +1,9 @@
-['aegis', 'scc']
-aegis,scc
+['a', 'c']
+a,c
+['a', 'c', 'b']
+a,c
+c,b
+['a', 'b']
+a,b
+['c', 'b']
+c,b

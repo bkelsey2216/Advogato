@@ -29,7 +29,7 @@ def removeNumbers():
 ##and outputs a new .dot file with the loops and unconnected nodes
 ##removed from the original .dot file
 def makeCleanDOT():
-	G = nx.DiGraph(nx.read_dot('temp-fixed-numbers.dot'))
+	G = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
 	nodeList = G.nodes()
 	for node in nodeList:
 		if G.has_edge(node, node):

@@ -12,7 +12,7 @@ from TVSL3 import comb #combining operation
 #This code removes numerical values from the .dot file because 
 #the networkx read_dot method does not play well with numerical values
 def removeNumbers():
-    f = open('advogato-graph-latest.dot', 'r')
+    f = open('smaller-digraph.dot', 'r')
     o = open('advogato-fixed-numbers.dot', 'w')
 
     for line in f:
@@ -41,8 +41,10 @@ rdfpre = 'advogato-fixed-numbers.dot'   # data set
 G=nx.DiGraph(nx.read_dot(rdfpre))
 
 nnum = len(G.nodes())
+print "number of nodes"
 print(nnum)
 enum = len(G.edges())
+print "number of edges"
 print(enum)
 
 G.remove_edges_from(G.selfloop_edges())
@@ -58,7 +60,7 @@ elist = G.edges()      #find those edges
 G_int = nx.convert_node_labels_to_integers(G,label_attribute='old_name')  #transfer node names to numbers
 intnlist = G_int.nodes()
 
-for e in elist[0:1]:
+for e in elist:
     Gmini=nx.DiGraph()     #initiate a mini subgraph
 
 #Now begin to calculate paths from src to dst 
@@ -79,11 +81,13 @@ for e in elist[0:1]:
         
         #transfer edge attributes of 1 hop ground truth to opinion
         curHop = 0
+        print "e1 %s" %e[1]
+        print "e2 %s" %e[0]
         finalOpn =  TVSLAlgr(GminiR, e[1], e[0], MaxHop, curHop)   #run assess trust on the subgraph to get computational opinion 
              
-        if TVSLExp(finalOpn) > 0:
+        if TVSLExp(finalOpn) > 0 or TVSLExp(finalOpn)<=0:
             print TVSLExp(finalOpn)
-            print edgeCount
+            print "enum: %d" %Enum
             for n in intnlist:
                 if G_int.node[n]['old_name'] == e[0]:
                     e_num_0 = n
