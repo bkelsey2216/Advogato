@@ -190,8 +190,6 @@ def makeDegreeDistribution():
 	for i in range (0,len(DG.nodes())):
 		statsArray.append(0)
 
-	# DG.in_degree returns a dictionary with the nodes as
-	# keys and in degrees as values
 	for node in DG:		
 		statsArray[DG.in_degree(node)] += 1
 
@@ -203,11 +201,11 @@ def makeDegreeDistribution():
 readCleanDotFile()
 
 #calls DFS search to get 4 distribution data files
-#distWrite(makeReachableDistribution(1), "distribution1.txt")
-#distWrite(makeReachableDistribution(2), "distribution2.txt")
-#distWrite(makeReachableDistribution(3), "distribution3.txt")
-#distWrite(makeReachableDistribution(4), "distribution4.txt")
-distWrite(makeDegreeDistribution(), "degree_distribution.txt")
+distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
+distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
+distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
+distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
+#distWrite(makeDegreeDistribution(), "degree_distribution.txt")
 
 #drawSubgraphs()
 
