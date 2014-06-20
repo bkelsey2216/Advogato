@@ -3,6 +3,7 @@
 import networkx as nx
 import pygraphviz
 import matplotlib.pyplot as plt
+from collections import defaultdict
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import TVSLExp #compute expected belief
@@ -241,27 +242,35 @@ def getNodesYInDegree(inDegree):
 
 def computePublicOpinion(numHops, userList):
 
-	pubOpnDict = {}
+	pubOpnDict = defaultdict(list)
 
 	for node in userList:
 		print "getting reachables"
 		trustorNodes = []
 		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
+
 		print len(trustorNodes)
+
+		trustorNodes.append(node)
+		pubOpnDG = DG.subgraph(trustorNodes)
 		opnMatrix = []
-		for trustor in trustorNodes:
+		for trustor in pubOpnDG:
 			print "TVSL loop"
-			finalOpn = TVSLAlgr(DG, node, trustor, 3, 0)
+			finalOpn = TVSLAlgr(pubOpnDG, node, trustor, numHops, 0)
 			opnMatrix.append(finalOpn)
 
 		publicOpn = opnMatrix[0]
 		for i in range(1, len(opnMatrix)):
 			publicOpn = comb(publicOpn, opnMatrix[i])
+		
+		for x in publicOpn:
+			pubOpnDict[node].append(x)
 
-		pubOpnDict = {node, publicOpn}
+		pubOpnDict.items()
 		print publicOpn
 
+	print pubOpnDict.has_key('acme')
 	return pubOpnDict
 
 
