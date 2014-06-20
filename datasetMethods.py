@@ -3,6 +3,10 @@
 import networkx as nx
 import pygraphviz
 import matplotlib.pyplot as plt
+from TVSL3 import TVSLTran #transfer edge attributes to opinion
+from TVSL3 import TVSLAlgr #trust assess algr
+from TVSL3 import TVSLExp #compute expected belief
+from TVSL3 import comb #combining operation
 
 # global variables
 DG = nx.DiGraph()
@@ -182,6 +186,16 @@ def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables,
 			listOfReachables.append(n)
 			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
 
+def getSourcesUsingDestInNHops(numberOfHops, currentDepth, listOfReachers, destination):
+	if currentDepth == numberOfHops:
+		return listOfReachers
+
+	for n in DG.predecessors(destination):
+		if not n in listOfReachers:
+			listOfReachers.append(n)
+			getSourcesUsingDestInNHops(numberOfHops, currentDepth+1, listOfReachers, n)
+
+
 ##distWrite creates a file with the given filename and writes
 ##one element of the given array into one line of the file. These
 ##files will be used to create data vectors for a distribution.
@@ -209,15 +223,60 @@ def makeDegreeDistribution():
 	print statsArray[0:50]
 	return statsArray
 
+def getNodesXInDegree(inDegree):
+	nodeList = []
+	for node in DG:
+		if DG.in_degree(node) >= inDegree:
+			nodeList.append(node)
+
+	return nodeList
+
+def getNodesYInDegree(inDegree):
+	nodeList = []
+	for node in DG:
+		if DG.in_degree(node) <= inDegree:
+			nodeList.append(node)
+
+	return nodeList
+
+def computePublicOpinion(numHops, userList):
+
+	pubOpnDict = {}
+
+	for node in userList:
+		print "getting reachables"
+		trustorNodes = []
+		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
+
+		print len(trustorNodes)
+		opnMatrix = []
+		for trustor in trustorNodes:
+			print "TVSL loop"
+			finalOpn = TVSLAlgr(DG, node, trustor, 3, 0)
+			opnMatrix.append(finalOpn)
+
+		publicOpn = opnMatrix[0]
+		for i in range(1, len(opnMatrix)):
+			publicOpn = comb(publicOpn, opnMatrix[i])
+
+		pubOpnDict = {node, publicOpn}
+		print publicOpn
+
+	return pubOpnDict
+
 
 readCleanDotFile()
 
+users = getNodesXInDegree(100)
+print "after x degree"
+computePublicOpinion(1, users)
+
 #calls DFS search to get 4 distribution data files
-distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
-distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
-distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
-distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
-distWrite(makeDegreeDistribution(), "degree_distribution.txt")
+# distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
+# distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
+# distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
+# distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
+# distWrite(makeDegreeDistribution(), "degree_distribution.txt")
 
 #drawSubgraphs()
 
