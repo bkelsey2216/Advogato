@@ -245,18 +245,13 @@ def computePublicOpinion(numHops, userList):
 	pubOpnDict = defaultdict(list)
 
 	for node in userList:
-		print "getting reachables"
 		trustorNodes = []
 		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
-
-
-		print len(trustorNodes)
 
 		trustorNodes.append(node)
 		pubOpnDG = DG.subgraph(trustorNodes)
 		opnMatrix = []
 		for trustor in pubOpnDG:
-			print "TVSL loop"
 			finalOpn = TVSLAlgr(pubOpnDG, node, trustor, numHops, 0)
 			opnMatrix.append(finalOpn)
 
@@ -270,7 +265,6 @@ def computePublicOpinion(numHops, userList):
 		pubOpnDict.items()
 		print publicOpn
 
-	print pubOpnDict.has_key('acme')
 	return pubOpnDict
 
 
