@@ -143,7 +143,7 @@ def makeReachableDistribution(numHops):
 
 	for node in DG.nodes():
 		listOfReachables = []
-		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node, DG)
+		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 		numberOfNodesReachable = len(listOfReachables)
 
 		statsArray[numberOfNodesReachable] += 1
@@ -159,7 +159,7 @@ def makeReachableDistribution(numHops):
 def testReachableInNHops(numHops, node):
 
 	listOfReachables = []
-	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node, DG)
+	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
 	print listOfReachables
@@ -179,15 +179,23 @@ def testReachableInNHops(numHops, node):
 #specified distance of the specified node to the listOfReachables
 #current depth should be set to zero
 #listOfReachables should be an empty list
-def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node, graph):
+def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
 	if currentDepth == numberOfHops:
 		return listOfReachables
 	
 	for n in DG.neighbors(node):
 		if not n in listOfReachables:
 			listOfReachables.append(n)
-			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n, graph)
+			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
 
+def getSourcesUsingDestInNHops(numberOfHops, currentDepth, listOfReachers, destination):
+	if currentDepth == numberOfHops:
+		return listOfReachers
+
+	for n in DG.predecessors(destination):
+		if not n in listOfReachers:
+			listOfReachers.append(n)
+			getSourcesUsingDestInNHops(numberOfHops, currentDepth+1, listOfReachers, n)
 
 
 ##distWrite creates a file with the given filename and writes
@@ -233,54 +241,45 @@ def getNodesYInDegree(inDegree):
 
 	return nodeList
 
-# Computes the public opinion of every node in DG in userList using the
-# opinions of nodes within numHops
-# Returns a dictionary of public onpinions where the node is the key and 
-# a four valued vector containing the public opinion is the value
 def computePublicOpinion(numHops, userList):
-	# The dictionary of opinions to be returned
 	pubOpnDict = defaultdict(list)
-	reverseDG = DG.reverse()
 
 	for node in userList:
 		trustorNodes = []
-		publicOpinion = []
+		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
+		pubOpnDG = nx.DiGraph()
 
-		# get all the nodes within numHops who have rated this node and
-		# saves list in trustorNodes
-		getListOfNodesReachableInNHops(numHops, 0, trustorNodes, node, reverseDG)
-
-		for trustor in trustorNodes:
-			pubOpnDG = nx.DiGraph()			
-			currentOpinion = []			
-			path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
+		for i in trustorNodes:
+			path = nx.all_simple_paths(DG, source=i, target=node, cutoff=numHops)
 			levels = nx.get_edge_attributes(DG, 'level')
 
 			for p in path:
-				pubOpnDG.add_edge(trustor, node, level=levels[(p[0], p[1])])
+				pubOpnDG.add_edge(i, node, level=levels[(p[0], p[1])])
+
+		trustorNodes.append(node)
+		opnMatrix = []
+
+		for trustor in trustorNodes:
+			if trustor != node:
+				finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+				opnMatrix.append(finalOpn)
+
+			publicOpn = opnMatrix[0]
+			for i in range(1, len(opnMatrix)):
+				publicOpn = comb(publicOpn, opnMatrix[i])
 			
-			currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+			for x in publicOpn:
+				pubOpnDict[node].append(x)
 
-			#combine the current opinion with the previous public opinion to 
-			#create a new public opinion
-			if len(publicOpinion) != 0:
-				publicOpinion = comb(publicOpinion, currentOpinion)
-			else:
-				publicOpinion = currentOpinion
-	
-		#pubOpnDict[node] = publicOpinion
-
+		pubOpnDict.items()
 		print node
-		print publicOpinion
+		print publicOpn
 
-	#print pubOpnDict.items()
-	#return pubOpnDict
+	return pubOpnDict
 
 
 readCleanDotFile()
 users = getNodesXInDegree(100)
-#users = DG.nodes()
-print users
 computePublicOpinion(1, users)
 
 #calls DFS search to get 4 distribution data files
