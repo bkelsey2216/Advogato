@@ -241,6 +241,13 @@ def getNodesYInDegree(inDegree):
 
 	return nodeList
 
+
+def computePublicOpinion2(numberOfHops, userList):
+	pubOpnDict = defaultdict(list)
+	rDG = DG.reverse()
+
+	get
+
 def computePublicOpinion(numHops, userList):
 	pubOpnDict = defaultdict(list)
 
@@ -274,10 +281,19 @@ def computePublicOpinion(numHops, userList):
 
 	return pubOpnDict
 
+def getAOpinionOfB(A,B):
+	op = TVSLAlgr(DG, A, B, 3, 0)
+	print op
+	print TVSLExp(op)
 
 readCleanDotFile()
-users = getNodesXInDegree(2)
-computePublicOpinion(2, users)
+#users = getNodesXInDegree(2)
+#computePublicOpinion(2, users)
+
+print "going from " + DG.nodes()[0] +  " to " + DG.nodes()[1]
+
+getAOpinionOfB(DG.nodes()[0],DG.nodes()[1])
+
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")

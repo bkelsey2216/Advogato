@@ -5,9 +5,9 @@ digraph G {
    C -> D [level="Apprentice"];
    E -> A [level = "Master"];
    D -> A [level = "Journeyer"];
-   /*A -> D [level = "Master"];*/
-   /*J -> C [level = "Apprentice"];*/
-   /*K -> J [level = "Journeyer"];*/
+   A -> D [level = "Master"];
+   J -> C [level = "Apprentice"];
+   K -> J [level = "Journeyer"];
    B -> C [level = "Master"];
 
 }

@@ -83,7 +83,7 @@ for e in elist:
         curHop = 0
         finalOpn =  TVSLAlgr(GminiR, e[1], e[0], MaxHop, curHop)   #run assess trust on the subgraph to get computational opinion 
         print finalOpn
-        if TVSLExp(finalOpn) > 0 or TVSLExp(finalOpn)<=0:
+        if TVSLExp(finalOpn) > 0:
             for n in intnlist:
                 if G_int.node[n]['old_name'] == e[0]:
                     e_num_0 = n

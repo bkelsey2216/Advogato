@@ -113,8 +113,6 @@ def TVSLTran(trust):     #transfer edge attribute to opinion
 def TVSLAlgr(G, src, tgt, MaxHop, preHop):     #assess trust algr
     curHop = preHop + 1
     if curHop > MaxHop:    #check whether maxhop has been reached, if so, return numb
-        #remove:
-        print "negatives in curHop > MaxHop: " + src + " " + tgt
         return [-1, -1,-1,-1]   # how does this 
     
     nlist = G.neighbors(src)     #check the edges connected to current node
