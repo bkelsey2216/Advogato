@@ -143,7 +143,7 @@ def makeReachableDistribution(numHops):
 
 	for node in DG.nodes():
 		listOfReachables = []
-		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
+		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node, DG)
 		numberOfNodesReachable = len(listOfReachables)
 
 		statsArray[numberOfNodesReachable] += 1
@@ -159,7 +159,7 @@ def makeReachableDistribution(numHops):
 def testReachableInNHops(numHops, node):
 
 	listOfReachables = []
-	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
+	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node, DG)
 
 	print "The nodes reachable within %d hops of %s" %(numHops, node)
 	print listOfReachables
@@ -179,23 +179,15 @@ def testReachableInNHops(numHops, node):
 #specified distance of the specified node to the listOfReachables
 #current depth should be set to zero
 #listOfReachables should be an empty list
-def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
+def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node, graph):
 	if currentDepth == numberOfHops:
 		return listOfReachables
 	
 	for n in DG.neighbors(node):
 		if not n in listOfReachables:
 			listOfReachables.append(n)
-			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
+			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n, graph)
 
-def getSourcesUsingDestInNHops(numberOfHops, currentDepth, listOfReachers, destination):
-	if currentDepth == numberOfHops:
-		return listOfReachers
-
-	for n in DG.predecessors(destination):
-		if not n in listOfReachers:
-			listOfReachers.append(n)
-			getSourcesUsingDestInNHops(numberOfHops, currentDepth+1, listOfReachers, n)
 
 
 ##distWrite creates a file with the given filename and writes
@@ -248,51 +240,47 @@ def getNodesYInDegree(inDegree):
 def computePublicOpinion(numHops, userList):
 	# The dictionary of opinions to be returned
 	pubOpnDict = defaultdict(list)
+	reverseDG = DG.reverse()
 
 	for node in userList:
 		trustorNodes = []
-		opnMatrix = []
+		publicOpinion = []
 
-		#get all the nodes within numHops who have rated this node
-		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
-		pubOpnDG = nx.DiGraph()
+		# get all the nodes within numHops who have rated this node and
+		# saves list in trustorNodes
+		getListOfNodesReachableInNHops(numHops, 0, trustorNodes, node, reverseDG)
 
 		for trustor in trustorNodes:
+			pubOpnDG = nx.DiGraph()			
+			currentOpinion = []			
 			path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
 			levels = nx.get_edge_attributes(DG, 'level')
 
-			for edge in path:
-				pubOpnDG.add_edge(trustor, node, level=levels[(edge[0], edge[1])])
+			for p in path:
+				pubOpnDG.add_edge(trustor, node, level=levels[(p[0], p[1])])
+			
+			currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
 
-
-		#so now we have trustorNodes filled will all the nodes w/in 3 hops
-		#and pubOpnDG filled will all the edges which create simple paths
-		#of 3 hops or less from everything in trustorNodes to node
-
-		#for trustor in trustorNodes:
-			finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
-			opnMatrix.append(finalOpn)
-
-		# opnMatrix is now filled with everybody's opinions of node
-
-		#so we combine them all
-		publicOpn = opnMatrix[0]
-		for i in range(1, len(opnMatrix)):
-			publicOpn = comb(publicOpn, opnMatrix[i])
-		
-		pubOpnDict[node] = publicOpn
+			#combine the current opinion with the previous public opinion to 
+			#create a new public opinion
+			if len(publicOpinion) != 0:
+				publicOpinion = comb(publicOpinion, currentOpinion)
+			else:
+				publicOpinion = currentOpinion
+	
+		#pubOpnDict[node] = publicOpinion
 
 		print node
-		print publicOpn
+		print publicOpinion
 
-	print pubOpnDict
-
-
-	return pubOpnDict
+	#print pubOpnDict.items()
+	#return pubOpnDict
 
 
 readCleanDotFile()
 users = getNodesXInDegree(100)
+#users = DG.nodes()
+print users
 computePublicOpinion(1, users)
 
 #calls DFS search to get 4 distribution data files
