@@ -1,0 +1,320 @@
+['aegis', 'scc']
+aegis,scc
+['fixxxer', 'gwolf']
+fixxxer,gwolf
+['bkkx', 'zhp']
+bkkx,zhp
+['bytestwofivesix', 'Akira']
+bytestwofivesix,Akira
+['pkiforum', 'digitect']
+pkiforum,digitect
+['pkiforum', 'rachel']
+pkiforum,rachel
+['pkiforum', 'eckes']
+pkiforum,eckes
+['pkiforum', 'aleksey']
+pkiforum,aleksey
+['pkiforum', 'sponge']
+pkiforum,sponge
+['pkiforum', 'raph']
+pkiforum,raph
+['pkiforum', 'ottawaDave']
+pkiforum,ottawaDave
+['pkiforum', 'zoke']
+pkiforum,zoke
+['pkiforum', 'rkarl']
+pkiforum,rkarl
+['superant', 'ariya']
+superant,ariya
+['superant', 'fxn', 'ariya']
+superant,fxn
+fxn,ariya
+['superant', 'mascot', 'ariya']
+superant,mascot
+mascot,ariya
+['superant', 'jLoki', 'ariya']
+superant,jLoki
+jLoki,ariya
+['superant', 'mattbradshaw', 'ariya']
+superant,mattbradshaw
+mattbradshaw,ariya
+['superant', 'superuser']
+superant,superuser
+['superant', 'fxn', 'superuser']
+superant,fxn
+fxn,superuser
+['superant', 'xcyber', 'superuser']
+superant,xcyber
+xcyber,superuser
+['superant', 'neoneye']
+superant,neoneye
+['superant', 'whytheluckystiff', 'neoneye']
+superant,whytheluckystiff
+whytheluckystiff,neoneye
+['superant', 'mirwin']
+superant,mirwin
+['superant', 'redowl', 'mirwin']
+superant,redowl
+redowl,mirwin
+['superant', 'csm', 'mirwin']
+superant,csm
+csm,mirwin
+['superant', 'jao', 'mirwin']
+superant,jao
+jao,mirwin
+['superant', 'fxn', 'mirwin']
+superant,fxn
+fxn,mirwin
+['superant', 'jLoki', 'mirwin']
+superant,jLoki
+jLoki,mirwin
+['superant', 'chipxeightsix', 'mirwin']
+superant,chipxeightsix
+chipxeightsix,mirwin
+['superant', 'mirwin', 'aerosixdof']
+superant,mirwin
+mirwin,aerosixdof
+['superant', 'aerosixdof']
+superant,aerosixdof
+['superant', 'rupert', 'aerosixdof']
+superant,rupert
+rupert,aerosixdof
+['superant', 'whytheluckystiff', 'aerosixdof']
+superant,whytheluckystiff
+whytheluckystiff,aerosixdof
+['superant', 'yosh']
+superant,yosh
+['superant', 'proski', 'yosh']
+superant,proski
+proski,yosh
+['superant', 'beppu', 'yosh']
+superant,beppu
+beppu,yosh
+['superant', 'cinamod', 'yosh']
+superant,cinamod
+cinamod,yosh
+['superant', 'xcyber', 'yosh']
+superant,xcyber
+xcyber,yosh
+['superant', 'jLoki', 'yosh']
+superant,jLoki
+jLoki,yosh
+['superant', 'weasel']
+superant,weasel
+['superant', 'khazad', 'weasel']
+superant,khazad
+khazad,weasel
+['superant', 'proski']
+superant,proski
+['superant', 'fxn', 'proski']
+superant,fxn
+fxn,proski
+['superant', 'fuzzyping', 'proski']
+superant,fuzzyping
+fuzzyping,proski
+['superant', 'mirwin', 'redowl']
+superant,mirwin
+mirwin,redowl
+['superant', 'redowl']
+superant,redowl
+['superant', 'jao', 'redowl']
+superant,jao
+jao,redowl
+['superant', 'fxn', 'redowl']
+superant,fxn
+fxn,redowl
+['superant', 'mirwin', 'rupert']
+superant,mirwin
+mirwin,rupert
+['superant', 'rupert']
+superant,rupert
+['superant', 'csm', 'rupert']
+superant,csm
+csm,rupert
+['superant', 'fxn', 'rupert']
+superant,fxn
+fxn,rupert
+['superant', 'chipxeightsix', 'rupert']
+superant,chipxeightsix
+chipxeightsix,rupert
+['superant', 'async', 'rupert']
+superant,async
+async,rupert
+['superant', 'proski', 'andersee']
+superant,proski
+proski,andersee
+['superant', 'andersee']
+superant,andersee
+['superant', 'taj']
+superant,taj
+['superant', 'fxn', 'taj']
+superant,fxn
+fxn,taj
+['superant', 'jLoki', 'taj']
+superant,jLoki
+jLoki,taj
+['superant', 'mirwin', 'csm']
+superant,mirwin
+mirwin,csm
+['superant', 'csm']
+superant,csm
+['superant', 'jao', 'csm']
+superant,jao
+jao,csm
+['superant', 'fxn', 'csm']
+superant,fxn
+fxn,csm
+['superant', 'kgb', 'csm']
+superant,kgb
+kgb,csm
+['superant', 'chipxeightsix', 'csm']
+superant,chipxeightsix
+chipxeightsix,csm
+['superant', 'async', 'csm']
+superant,async
+async,csm
+['superant', 'yosh', 'beppu']
+superant,yosh
+yosh,beppu
+['superant', 'andersee', 'beppu']
+superant,andersee
+andersee,beppu
+['superant', 'beppu']
+superant,beppu
+['superant', 'hship']
+superant,hship
+['superant', 'jao', 'hship']
+superant,jao
+jao,hship
+['superant', 'fxn', 'hship']
+superant,fxn
+fxn,hship
+['superant', 'jLoki', 'hship']
+superant,jLoki
+jLoki,hship
+['superant', 'mirwin', 'MichaelCrawford']
+superant,mirwin
+mirwin,MichaelCrawford
+['superant', 'aerosixdof', 'MichaelCrawford']
+superant,aerosixdof
+aerosixdof,MichaelCrawford
+['superant', 'MichaelCrawford']
+superant,MichaelCrawford
+['superant', 'fxn', 'MichaelCrawford']
+superant,fxn
+fxn,MichaelCrawford
+['superant', 'robocoder', 'MichaelCrawford']
+superant,robocoder
+robocoder,MichaelCrawford
+['superant', 'mascot', 'MichaelCrawford']
+superant,mascot
+mascot,MichaelCrawford
+['superant', 'jLoki', 'MichaelCrawford']
+superant,jLoki
+jLoki,MichaelCrawford
+['superant', 'mirwin', 'brouhaha']
+superant,mirwin
+mirwin,brouhaha
+['superant', 'brouhaha']
+superant,brouhaha
+['superant', 'fxn', 'brouhaha']
+superant,fxn
+fxn,brouhaha
+['superant', 'jarod']
+superant,jarod
+['superant', 'jao', 'jarod']
+superant,jao
+jao,jarod
+['superant', 'khazad', 'jarod']
+superant,khazad
+khazad,jarod
+['superant', 'mascot', 'jarod']
+superant,mascot
+mascot,jarod
+['superant', 'neoneye', 'tcopeland']
+superant,neoneye
+neoneye,tcopeland
+['superant', 'tcopeland']
+superant,tcopeland
+['superant', 'whytheluckystiff', 'tcopeland']
+superant,whytheluckystiff
+whytheluckystiff,tcopeland
+['superant', 'ade', 'tcopeland']
+superant,ade
+ade,tcopeland
+['superant', 'nicku']
+superant,nicku
+['superant', 'mirwin', 'jao']
+superant,mirwin
+mirwin,jao
+['superant', 'redowl', 'jao']
+superant,redowl
+redowl,jao
+['superant', 'jao']
+superant,jao
+['superant', 'fxn', 'jao']
+superant,fxn
+fxn,jao
+['superant', 'khazad', 'jao']
+superant,khazad
+khazad,jao
+['superant', 'mascot', 'jao']
+superant,mascot
+mascot,jao
+['superant', 'ariya', 'fxn']
+superant,ariya
+ariya,fxn
+['superant', 'mirwin', 'fxn']
+superant,mirwin
+mirwin,fxn
+['superant', 'redowl', 'fxn']
+superant,redowl
+redowl,fxn
+['superant', 'rupert', 'fxn']
+superant,rupert
+rupert,fxn
+['superant', 'MichaelCrawford', 'fxn']
+superant,MichaelCrawford
+MichaelCrawford,fxn
+['superant', 'brouhaha', 'fxn']
+superant,brouhaha
+brouhaha,fxn
+['superant', 'jao', 'fxn']
+superant,jao
+jao,fxn
+['superant', 'fxn']
+superant,fxn
+['superant', 'fuzzyping', 'fxn']
+superant,fuzzyping
+fuzzyping,fxn
+['superant', 'whytheluckystiff', 'fxn']
+superant,whytheluckystiff
+whytheluckystiff,fxn
+['superant', 'mascot', 'fxn']
+superant,mascot
+mascot,fxn
+['superant', 'xcyber', 'fxn']
+superant,xcyber
+xcyber,fxn
+['superant', 'jLoki', 'fxn']
+superant,jLoki
+jLoki,fxn
+['superant', 'chipxeightsix', 'fxn']
+superant,chipxeightsix
+chipxeightsix,fxn
+['superant', 'fzort', 'fxn']
+superant,fzort
+fzort,fxn
+['superant', 'esteve', 'fxn']
+superant,esteve
+esteve,fxn
+['superant', 'vtamara']
+superant,vtamara
+['superant', 'uweo', 'vtamara']
+superant,uweo
+uweo,vtamara
+['superant', 'vtamara', 'uweo']
+superant,vtamara
+vtamara,uweo
+['superant', 'uweo']
+superant,uweo
