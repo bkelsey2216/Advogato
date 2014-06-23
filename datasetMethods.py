@@ -241,39 +241,52 @@ def getNodesYInDegree(inDegree):
 
 	return nodeList
 
+# Computes the public opinion of every node in DG in userList using the
+# opinions of nodes within numHops
+# Returns a dictionary of public onpinions where the node is the key and 
+# a four valued vector containing the public opinion is the value
 def computePublicOpinion(numHops, userList):
+	# The dictionary of opinions to be returned
 	pubOpnDict = defaultdict(list)
 
 	for node in userList:
 		trustorNodes = []
+		opnMatrix = []
+
+		#get all the nodes within numHops who have rated this node
 		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 		pubOpnDG = nx.DiGraph()
 
-		for i in trustorNodes:
-			path = nx.all_simple_paths(DG, source=i, target=node, cutoff=numHops)
+		for trustor in trustorNodes:
+			path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
 			levels = nx.get_edge_attributes(DG, 'level')
 
-			for p in path:
-				pubOpnDG.add_edge(i, node, level=levels[(p[0], p[1])])
+			for edge in path:
+				pubOpnDG.add_edge(trustor, node, level=levels[(edge[0], edge[1])])
 
-		trustorNodes.append(node)
-		opnMatrix = []
 
-		for trustor in trustorNodes:
-			if trustor != node:
-				finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
-				opnMatrix.append(finalOpn)
+		#so now we have trustorNodes filled will all the nodes w/in 3 hops
+		#and pubOpnDG filled will all the edges which create simple paths
+		#of 3 hops or less from everything in trustorNodes to node
 
-			publicOpn = opnMatrix[0]
-			for i in range(1, len(opnMatrix)):
-				publicOpn = comb(publicOpn, opnMatrix[i])
-			
-			for x in publicOpn:
-				pubOpnDict[node].append(x)
+		#for trustor in trustorNodes:
+			finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+			opnMatrix.append(finalOpn)
 
-		pubOpnDict.items()
+		# opnMatrix is now filled with everybody's opinions of node
+
+		#so we combine them all
+		publicOpn = opnMatrix[0]
+		for i in range(1, len(opnMatrix)):
+			publicOpn = comb(publicOpn, opnMatrix[i])
+		
+		pubOpnDict[node] = publicOpn
+
 		print node
 		print publicOpn
+
+	print pubOpnDict
+
 
 	return pubOpnDict
 
