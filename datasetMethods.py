@@ -1,4 +1,4 @@
-###### Natalie Pollard & Brooke Kelsey
+## Natalie Pollard & Brooke Kelsey
 
 import networkx as nx
 import pygraphviz
@@ -115,6 +115,7 @@ def findAllPathsAtoB(source, destination):
 
 	for item in nx.all_simple_paths(subDG, listOfNodesForSubgraph[source], listOfNodesForSubgraph[destination]):
 		pathList.append(item)
+		print item
 
 	for x in pathList:
 		iterator = len(x)
@@ -243,22 +244,39 @@ def computePublicOpinion(numHops, userList):
 
 	pubOpnDict = defaultdict(list)
 
-	for node in userList:
+	for node in userList[0:1]:
+		Gmini=nx.DiGraph() 
+		print "starting public opinion calculation"
 		trustorNodes = []
 		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
 		trustorNodes.append(node)
 		pubOpnDG = DG.subgraph(trustorNodes)
-		nx.draw(pubOpnDG)
-		plt.show()
 		opnMatrix = []
+		rPubOpnDG = pubOpnDG.reverse()
 		for trustor in pubOpnDG:
-			finalOpn = TVSLAlgr(pubOpnDG, node, trustor, numHops, 0)
+			path = nx.all_simple_paths(DG, source = turstor, target = node, cutoff = numHops)
+			levels = nx.get_edge_attributes(G, 'level')
+			
+			for p in path:
+				for i in range(0,len(p)-1):
+				Gmini.add_edge(p[i],p[i+1],level=levels[(p[0], p[1])])
+
+			if Gmini:
+				 Nnum = Gmini.number_of_nodes()
+        		Enum = Gmini.number_of_edges()
+        		GminiR = Gmini.reverse()
+
+
+			finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+			print finalOpn
 			opnMatrix.append(finalOpn)
 
 		publicOpn = opnMatrix[0]
+		#print publicOpn
 		for i in range(1, len(opnMatrix)):
 			publicOpn = comb(publicOpn, opnMatrix[i])
+		#	print publicOpn
 		
 		for x in publicOpn:
 			pubOpnDict[node].append(x)
@@ -271,7 +289,7 @@ def computePublicOpinion(numHops, userList):
 
 readCleanDotFile()
 
-users = getNodesXInDegree(250)
+users = getNodesXInDegree(100)
 print "after x degree"
 computePublicOpinion(1, users)
 
