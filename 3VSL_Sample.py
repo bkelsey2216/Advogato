@@ -35,8 +35,8 @@ f = 'testFile'
 rf = 'testResultFile'
 result= 'tmpFile'  #tmp file
 
-removeNumbers()
-rdfpre = 'advogato-fixed-numbers.dot'   # data set
+# removeNumbers()
+rdfpre = 'testSubgraph.dot'   # data set
 
 G=nx.DiGraph(nx.read_dot(rdfpre))
 
@@ -82,7 +82,7 @@ for e in elist:
         #transfer edge attributes of 1 hop ground truth to opinion
         curHop = 0
         finalOpn =  TVSLAlgr(GminiR, e[1], e[0], MaxHop, curHop)   #run assess trust on the subgraph to get computational opinion 
-        print finalOpn
+        print sum(finalOpn)
         if TVSLExp(finalOpn) > 0 or TVSLExp(finalOpn)<=0:
             for n in intnlist:
                 if G_int.node[n]['old_name'] == e[0]:

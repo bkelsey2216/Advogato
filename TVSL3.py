@@ -111,29 +111,22 @@ def TVSLTran(trust):     #transfer edge attribute to opinion
 # MaxHop - maximum path length (from src to tgt) TO IGNORE PATHS THAT ARE TOO LONG...?
 # preHop - NOT SURE??? ITERATOR/HOP COUNT???
 def TVSLAlgr(G, src, tgt, MaxHop, preHop):     #assess trust algr
+
     curHop = preHop + 1
     if curHop > MaxHop:    #check whether maxhop has been reached, if so, return numb
-        #remove:
-        print "negatives in curHop > MaxHop: " + src + " " + tgt
         return [-1, -1,-1,-1]   # how does this 
     
     nlist = G.neighbors(src)     #check the edges connected to current node
     if len(nlist) == 1:    #if there is only one edge, take it as original opinion and proceed forward. 
         preOpn =  TVSLTran(G[src][nlist[0]]['level'])
         if nlist[0] == tgt:  #if this opinion is directly connected to dst, return it
-            #remove:
-            print preOpn
             return preOpn
     
         else:
             posOpn = TVSLAlgr(G, nlist[0], tgt, MaxHop, curHop)   # if not, recursively recall TVSLAlgr and  take the resulting opinion as discounting opinion
             if posOpn[0] == -1:   #if the obtained opinion is invalid
-                #remove:
-                print "negatives: " + nlist[0] + " " + tgt
                 return [-1, -1,-1,-1]
-            else:
-                #remove:
-                print disc(posOpn, preOpn)  
+            else: 
                 return  disc(posOpn, preOpn)  #else, discount it with previous opinion
     elif len(nlist) > 1:   #if more than 1 edges are connected to current node
         preOpnM = np.empty([len(nlist),4])   #matrix used to store opinions which are about to be combined
@@ -155,12 +148,8 @@ def TVSLAlgr(G, src, tgt, MaxHop, preHop):     #assess trust algr
         for j, k in enumerate(nlist):
             if (j > m) and (preOpnM[j, 0] > 0):
                 sumOpn = comb(sumOpn, preOpnM[j,:])
-        #remove:
-        print sumOpn
         return sumOpn
     else:
-        #remove:
-        print "negatives: " + nlist[0] + " " + tgt
         return [-1,-1,-1,-1]
     
 # Method for calculating the expected belief of an opinion, given opinion vector A.
