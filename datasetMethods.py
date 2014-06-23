@@ -1,4 +1,4 @@
-## Natalie Pollard & Brooke Kelsey
+###### Natalie Pollard & Brooke Kelsey
 
 import networkx as nx
 import pygraphviz
@@ -115,7 +115,6 @@ def findAllPathsAtoB(source, destination):
 
 	for item in nx.all_simple_paths(subDG, listOfNodesForSubgraph[source], listOfNodesForSubgraph[destination]):
 		pathList.append(item)
-		print item
 
 	for x in pathList:
 		iterator = len(x)
@@ -250,6 +249,8 @@ def computePublicOpinion(numHops, userList):
 
 		trustorNodes.append(node)
 		pubOpnDG = DG.subgraph(trustorNodes)
+		nx.draw(pubOpnDG)
+		plt.show()
 		opnMatrix = []
 		for trustor in pubOpnDG:
 			finalOpn = TVSLAlgr(pubOpnDG, node, trustor, numHops, 0)
@@ -270,7 +271,7 @@ def computePublicOpinion(numHops, userList):
 
 readCleanDotFile()
 
-users = getNodesXInDegree(100)
+users = getNodesXInDegree(250)
 print "after x degree"
 computePublicOpinion(1, users)
 
