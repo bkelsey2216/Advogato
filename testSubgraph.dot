@@ -1,0 +1,13 @@
+digraph G {
+   A -> B [level="Master"];
+   A -> C [level="Master"];
+   B -> D [level="Journeyer"];
+   C -> D [level="Apprentice"];
+   E -> A [level = "Master"];
+   D -> A [level = "Journeyer"];
+   /*A -> D [level = "Master"];*/
+   /*J -> C [level = "Apprentice"];*/
+   /*K -> J [level = "Journeyer"];*/
+   B -> C [level = "Master"];
+
+}

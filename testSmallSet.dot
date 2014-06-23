@@ -1,0 +1,438 @@
+digraph G {
+   /* zowietwozerosixnine */
+   /* godsononethreeseven */
+   /* gc */
+   gc -> gc [level="Journeyer"];
+   gc -> prigaux [level="Master"];
+   gc -> fred [level="Master"];
+   gc -> quintela [level="Master"];
+   gc -> jgarzik [level="Master"];
+   gc -> penso [level="Journeyer"];
+   gc -> leviramsey [level="Apprentice"];
+   gc -> havardk [level="Master"];
+   gc -> sh [level="Master"];
+   /* desperated */
+   desperated -> desperated [level="Observer"];
+   /* answer */
+   /* zappy */
+   zappy -> ollesson [level="Apprentice"];
+   /* rompe */
+   /* sander */
+   sander -> sander [level="Apprentice"];
+   sander -> caolan [level="Journeyer"];
+   sander -> samth [level="Journeyer"];
+   /* pramodjaaydaad */
+   /* SteveMallett */
+   SteveMallett -> SteveMallett [level="Apprentice"];
+   SteveMallett -> duff [level="Journeyer"];
+   SteveMallett -> MikeCamel [level="Apprentice"];
+   SteveMallett -> mwk [level="Journeyer"];
+   SteveMallett -> mobius [level="Master"];
+   SteveMallett -> mbrubeck [level="Apprentice"];
+   SteveMallett -> tod [level="Apprentice"];
+   SteveMallett -> rasmus [level="Master"];
+   SteveMallett -> mrcsparker [level="Apprentice"];
+   /* roxo */
+   /* pben */
+   /* jeje */
+   jeje -> jeje [level="Journeyer"];
+   /* sheath */
+   sheath -> dwaite [level="Journeyer"];
+   sheath -> Erbo [level="Journeyer"];
+   sheath -> pgmillard [level="Journeyer"];
+   sheath -> jeremie [level="Master"];
+   sheath -> miguel [level="Master"];
+   sheath -> temas [level="Master"];
+   sheath -> DizzyD [level="Journeyer"];
+   sheath -> eliot [level="Journeyer"];
+   sheath -> julian [level="Journeyer"];
+   sheath -> sheath [level="Journeyer"];
+   sheath -> fingolfin [level="Journeyer"];
+   /* yiran */
+   yiran -> yiran [level="Master"];
+   /* DaveGoehrig */
+   DaveGoehrig -> agntdrake [level="Journeyer"];
+   DaveGoehrig -> tripix [level="Journeyer"];
+   DaveGoehrig -> beppu [level="Journeyer"];
+   DaveGoehrig -> DaveGoehrig [level="Journeyer"];
+   /* avernet */
+   /* napoleon */
+   /* blanu */
+   /* Astinus */
+   Astinus -> Astinus [level="Apprentice"];
+   Astinus -> halcyzeron [level="Apprentice"];
+   Astinus -> timriker [level="Master"];
+   Astinus -> davej [level="Master"];
+   Astinus -> lkcl [level="Master"];
+   Astinus -> alan [level="Master"];
+   /* ashbym */
+   ashbym -> ashbym [level="Observer"];
+   /* zulcss */
+   zulcss -> zulcss [level="Apprentice"];
+   /* itamar */
+   itamar -> ping [level="Journeyer"];
+   itamar -> MJ [level="Journeyer"];
+   itamar -> faassen [level="Journeyer"];
+   itamar -> shalabh [level="Journeyer"];
+   itamar -> itamar [level="Journeyer"];
+   itamar -> moshez [level="Master"];
+   itamar -> Shenka [level="Apprentice"];
+   itamar -> butchland [level="Journeyer"];
+   itamar -> ppetru [level="Journeyer"];
+   itamar -> ChrisMcDonough [level="Journeyer"];
+   itamar -> hathawsh [level="Master"];
+   itamar -> stevea [level="Journeyer"];
+   itamar -> hugues [level="Journeyer"];
+   itamar -> michel [level="Journeyer"];
+   itamar -> chalst [level="Apprentice"];
+   itamar -> robla [level="Apprentice"];
+   itamar -> eliseven [level="Journeyer"];
+   itamar -> mbp [level="Master"];
+   itamar -> spiv [level="Journeyer"];
+   itamar -> glyph [level="Master"];
+   itamar -> jml [level="Journeyer"];
+   itamar -> zthreep [level="Journeyer"];
+   itamar -> carmstro [level="Journeyer"];
+   itamar -> washort [level="Journeyer"];
+   itamar -> Artimage [level="Journeyer"];
+   itamar -> sjogren [level="Journeyer"];
+   itamar -> calderone [level="Journeyer"];
+   itamar -> etrepum [level="Journeyer"];
+   itamar -> xxant [level="Journeyer"];
+   /* ralphve */
+   /* pfdietz */
+   /* gandalfgrey */
+   /* myaminseveneightseven */
+   myaminseveneightseven -> myaminseveneightseven [level="Journeyer"];
+   /* sluggy */
+   /* stevetaylor */
+   stevetaylor -> winter [level="Master"];
+   stevetaylor -> ladypine [level="Journeyer"];
+   stevetaylor -> Ausmosis [level="Journeyer"];
+   stevetaylor -> sulaiman [level="Journeyer"];
+   stevetaylor -> gbowland [level="Journeyer"];
+   stevetaylor -> doogie [level="Journeyer"];
+   stevetaylor -> ghaering [level="Journeyer"];
+   stevetaylor -> netgod [level="Journeyer"];
+   stevetaylor -> jules [level="Journeyer"];
+   stevetaylor -> crj [level="Journeyer"];
+   stevetaylor -> Waldo [level="Journeyer"];
+   stevetaylor -> shaleh [level="Journeyer"];
+   stevetaylor -> seeS [level="Journeyer"];
+   stevetaylor -> schoen [level="Master"];
+   stevetaylor -> sad [level="Journeyer"];
+   stevetaylor -> RyanMuldoon [level="Journeyer"];
+   stevetaylor -> Ryan [level="Master"];
+   stevetaylor -> rwtwo [level="Journeyer"];
+   stevetaylor -> ruud [level="Journeyer"];
+   stevetaylor -> rupert [level="Journeyer"];
+   stevetaylor -> rtmfd [level="Journeyer"];
+   stevetaylor -> afayolle [level="Master"];
+   stevetaylor -> Daryll [level="Master"];
+   stevetaylor -> darkewolf [level="Journeyer"];
+   stevetaylor -> csm [level="Journeyer"];
+   stevetaylor -> crackmonkey [level="Master"];
+   stevetaylor -> cmc [level="Journeyer"];
+   stevetaylor -> bma [level="Journeyer"];
+   stevetaylor -> bjf [level="Journeyer"];
+   stevetaylor -> beppu [level="Journeyer"];
+   stevetaylor -> benno [level="Master"];
+   stevetaylor -> azz [level="Journeyer"];
+   stevetaylor -> asmodai [level="Journeyer"];
+   stevetaylor -> angelsun [level="Journeyer"];
+   stevetaylor -> andrei [level="Master"];
+   stevetaylor -> ajv [level="Master"];
+   /* salvadorfb */
+   salvadorfb -> CharlyBrown [level="Master"];
+   salvadorfb -> gwolf [level="Journeyer"];
+   salvadorfb -> salvadorfb [level="Journeyer"];
+   /* ps */
+   ps -> ps [level="Observer"];
+   /* trutap */
+   /* dennyliao */
+   dennyliao -> ssb [level="Master"];
+   dennyliao -> lukeh [level="Master"];
+   /* Zagadka */
+   /* AndreyGolub */
+   AndreyGolub -> lkcl [level="Master"];
+   AndreyGolub -> advogato [level="Master"];
+   /* iwasz */
+   /* markonen */
+   markonen -> rasmus [level="Master"];
+   markonen -> kalowsky [level="Journeyer"];
+   markonen -> slamb [level="Journeyer"];
+   /* haruspex */
+   haruspex -> rms [level="Master"];
+   haruspex -> novelli [level="Journeyer"];
+   haruspex -> karlberry [level="Journeyer"];
+   haruspex -> timbl [level="Master"];
+   /* tresoldi */
+   /* piledriver */
+   piledriver -> piledriver [level="Journeyer"];
+   /* asjo */
+   /* carendonsevenone */
+   /* Dimmerswitch */
+   /* mrbob */
+   /* dbrashear */
+   /* randu */
+   randu -> randu [level="Apprentice"];
+   randu -> irb [level="Apprentice"];
+   randu -> elgreen [level="Journeyer"];
+   /* csg */
+   csg -> ksb [level="Master"];
+   csg -> ab [level="Master"];
+   csg -> softweyr [level="Master"];
+   csg -> csg [level="Journeyer"];
+   csg -> petef [level="Journeyer"];
+   csg -> winter [level="Master"];
+   csg -> crtzero [level="Master"];
+   csg -> schultmc [level="Apprentice"];
+   csg -> pretzelgod [level="Journeyer"];
+   csg -> branden [level="Journeyer"];
+   /* swilde */
+   swilde -> bernhard [level="Master"];
+   swilde -> jan [level="Master"];
+   swilde -> coorman [level="Master"];
+   swilde -> ber [level="Master"];
+   swilde -> Fefe [level="Master"];
+   /* johnmc */
+   johnmc -> johnmc [level="Apprentice"];
+   /* clonethreefivefourtwonine */
+   /* kapplegate */
+   kapplegate -> kapplegate [level="Observer"];
+   kapplegate -> netsaint [level="Journeyer"];
+   /* VUGO */
+   VUGO -> VUGO [level="Master"];
+   /* pom */
+   pom -> pom [level="Master"];
+   pom -> pliant [level="Master"];
+   pom -> huberttonneau [level="Master"];
+   pom -> hf [level="Master"];
+   pom -> fxn [level="Journeyer"];
+   pom -> oka [level="Apprentice"];
+   pom -> eel [level="Journeyer"];
+   pom -> athomas [level="Apprentice"];
+   pom -> minou [level="Journeyer"];
+   pom -> abraham [level="Journeyer"];
+   pom -> gord [level="Master"];
+   /* allens */
+   /* Drue */
+   Drue -> Drue [level="Journeyer"];
+   Drue -> Bram [level="Master"];
+   Drue -> splork [level="Journeyer"];
+   Drue -> Zooko [level="Journeyer"];
+   Drue -> orasis [level="Journeyer"];
+   /* AlthA */
+   AlthA -> macdome [level="Master"];
+   AlthA -> Darin [level="Master"];
+   AlthA -> mjs [level="Master"];
+   AlthA -> lypanov [level="Journeyer"];
+   AlthA -> andersca [level="Master"];
+   AlthA -> AlthA [level="Journeyer"];
+   AlthA -> esr [level="Master"];
+   AlthA -> bengoodger [level="Master"];
+   AlthA -> kevinvv [level="Journeyer"];
+   AlthA -> landonf [level="Journeyer"];
+   /* felipe */
+   felipe -> felipe [level="Apprentice"];
+   /* Wolf */
+   Wolf -> niceguyeddie [level="Journeyer"];
+   Wolf -> Rabbitt [level="Journeyer"];
+   Wolf -> easino [level="Apprentice"];
+   Wolf -> Apakuni [level="Observer"];
+   /* Payne */
+   Payne -> Payne [level="Journeyer"];
+   /* srp */
+   /* ppcrap */
+   /* mfana */
+   /* izham */
+   izham -> izham [level="Master"];
+   izham -> zeenix [level="Journeyer"];
+   izham -> chalst [level="Journeyer"];
+   izham -> nutella [level="Apprentice"];
+   izham -> zhaoway [level="Journeyer"];
+   izham -> mx [level="Apprentice"];
+   /* tinaly */
+   /* Kitemaker */
+   /* iand */
+   iand -> jmason [level="Journeyer"];
+   iand -> mallum [level="Journeyer"];
+   iand -> simonstl [level="Master"];
+   iand -> aaronsw [level="Journeyer"];
+   /* bladernr */
+   /* waldooneoneoneone */
+   /* zbir */
+   zbir -> mml [level="Journeyer"];
+   zbir -> cdent [level="Journeyer"];
+   zbir -> zbir [level="Apprentice"];
+   zbir -> squiggy [level="Apprentice"];
+   zbir -> suso [level="Apprentice"];
+   zbir -> ahosey [level="Apprentice"];
+   zbir -> esinclai [level="Apprentice"];
+   zbir -> cannam [level="Journeyer"];
+   zbir -> eknuth [level="Apprentice"];
+   zbir -> jjw [level="Apprentice"];
+   zbir -> jlf [level="Apprentice"];
+   /* andrewlitz */
+   /* bmastenbrook */
+   bmastenbrook -> crhodes [level="Master"];
+   bmastenbrook -> bmastenbrook [level="Journeyer"];
+   bmastenbrook -> water [level="Journeyer"];
+   bmastenbrook -> dan [level="Master"];
+   bmastenbrook -> wnewman [level="Master"];
+   bmastenbrook -> tbmoore [level="Master"];
+   bmastenbrook -> Leimy [level="Master"];
+   bmastenbrook -> pfdietz [level="Master"];
+   /* kArLa */
+   /* nymia */
+   nymia -> nymia [level="Apprentice"];
+   nymia -> kroah [level="Journeyer"];
+   nymia -> govert [level="Apprentice"];
+   nymia -> cyrus [level="Apprentice"];
+   nymia -> Frostola [level="Apprentice"];
+   nymia -> Gregoyle [level="Apprentice"];
+   nymia -> Rika [level="Apprentice"];
+   nymia -> infodragon [level="Apprentice"];
+   nymia -> jleader [level="Apprentice"];
+   nymia -> larke [level="Apprentice"];
+   nymia -> jameson [level="Apprentice"];
+   nymia -> miniver [level="Apprentice"];
+   nymia -> volsung [level="Apprentice"];
+   nymia -> matt [level="Apprentice"];
+   nymia -> Malkuse [level="Apprentice"];
+   nymia -> pemdas [level="Apprentice"];
+   nymia -> tetron [level="Apprentice"];
+   nymia -> Blacky [level="Apprentice"];
+   nymia -> nixnut [level="Apprentice"];
+   nymia -> const [level="Journeyer"];
+   nymia -> hypatia [level="Apprentice"];
+   nymia -> jonathon [level="Apprentice"];
+   nymia -> maphew [level="Apprentice"];
+   nymia -> sergent [level="Apprentice"];
+   nymia -> pedro [level="Apprentice"];
+   nymia -> pnkfelix [level="Apprentice"];
+   nymia -> apgarcia [level="Apprentice"];
+   nymia -> zachlipton [level="Apprentice"];
+   nymia -> jono [level="Apprentice"];
+   nymia -> renster [level="Apprentice"];
+   nymia -> nipper [level="Apprentice"];
+   nymia -> GJF [level="Apprentice"];
+   nymia -> ebizo [level="Apprentice"];
+   nymia -> extremely [level="Apprentice"];
+   nymia -> wwwwolf [level="Apprentice"];
+   nymia -> matman [level="Apprentice"];
+   nymia -> ravskel [level="Apprentice"];
+   nymia -> carmstro [level="Apprentice"];
+   nymia -> Johnath [level="Apprentice"];
+   nymia -> orlando [level="Apprentice"];
+   nymia -> mattk [level="Apprentice"];
+   nymia -> backtick [level="Apprentice"];
+   nymia -> mikeszcz [level="Apprentice"];
+   nymia -> wen [level="Apprentice"];
+   nymia -> JoshO [level="Apprentice"];
+   nymia -> dirtyrat [level="Apprentice"];
+   nymia -> semaj [level="Apprentice"];
+   nymia -> fxtech [level="Apprentice"];
+   nymia -> mirwin [level="Apprentice"];
+   nymia -> sune [level="Apprentice"];
+   nymia -> maelstorm [level="Apprentice"];
+   nymia -> slide [level="Apprentice"];
+   nymia -> sej [level="Journeyer"];
+   /* loweytwozerozerotwo */
+   /* kailden */
+   kailden -> kailden [level="Apprentice"];
+   /* tschwall */
+   tschwall -> tschwall [level="Master"];
+   tschwall -> echuck [level="Master"];
+   tschwall -> tripp [level="Apprentice"];
+   tschwall -> gtalvola [level="Master"];
+   tschwall -> uweo [level="Journeyer"];
+   tschwall -> mengel [level="Master"];
+   tschwall -> lars [level="Master"];
+   tschwall -> jtauber [level="Master"];
+   /* montdidier */
+   montdidier -> montdidier [level="Observer"];
+   montdidier -> Svartalf [level="Journeyer"];
+   /* ab */
+   ab -> ksb [level="Master"];
+   /* cargego */
+   /* taylor */
+   /* tabrez */
+   /* heyongfei */
+   /* jsvendsen */
+   /* Stab */
+   Stab -> hackle [level="Apprentice"];
+   Stab -> djs [level="Journeyer"];
+   Stab -> federico [level="Observer"];
+   Stab -> jasper [level="Apprentice"];
+   Stab -> Stab [level="Journeyer"];
+   Stab -> valen [level="Apprentice"];
+   Stab -> lars [level="Observer"];
+   Stab -> gstein [level="Master"];
+   Stab -> Toby [level="Journeyer"];
+   Stab -> miguel [level="Master"];
+   Stab -> bjn [level="Apprentice"];
+   Stab -> rasmus [level="Master"];
+   Stab -> chuck [level="Master"];
+   Stab -> jwz [level="Master"];
+   Stab -> parise [level="Journeyer"];
+   Stab -> matt [level="Apprentice"];
+   Stab -> jpc [level="Journeyer"];
+   Stab -> dannyobrien [level="Apprentice"];
+   Stab -> imp [level="Master"];
+   Stab -> avi [level="Apprentice"];
+   Stab -> lukem [level="Master"];
+   Stab -> andrei [level="Master"];
+   Stab -> Sanaya [level="Observer"];
+   Stab -> jtc [level="Observer"];
+   Stab -> helish [level="Observer"];
+   Stab -> cwryu [level="Observer"];
+   Stab -> alfie [level="Observer"];
+   Stab -> michel [level="Journeyer"];
+   Stab -> deekayen [level="Observer"];
+   Stab -> PaulWay [level="Observer"];
+   Stab -> seekthreer [level="Apprentice"];
+   Stab -> fabien [level="Observer"];
+   Stab -> abotwo [level="Observer"];
+   Stab -> rogoyski [level="Observer"];
+   Stab -> JMarc [level="Observer"];
+   Stab -> rohee [level="Apprentice"];
+   Stab -> julian [level="Observer"];
+   Stab -> dnm [level="Journeyer"];
+   Stab -> dugsong [level="Journeyer"];
+   Stab -> bagder [level="Master"];
+   Stab -> NetHunter [level="Apprentice"];
+   Stab -> Malx [level="Observer"];
+   Stab -> nipper [level="Observer"];
+   Stab -> pphaneuf [level="Observer"];
+   /* jwing */
+   jwing -> jwing [level="Master"];
+   /* MattPayne */
+   /* ssheth */
+   ssheth -> ssheth [level="Apprentice"];
+   /* threeninethreenine */
+   /* mctninetwoeighteight */
+   /* timp */
+   timp -> timp [level="Journeyer"];
+   timp -> alan [level="Master"];
+   timp -> Ryan [level="Journeyer"];
+   timp -> spong [level="Journeyer"];
+   timp -> blizzard [level="Master"];
+   timp -> msw [level="Master"];
+   timp -> johnsonm [level="Master"];
+   timp -> Adrian [level="Journeyer"];
+   timp -> bero [level="Journeyer"];
+   timp -> harald [level="Master"];
+   /* jacobsan */
+   jacobsan -> jacobsan [level="Apprentice"];
+   jacobsan -> jmason [level="Journeyer"];
+   jacobsan -> ewan [level="Master"];
+   jacobsan -> AArthur [level="Apprentice"];
+   jacobsan -> cam [level="Apprentice"];
+   /* riaan */
+   riaan -> riaan [level="Journeyer"];
+   /* raelll */
+   /* llsninetwofour */
+   /* twermund */
+   twermund -> twermund [level="Observer"];
+}

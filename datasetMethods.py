@@ -4,6 +4,7 @@ import networkx as nx
 import pygraphviz
 import matplotlib.pyplot as plt
 from collections import defaultdict
+from decimal import Decimal
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import TVSLExp #compute expected belief
@@ -48,7 +49,7 @@ def readCleanDotFile():
 	global subApprenticeDG
 	global subObserverDG
 	
-	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+	DG = nx.DiGraph(nx.read_dot('testSubgraph.dot'))
 
 	
 	#remove all of the self loop edges
@@ -241,42 +242,42 @@ def getNodesYInDegree(inDegree):
 	return nodeList
 
 def computePublicOpinion(numHops, userList):
-
 	pubOpnDict = defaultdict(list)
 
-	for node in userList[0:1]:
-		print "starting public opinion calculation"
+	for node in userList:
 		trustorNodes = []
 		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
 		trustorNodes.append(node)
 		pubOpnDG = DG.subgraph(trustorNodes)
 		opnMatrix = []
-		for trustor in pubOpnDG:
-			finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
-			print finalOpn
-			opnMatrix.append(finalOpn)
+		for trustor in trustorNodes:
+			if trustor != node:
+				finalOpn = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+				if finalOpn[0] == -1:
+					print "Oh noooooooooo!!!!!!!!!!!!!!!!"
+				opnMatrix.append(finalOpn)
+				print trustor + " " + node
+				print sum(finalOpn)
 
-		publicOpn = opnMatrix[0]
-		#print publicOpn
-		for i in range(1, len(opnMatrix)):
-			publicOpn = comb(publicOpn, opnMatrix[i])
-		#	print publicOpn
-		
-		for x in publicOpn:
-			pubOpnDict[node].append(x)
+			publicOpn = opnMatrix[0]
+			for i in range(1, len(opnMatrix)):
+				publicOpn = comb(publicOpn, opnMatrix[i])
+			
+			for x in publicOpn:
+				pubOpnDict[node].append(x)
 
 		pubOpnDict.items()
-		print publicOpn
+		print node
+		print sum(publicOpn)
+		print
 
 	return pubOpnDict
 
 
 readCleanDotFile()
-
-users = getNodesXInDegree(100)
-print "after x degree"
-computePublicOpinion(1, users)
+users = getNodesXInDegree(2)
+computePublicOpinion(2, users)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
