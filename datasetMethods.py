@@ -49,7 +49,7 @@ def readCleanDotFile():
 	global subApprenticeDG
 	global subObserverDG
 	
-	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+	DG = nx.DiGraph(nx.read_dot('master-graph.dot'))
 
 	
 	#remove all of the self loop edges
@@ -256,7 +256,10 @@ def computePublicOpinion(numHops, userList):
 			levels = nx.get_edge_attributes(DG, 'level')
 
 			for p in path:
-				pubOpnDG.add_edge(trustor, node, level=levels[(p[0], p[1])])
+				print p
+				for i in range(0, len(p)-1):
+					pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
+
 
 			if trustor != node:
 				currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
@@ -265,9 +268,8 @@ def computePublicOpinion(numHops, userList):
 				else:
 					publicOpinion = currentOpinion
 			
-#		for x in publicOpinion:
-#			pubOpnDict[node].append(x)
-		publicOpnDict[node] = publicOpinion
+		for x in publicOpinion:
+			pubOpnDict[node].append(x)
 
 		pubOpnDict.items()
 		print node
@@ -277,8 +279,8 @@ def computePublicOpinion(numHops, userList):
 
 
 readCleanDotFile()
-users = getNodesXInDegree(100)
-computePublicOpinion(1, users)
+users = getNodesXInDegree(1)
+computePublicOpinion(3, users)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
