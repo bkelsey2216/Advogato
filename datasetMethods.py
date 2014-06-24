@@ -5,6 +5,7 @@ import pygraphviz
 import matplotlib.pyplot as plt
 from collections import defaultdict
 from decimal import Decimal
+import csv
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import TVSLExp #compute expected belief
@@ -49,7 +50,7 @@ def readCleanDotFile():
 	global subApprenticeDG
 	global subObserverDG
 	
-	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+	DG = nx.DiGraph(nx.read_dot('testSubgraph.dot'))
 
 	
 	#remove all of the self loop edges
@@ -226,59 +227,72 @@ def makeDegreeDistribution():
 	return statsArray
 
 def getNodesXInDegree(inDegree):
-	nodeList = []
+	nodeListDict = {}
 	for node in DG:
 		if DG.in_degree(node) >= inDegree:
-			nodeList.append(node)
+			nodeListDict[node] = DG.in_degree(node)
 
-	return nodeList
+	return nodeListDict
 
 def getNodesYInDegree(inDegree):
-	nodeList = []
+	nodeListDict = {}
 	for node in DG:
 		if DG.in_degree(node) <= inDegree:
-			nodeList.append(node)
+			nodeListDict[node] = DG.in_degree(node)
 
-	return nodeList
+	return nodeListDict
 
-def computePublicOpinion(numHops, userList):
-	pubOpnDict = defaultdict(list)
-	currentOpinion = []
+def computePublicOpinion(numHops, userDict):
 
-	for node in userList:
-		trustorNodes = []
-		publicOpinion = []		
-		getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
+	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  #transfer node names to numbers
 
-		for trustor in trustorNodes:
-			pubOpnDG = nx.DiGraph()			
-			path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
-			levels = nx.get_edge_attributes(DG, 'level')
+	with open('testCSV.csv', 'wb') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
 
-			for p in path:
-				pubOpnDG.add_edge(trustor, node, level=levels[(p[0], p[1])])
+		currentOpinion = []
+		for node in userDict:
+			trustorNodes = []
+			publicOpinion = []
+			trustorOpnList = []	
+			#nodeInt = DGInts.node[node]	
+			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
-			if trustor != node:
-				currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
-				if len(publicOpinion) != 0:
-					publicOpinion = comb(publicOpinion, currentOpinion)
-				else:
-					publicOpinion = currentOpinion
-			
-#		for x in publicOpinion:
-#			pubOpnDict[node].append(x)
-		publicOpnDict[node] = publicOpinion
+			for trustor in trustorNodes:
+				trustorDict = {}
+				pubOpnDG = nx.DiGraph()			
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
+				levels = nx.get_edge_attributes(DG, 'level')
+				
+				for p in path:
+					for i in range(0, len(p)-1):
+						pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 
-		pubOpnDict.items()
-		print node
-		print publicOpinion
+				if trustor != node:
+					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+					trustorOpnList.append(currentOpinion)
+					if len(publicOpinion) != 0:
+						publicOpinion = comb(publicOpinion, currentOpinion)
+					else:
+						publicOpinion = currentOpinion
 
-	return pubOpnDict
+			## CSV file format:
+			## [group: 1 = X, 2 = Y; trustee; inDegree of trustee; trustor; trustor's opinion; public opinion]
+			for opinion in range(0, len(trustorOpnList)):
+				toWrite.writerow(['1', node, userDict[node], trustorNodes[opinion], trustorOpnList[opinion], publicOpinion])
+
+			print node
+			print publicOpinion
+
+
+def writePubOpinion(group, trustee, inDegree, trustor, opinion, opinionEntropy, pubOpinion, pubOpinionEntropy):
+	with open('testCSV.csv', 'wb') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		toWrite.writerow([group, trustee, inDegree, trustor, opinion, opinionEntropy, pubOpinion, pubOpinionEntropy])
 
 
 readCleanDotFile()
-users = getNodesXInDegree(100)
-computePublicOpinion(1, users)
+users = getNodesXInDegree(1)
+computePublicOpinion(2, users)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
