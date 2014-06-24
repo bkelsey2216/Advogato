@@ -255,14 +255,14 @@ def computePublicOpinion(numHops, userDict, groupID):
 	for n in nodeIntList:
 		nodeIntDict[(DGInts.node[n]['old_name'])] = n
 
-	with open('testCSV.csv', 'wb') as csvfile:
+	with open(str(groupID) + 'testCSV.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
 
 		currentOpinion = []
 		for node in userDict:
 			trustorNodes = []
 			publicOpinion = []
-			trustorOpnList = []		
+			trustorOpnList = []
 			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
 			for trustor in trustorNodes:
@@ -287,7 +287,7 @@ def computePublicOpinion(numHops, userDict, groupID):
 			## [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
 			## still need to get entropy of trustor's opinion and public opinion????
 			for opinion in range(0, len(trustorOpnList)):
-				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], nodeIntDict[trustorNodes[opinion]], trustorOpnList[opinion], publicOpinion])
+				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], nodeIntDict[trustorNodes[opinion]], trustorOpnList[opinion][0], trustorOpnList[opinion][1], trustorOpnList[opinion][2], trustorOpnList[opinion][3], publicOpinion[0], publicOpinion[1], publicOpinion[2], publicOpinion[3]])
 
 			print node
 			print publicOpinion
