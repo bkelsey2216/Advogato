@@ -226,6 +226,8 @@ def makeDegreeDistribution():
 	print statsArray[0:50]
 	return statsArray
 
+## creates and returns a dictionary of key=node:value=inDegree for all nodes in the graph
+## having an inDegree *greater than or equal to* the inDegree parameter
 def getNodesXInDegree(inDegree):
 	nodeListDict = {}
 	for node in DG:
@@ -234,6 +236,8 @@ def getNodesXInDegree(inDegree):
 
 	return nodeListDict
 
+## creates and returns a dictionary of key=node:value=inDegree for all nodes in the graph
+## having an inDegree *less than or equal to* the inDegree parameter
 def getNodesYInDegree(inDegree):
 	nodeListDict = {}
 	for node in DG:
@@ -242,9 +246,14 @@ def getNodesYInDegree(inDegree):
 
 	return nodeListDict
 
-def computePublicOpinion(numHops, userDict):
-
+def computePublicOpinion(numHops, userDict, groupID):
+	# create a dictionary of key=node:value=nodeID so that we can later write the nodes to the file
+	# using numerical nodeID rather than string.
 	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  #transfer node names to numbers
+	nodeIntList = DGInts.nodes()
+	nodeIntDict = {}
+	for n in nodeIntList:
+		nodeIntDict[(DGInts.node[n]['old_name'])] = n
 
 	with open('testCSV.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
@@ -253,8 +262,7 @@ def computePublicOpinion(numHops, userDict):
 		for node in userDict:
 			trustorNodes = []
 			publicOpinion = []
-			trustorOpnList = []	
-			#nodeInt = DGInts.node[node]	
+			trustorOpnList = []		
 			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
 			for trustor in trustorNodes:
@@ -269,16 +277,17 @@ def computePublicOpinion(numHops, userDict):
 
 				if trustor != node:
 					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
-					trustorOpnList.append(currentOpinion)
+					trustorOpnList.append(currentOpinion) #create a list of final trustor opinion vectors -- needed for file writing later
 					if len(publicOpinion) != 0:
 						publicOpinion = comb(publicOpinion, currentOpinion)
 					else:
 						publicOpinion = currentOpinion
 
 			## CSV file format:
-			## [group: 1 = X, 2 = Y; trustee; inDegree of trustee; trustor; trustor's opinion; public opinion]
+			## [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
+			## still need to get entropy of trustor's opinion and public opinion????
 			for opinion in range(0, len(trustorOpnList)):
-				toWrite.writerow(['1', node, userDict[node], trustorNodes[opinion], trustorOpnList[opinion], publicOpinion])
+				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], nodeIntDict[trustorNodes[opinion]], trustorOpnList[opinion], publicOpinion])
 
 			print node
 			print publicOpinion
@@ -286,7 +295,7 @@ def computePublicOpinion(numHops, userDict):
 
 readCleanDotFile()
 users = getNodesXInDegree(1)
-computePublicOpinion(2, users)
+computePublicOpinion(2, users, 1)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
