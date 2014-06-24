@@ -268,7 +268,7 @@ def computePublicOpinion(numHops, userDict, groupID):
 			for trustor in trustorNodes:
 				trustorDict = {}
 				pubOpnDG = nx.DiGraph()			
-				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + 3)
 				levels = nx.get_edge_attributes(DG, 'level')
 				
 				for p in path:
@@ -276,7 +276,7 @@ def computePublicOpinion(numHops, userDict, groupID):
 						pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 
 				if trustor != node:
-					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops + 3, 0)
 					trustorOpnList.append(currentOpinion) #create a list of final trustor opinion vectors -- needed for file writing later
 					if len(publicOpinion) != 0:
 						publicOpinion = comb(publicOpinion, currentOpinion)
