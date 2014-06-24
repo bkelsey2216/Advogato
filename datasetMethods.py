@@ -284,12 +284,6 @@ def computePublicOpinion(numHops, userDict):
 			print publicOpinion
 
 
-def writePubOpinion(group, trustee, inDegree, trustor, opinion, opinionEntropy, pubOpinion, pubOpinionEntropy):
-	with open('testCSV.csv', 'wb') as csvfile:
-		toWrite = csv.writer(csvfile, delimiter = ',')
-		toWrite.writerow([group, trustee, inDegree, trustor, opinion, opinionEntropy, pubOpinion, pubOpinionEntropy])
-
-
 readCleanDotFile()
 users = getNodesXInDegree(1)
 computePublicOpinion(2, users)
