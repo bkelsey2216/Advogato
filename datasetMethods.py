@@ -295,9 +295,9 @@ def computePublicOpinion(numHops, userDict, groupID):
 
 
 readCleanDotFile()
-users = getNodesYInDegree(20)
+users = getNodesXInDegree(150)
 print len(users.keys())
-computePublicOpinion(3, users, 2)
+computePublicOpinion(3, users, 1)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
