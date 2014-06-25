@@ -50,7 +50,7 @@ def readCleanDotFile():
 	global subApprenticeDG
 	global subObserverDG
 	
-	DG = nx.DiGraph(nx.read_dot('testSubgraph.dot'))
+	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
 
 	
 	#remove all of the self loop edges
@@ -265,10 +265,11 @@ def computePublicOpinion(numHops, userDict, groupID):
 			trustorOpnList = []
 			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
+			print len(trustorNodes)
 			for trustor in trustorNodes:
 				trustorDict = {}
 				pubOpnDG = nx.DiGraph()			
-				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + 3)
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
 				levels = nx.get_edge_attributes(DG, 'level')
 				
 				for p in path:
@@ -276,7 +277,7 @@ def computePublicOpinion(numHops, userDict, groupID):
 						pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 
 				if trustor != node:
-					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops + 3, 0)
+					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
 					trustorOpnList.append(currentOpinion) #create a list of final trustor opinion vectors -- needed for file writing later
 					if len(publicOpinion) != 0:
 						publicOpinion = comb(publicOpinion, currentOpinion)
@@ -294,8 +295,9 @@ def computePublicOpinion(numHops, userDict, groupID):
 
 
 readCleanDotFile()
-users = getNodesXInDegree(1)
-computePublicOpinion(2, users, 1)
+users = getNodesYInDegree(20)
+print len(users.keys())
+computePublicOpinion(3, users, 2)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
