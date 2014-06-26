@@ -246,9 +246,16 @@ def getNodesYInDegree(inDegree):
 
 	return nodeListDict
 
+
+# computes the from each node within numHops of each node in userDict and
+# combines these to create a public opinion for each node in userDict
+# groupID is used to create the file name
 def computePublicOpinion(numHops, userDict, groupID):
-	# create a dictionary of key=node:value=nodeID so that we can later write the nodes to the file
-	# using numerical nodeID rather than string.
+	# This variable is the additional lenght witch can be added to path length
+	# (The one you suggested be 3 in your instructions)
+	# increasing this may dramatically increase run time
+	additionToPathLength = 1
+	
 	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  #transfer node names to numbers
 	nodeIntList = DGInts.nodes()
 	nodeIntDict = {}
@@ -263,21 +270,24 @@ def computePublicOpinion(numHops, userDict, groupID):
 			trustorNodes = []
 			publicOpinion = []
 			trustorOpnList = []
+
+			#get all the nodes within nunHops of node
 			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
 
-			print len(trustorNodes)
+			print "Calculating public opinion of " + node + " based on %d nodes" %len(trustorNodes)
 			for trustor in trustorNodes:
 				trustorDict = {}
-				pubOpnDG = nx.DiGraph()			
-				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops)
-				levels = nx.get_edge_attributes(DG, 'level')
-				
+				pubOpnDG = nx.DiGraph()
+
+				# fill pubOpnDG	with all the edges which occur in paths of length numHops + additionToPathLength
+				# from trustor to node	
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
 				for p in path:
 					for i in range(0, len(p)-1):
 						pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 
 				if trustor != node:
-					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops, 0)
+					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops + additionToPathLength, 0)
 					trustorOpnList.append(currentOpinion) #create a list of final trustor opinion vectors -- needed for file writing later
 					if len(publicOpinion) != 0:
 						publicOpinion = comb(publicOpinion, currentOpinion)
@@ -286,18 +296,16 @@ def computePublicOpinion(numHops, userDict, groupID):
 
 			## CSV file format:
 			## [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
-			## still need to get entropy of trustor's opinion and public opinion????
 			for opinion in range(0, len(trustorOpnList)):
 				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], nodeIntDict[trustorNodes[opinion]], trustorOpnList[opinion][0], trustorOpnList[opinion][1], trustorOpnList[opinion][2], trustorOpnList[opinion][3], publicOpinion[0], publicOpinion[1], publicOpinion[2], publicOpinion[3]])
 
-			print node
 			print publicOpinion
 
 
 readCleanDotFile()
 users = getNodesXInDegree(150)
-print len(users.keys())
-computePublicOpinion(3, users, 1)
+print "Calculating the public opinion for %d users" %len(users.keys())
+computePublicOpinion(2, users, 1)
 
 #calls DFS search to get 4 distribution data files
 # distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
