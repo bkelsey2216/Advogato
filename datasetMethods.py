@@ -153,52 +153,6 @@ def makeReachableDistribution(numHops):
 	#print statsArray[0:50]
 	return statsArray
 
-#This method tests reachable in n hops by printing out all the nodes reachable
-#within numHops of node and displaying a graph of these nodes
-#Even if the user has not rated themselves they will still appear in the 
-#displayed network
-def testReachableInNHops(numHops, node):
-
-	listOfReachables = []
-	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
-
-	print "The nodes reachable within %d hops of %s" %(numHops, node)
-	print listOfReachables
-	print "The number of nodes reachable is %d" %len(listOfReachables)
-
-	#add node to list of reachables before making the subgraph to display
-	#(because otherwise it looks funny)
-	if not node in listOfReachables:
-		listOfReachables.append(node)
-
-	reachableGraph  = DG.subgraph(listOfReachables)
-
-	nx.draw(reachableGraph, with_labels = True)	
-	plt.show()
-
-#This method performs a recursive depth first search to add all the nodes within a 
-#specified distance of the specified node to the listOfReachables
-#current depth should be set to zero
-#listOfReachables should be an empty list
-def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
-	if currentDepth == numberOfHops:
-		return listOfReachables
-	
-	for n in DG.neighbors(node):
-		if not n in listOfReachables:
-			listOfReachables.append(n)
-			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
-
-def getSourcesUsingDestInNHops(numberOfHops, currentDepth, listOfReachers, destination):
-	if currentDepth == numberOfHops:
-		return listOfReachers
-
-	for n in DG.predecessors(destination):
-		if not n in listOfReachers:
-			listOfReachers.append(n)
-			getSourcesUsingDestInNHops(numberOfHops, currentDepth+1, listOfReachers, n)
-
-
 ##distWrite creates a file with the given filename and writes
 ##one element of the given array into one line of the file. These
 ##files will be used to create data vectors for a distribution.
@@ -226,6 +180,57 @@ def makeDegreeDistribution():
 	print statsArray[0:50]
 	return statsArray
 
+#This method tests reachable in n hops by printing out all the nodes reachable
+#within numHops of node and displaying a graph of these nodes
+#Even if the user has not rated themselves they will still appear in the 
+#displayed network
+def testReachableInNHops(numHops, node):
+
+	listOfReachables = []
+	getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
+
+	print "The nodes reachable within %d hops of %s" %(numHops, node)
+	print listOfReachables
+	print "The number of nodes reachable is %d" %len(listOfReachables)
+
+	#add node to list of reachables before making the subgraph to display
+	#(because otherwise it looks funny)
+	if not node in listOfReachables:
+		listOfReachables.append(node)
+
+	reachableGraph  = DG.subgraph(listOfReachables)
+
+	nx.draw(reachableGraph, with_labels = True)	
+	plt.show()
+
+
+#This method performs a recursive depth first search to add all the nodes within a 
+#specified distance of the specified node to the listOfReachables
+#current depth should be set to zero
+#listOfReachables should be an empty list
+def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables, node):
+	if currentDepth == numberOfHops:
+		return listOfReachables
+	
+	for n in DG.neighbors(node):
+		if not n in listOfReachables:
+			listOfReachables.append(n)
+			getListOfNodesReachableInNHops(numberOfHops, currentDepth+1, listOfReachables, n)
+
+#This method performs a recursive depth first search to add all the nodes which have edges
+#pointing to a specicied node within a specified distance
+#current depth should be set to zero
+#listOfReachers should be an empty list
+def getSourcesUsingDestInNHops(numberOfHops, currentDepth, listOfReachers, destination):
+	if currentDepth == numberOfHops:
+		return listOfReachers
+
+	for n in DG.predecessors(destination):
+		if not n in listOfReachers:
+			listOfReachers.append(n)
+			getSourcesUsingDestInNHops(numberOfHops, currentDepth+1, listOfReachers, n)
+
+
 ## creates and returns a dictionary of key=node:value=inDegree for all nodes in the graph
 ## having an inDegree *greater than or equal to* the inDegree parameter
 def getNodesXInDegree(inDegree):
@@ -251,12 +256,13 @@ def getNodesYInDegree(inDegree):
 # combines these to create a public opinion for each node in userDict
 # groupID is used to create the file name
 def computePublicOpinion(numHops, userDict, groupID):
-	# This variable is the additional lenght witch can be added to path length
+	# This variable is the additional length witch can be added to numhops
 	# (The one you suggested be 3 in your instructions)
 	# increasing this may dramatically increase run time
 	additionToPathLength = 1
 	
-	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  #transfer node names to numbers
+	#transfer node names to numbers
+	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  
 	nodeIntList = DGInts.nodes()
 	nodeIntDict = {}
 	for n in nodeIntList:
@@ -301,20 +307,16 @@ def computePublicOpinion(numHops, userDict, groupID):
 
 			print publicOpinion
 
-
+#read in the file
 readCleanDotFile()
-users = getNodesXInDegree(150)
-print "Calculating the public opinion for %d users" %len(users.keys())
-computePublicOpinion(2, users, 1)
 
-#calls DFS search to get 4 distribution data files
-# distWrite(makeReachableDistribution(1), "reachable_distribution1.txt")
-# distWrite(makeReachableDistribution(2), "reachable_distribution2.txt")
-# distWrite(makeReachableDistribution(3), "reachable_distribution3.txt")
-# distWrite(makeReachableDistribution(4), "reachable_distribution4.txt")
-# distWrite(makeDegreeDistribution(), "degree_distribution.txt")
-
-#drawSubgraphs()
+usersX = getNodesXInDegree(150)
+print "Calculating the public opinion for %d users" %len(usersX.keys())
+computePublicOpinion(2, usersX, 1)
+print
+usersY = getNodesYInDegree(20)
+print "Calculating the public opinion for %d users" %len(usersY.keys())
+computePublicOpinion(2, usersY, 2)
 
 
 
