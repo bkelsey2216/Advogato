@@ -246,43 +246,79 @@ def getNodesXInDegree(inDegree):
 def getNodesYInDegree(inDegree):
 	nodeListDict = {}
 	for node in DG:
-		if DG.in_degree(node) <= inDegree:
+		if DG.in_degree(node) <= inDegree and DG.in_degree(node) > 0:
 			nodeListDict[node] = DG.in_degree(node)
 
 	return nodeListDict
 
+# combine the opinions of the predecessors coming into the node
+# and return the public opinion vector
+def computePublicOpinion(node):
+	predecessors = DG.predecessors(node)
+	if len(predecessors) < 0:
+		print "Error: cannot compute public opinion of a node with no predecessors"
 
-# computes the from each node within numHops of each node in userDict and
-# combines these to create a public opinion for each node in userDict
-# groupID is used to create the file name
-def computePublicOpinion(numHops, userDict, groupID):
+	level = DG[predecessors[0]][node]['level']
+	currentOpinion = TVSLTran(level)
+
+	for i in range(1,len(predecessors)):
+		level = DG[predecessors[i]][node]['level']
+		toCombine = TVSLTran(level)
+		currentOpinion = comb(toCombine, currentOpinion)
+
+	return currentOpinion
+
+
+# returns all nodes with shortest path exaclty numHops from node
+def getTrustorsOfExactHop(node, numHops):
+	trustorNodes = []
+	getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
+	toRemove = []
+
+	# If shortest path between the trustor and the node is not 
+	# numHops then remove it from trustorNodes
+	for trustor in trustorNodes:
+		if nx.shortest_path_length(DG, trustor, node) != numHops:
+			toRemove.append(trustor)	
+
+	for removeNode in toRemove:
+		trustorNodes.remove(removeNode)
+
+	return trustorNodes
+
+# This method calls compute public opinion on all the users
+# in userDict. It then calculates the opinion of each node exacly
+# numHops away. It outputs these opinions in the format 
+# [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
+# to the file groupID + "output.csv"
+def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 	# This variable is the additional length witch can be added to numhops
 	# (The one you suggested be 3 in your instructions)
-	# increasing this may dramatically increase run time
+	# Altering this variable will significantly impact runtime
 	additionToPathLength = 1
-	
-	#transfer node names to numbers
+
+	# Integers representing each node for file writing purposes
 	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  
 	nodeIntList = DGInts.nodes()
-	nodeIntDict = {}
+	nodeIntDict = {}	
 	for n in nodeIntList:
 		nodeIntDict[(DGInts.node[n]['old_name'])] = n
 
-	with open(str(groupID) + 'testCSV.csv', 'wb') as csvfile:
+
+	with open(str(groupID) + 'output.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
-
-		currentOpinion = []
+		
 		for node in userDict:
-			trustorNodes = []
-			publicOpinion = []
-			trustorOpnList = []
+			print "For node " + node						
 
-			#get all the nodes within nunHops of node
-			getSourcesUsingDestInNHops(numHops, 0, trustorNodes, node)
+			# the public opinion is the comined opinion of all nodes 1 hop away
+			publicOpinion = computePublicOpinion(node)
+			print "The public opinion is " + str(publicOpinion)			
+			
+			# trustor nodes is the list of nodes with shortest path numHops to node
+			trustorNodes = getTrustorsOfExactHop(node, numHops)
 
-			print "Calculating public opinion of " + node + " based on %d nodes" %len(trustorNodes)
 			for trustor in trustorNodes:
-				trustorDict = {}
 				pubOpnDG = nx.DiGraph()
 
 				# fill pubOpnDG	with all the edges which occur in paths of length numHops + additionToPathLength
@@ -294,29 +330,25 @@ def computePublicOpinion(numHops, userDict, groupID):
 
 				if trustor != node:
 					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops + additionToPathLength, 0)
-					trustorOpnList.append(currentOpinion) #create a list of final trustor opinion vectors -- needed for file writing later
-					if len(publicOpinion) != 0:
-						publicOpinion = comb(publicOpinion, currentOpinion)
-					else:
-						publicOpinion = currentOpinion
+					print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
+					# big file writing statement
+					toWrite.writerow([groupID, nodeIntDict[node], userDict[node], 
+					nodeIntDict[trustor], currentOpinion[0], currentOpinion[1], 
+					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
+					publicOpinion[2], publicOpinion[3]]) 
 
-			## CSV file format:
-			## [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
-			for opinion in range(0, len(trustorOpnList)):
-				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], nodeIntDict[trustorNodes[opinion]], trustorOpnList[opinion][0], trustorOpnList[opinion][1], trustorOpnList[opinion][2], trustorOpnList[opinion][3], publicOpinion[0], publicOpinion[1], publicOpinion[2], publicOpinion[3]])
 
-			print publicOpinion
 
 #read in the file
 readCleanDotFile()
 
 usersX = getNodesXInDegree(150)
 print "Calculating the public opinion for %d users" %len(usersX.keys())
-computePublicOpinion(2, usersX, 1)
+calculateOpinionsAndWriteToFile(2, usersX, 1)
 print
 usersY = getNodesYInDegree(20)
 print "Calculating the public opinion for %d users" %len(usersY.keys())
-computePublicOpinion(2, usersY, 2)
+calculateOpinionsAndWriteToFile(2, usersY, 2)
 
 
 

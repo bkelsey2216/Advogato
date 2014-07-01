@@ -1,12 +1,12 @@
 digraph G {
-   A -> B [level="Observer"];
-   A -> C [level="Observer"];
-   B -> D [level="Observer"];
-   C -> D [level="Observer"];
-   E -> A [level="Observer"];
-   D -> A [level="Observer"];
-   A -> D [level="Observer"];
-   J -> C [level="Observer"];
+   B -> A [level="Observer"];
+   C -> A [level="Observer"];
+   D -> A [level="Master"];
+   D -> C [level="Observer"];
+   /*F -> A [level="Observer"];
+   G -> D [level="Observer"];
+   H -> C [level="Observer"];
+   G -> E [level="Observer"];
    K -> J [level="Observer"];
-   Q -> R [level="Master"];
+   Q -> R [level="Master"];*/
 }
