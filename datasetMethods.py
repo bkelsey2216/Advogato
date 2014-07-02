@@ -10,6 +10,7 @@ from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import TVSLExp #compute expected belief
 from TVSL3 import comb #combining operation
+from TVSL3 import disc
 
 # global variables
 DG = nx.DiGraph()
@@ -29,6 +30,20 @@ numberOfNodesToPlot = 200
 ##from 'CLEAN-advogato-graph-latest.dot'
 ##When finished
 ##DG = a DiGraph of all the edges
+def readCleanDotFile():
+	global DG
+	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+	
+	#remove all of the self loop edges
+	DG.remove_edges_from(DG.selfloop_edges())
+	#remove all nodes with no incoming edges
+
+	toRemove = []
+	for node in DG:
+		if DG.in_degree(node) == 0 and DG.out_degree(node) == 0:
+			toRemove.append(node)
+	DG.remove_nodes_from(toRemove)
+
 ##masterDG = a DiGraph of all of the edges ranked master
 ##journeyerDG, apprenticeDG, observerDG = similar to masterDG
 ##listOfNodesForSubgraph = a list of the first numberOfNodesToPlot nodes in the graph
@@ -36,7 +51,7 @@ numberOfNodesToPlot = 200
 ##subDG = a graph of the nodes in listOfNodesForSubgraph for display purposes
 ##subMasterDG = a graph containing the master edges between nodes in listOfNodesForSubgraph
 ##subJourneyerDG, subApprenticeDG, subObserverDG = similar to subMasterDG
-def readCleanDotFile():
+def makeGraphForEachLevel():
 	global DG
 	global masterDG
 	global journeyerDG
@@ -49,19 +64,6 @@ def readCleanDotFile():
 	global subJourneyerDG
 	global subApprenticeDG
 	global subObserverDG
-	
-	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
-
-	
-	#remove all of the self loop edges
-	DG.remove_edges_from(DG.selfloop_edges())
-	#remove all nodes with no incoming edges
-
-	toRemove = []
-	for node in DG:
-		if DG.in_degree(node) == 0 and DG.out_degree(node) == 0:
-			toRemove.append(node)
-	DG.remove_nodes_from(toRemove)
 
 	levels = nx.get_edge_attributes(DG,'level')
 
@@ -337,11 +339,14 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
 					publicOpinion[2], publicOpinion[3]])
 
-# Finds nodes 
-# write the trust vectors to the file in the order 
-# X (start->middle), Y (middle->dest), Z (start->dest)
-# output file = TransitiveOutput.csv
+# Finds all the paths in the graph with the topology
+# start -> dest and start -> middle -> dest.
+# Write the trust vectors to the output file 
+# TransitiveOutput.csv
+# in the order X (start->middle), Y (middle->dest), Z (start->dest)
 def testTrustTransitivity():
+	#open the file and write nothing, clearing the file
+	open('TransitiveOutput.csv', 'w').close()
 	for dest in DG.nodes():
 		for pred in DG.predecessors(dest):
 			allPaths = nx.all_simple_paths(DG,pred,dest,2)
@@ -367,10 +372,15 @@ def writeForTransitivity(path):
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 
-# returns nodes start, dest, mid1 and mid2 where there is an edge start->dest and
-# nodes mid1 and one mid2 such that there are edges start->mid1->dest and start->mid2->dest and
-# mid1 != mid2
+
+# Finds all the nodes start and dest in the graph with the topology
+# start -> dest and start -> mid1 -> dest and start->mid2->dest where mid1 != mid2
+# Write the trust vectors to the output file 
+# combinedTransitiveOutput.csv
+# in the order: X (disc(start->mid1, mid1->dest)), Y (disc(start->mid2, mid2->dest)), Z (start->dest)
 def testTrustCombining():
+	#open the file and write nothing, clearing the file
+	open('combinedTransitiveOutput.csv', 'w').close()
 	for dest in DG.nodes():
 		for pred in DG.predecessors(dest):
 			allPaths = nx.all_simple_paths(DG,pred,dest,2)
@@ -382,14 +392,11 @@ def testTrustCombining():
 				path1 = allPathsList[0]
 				path2 = allPathsList[1]
 
-				print "path1 " + str(path1)
-				print "path2 " + str(path2)
-
 				writeForCombining(path1,path2)
 
 
-# write the trust vectors to the file in the order X (disc(start->mid1, mid1->dest)),
-# Y (disc(start->mid2, mid2->dest)), Z (start->dest)
+# helper method for testTrustCombining to calculate the 
+# trust vectors and write the vectors to the file
 def writeForCombining(path1, path2):
 # output file = combinedTransitiveOutput.csv
 	
@@ -420,7 +427,11 @@ def writeForCombining(path1, path2):
 #read in the file
 readCleanDotFile()
 
-getNodesWithCorrectTopologyForTransitivity()
+testTrustTransitivity()
+print "transitivity complete"
+testTrustCombining()
+print "combining complete"
+
 
 
 #usersX = getNodesXInDegree(150)
