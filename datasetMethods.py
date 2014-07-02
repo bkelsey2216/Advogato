@@ -337,21 +337,22 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
 					publicOpinion[2], publicOpinion[3]])
 
-# returns nodes start, dest and middle where there is an edge start->dest and at least
-# one middle such that there are edges start->middle->dest
-def getNodesWithCorrectTopologyForTransitivity():
+# Finds nodes 
+# write the trust vectors to the file in the order 
+# X (start->middle), Y (middle->dest), Z (start->dest)
+# output file = TransitiveOutput.csv
+def testTrustTransitivity():
 	for dest in DG.nodes():
 		for pred in DG.predecessors(dest):
 			allPaths = nx.all_simple_paths(DG,pred,dest,2)
 			for path in allPaths:
 				if len(path) == 3:
-					writeEdgeWeightsToFileForTransitivity(path)
+					writeForTransitivity(path)
 
 
-# write the trust vectors to the file in the order 
-# X (start->middle), Y (middle->dest), Z (start->dest)
-# output file = TransitiveOutput.csv
-def writeEdgeWeightsToFileForTransitivity(path):
+# helper method for testTrustTransitivity to calculate the 
+# trust vectors and write the vectors to the file
+def writeForTransitivity(path):
 	XLevel = DG[path[0]][path[1]]['level']
 	YLevel = DG[path[1]][path[2]]['level']
 	ZLevel = DG[path[0]][path[2]]['level']
@@ -369,7 +370,7 @@ def writeEdgeWeightsToFileForTransitivity(path):
 # returns nodes start, dest, mid1 and mid2 where there is an edge start->dest and
 # nodes mid1 and one mid2 such that there are edges start->mid1->dest and start->mid2->dest and
 # mid1 != mid2
-def getNodesWithCorrectTopologyForCombining():
+def testTrustCombining():
 	for dest in DG.nodes():
 		for pred in DG.predecessors(dest):
 			allPaths = nx.all_simple_paths(DG,pred,dest,2)
@@ -384,19 +385,29 @@ def getNodesWithCorrectTopologyForCombining():
 				print "path1 " + str(path1)
 				print "path2 " + str(path2)
 
-				writeEdgeWeightsToFileForCombining(path1,path2)
+				writeForCombining(path1,path2)
 
 
 # write the trust vectors to the file in the order X (disc(start->mid1, mid1->dest)),
 # Y (disc(start->mid2, mid2->dest)), Z (start->dest)
-<<<<<<< HEAD
-def writeEdgeWeightsToFileForCombining(path1, path2):
-	print
-=======
+def writeForCombining(path1, path2):
 # output file = combinedTransitiveOutput.csv
-def writeEdgeWeightsToFileForCombining(start, mid1, mid2, dest):
-	XOpinion = TVSLTran(XLevel)
-	YOpinion = TVSLTran(YLevel)
+	
+	XALevel = DG[path1[0]][path1[1]]['level']
+	XBLevel = DG[path1[1]][path1[2]]['level']
+	
+	YALevel = DG[path2[0]][path2[1]]['level']
+	YBLevel = DG[path2[1]][path2[2]]['level']
+
+	ZLevel  = DG[path1[0]][path1[2]]['level']
+
+	XAOpinion = TVSLTran(XALevel)
+	XBOpinion = TVSLTran(XBLevel)
+	YAOpinion = TVSLTran(YALevel)
+	YBOpinion = TVSLTran(YBLevel)
+
+	XOpinion = disc(XAOpinion, XBOpinion)
+	YOpinion = disc(YAOpinion, YBOpinion)
 	ZOpinion = TVSLTran(ZLevel)
 
 	with open('combinedTransitiveOutput.csv', 'a') as csvfile:
@@ -404,13 +415,12 @@ def writeEdgeWeightsToFileForCombining(start, mid1, mid2, dest):
 		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
->>>>>>> FETCH_HEAD
 
 
 #read in the file
 readCleanDotFile()
 
-getNodesWithCorrectTopologyForCombining()
+getNodesWithCorrectTopologyForTransitivity()
 
 
 #usersX = getNodesXInDegree(150)
