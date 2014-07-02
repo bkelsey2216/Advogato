@@ -335,20 +335,57 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 					toWrite.writerow([groupID, nodeIntDict[node], userDict[node], 
 					nodeIntDict[trustor], currentOpinion[0], currentOpinion[1], 
 					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
-					publicOpinion[2], publicOpinion[3]]) 
+					publicOpinion[2], publicOpinion[3]])
 
+# returns nodes start, dest and middle where there is an edge start->dest and at least
+# one middle such that there are edges start->middle->dest
+def getNodesWithCorrectTopologyForTransitivity():
+	for node in DG.nodes():
+		for pred in DG.predecessors(node):
+			paths = nx.all_simple_paths(DG,pred,node,2)
+			for path in paths:
+				if len(path) == 3:
+					writeEdgeWeightsToFileForTransitivity(path)
+
+
+# write the trust vectors to the file in the order 
+# X (start->middle), Y (middle->dest), Z (start->dest)
+def writeEdgeWeightsToFileForTransitivity(path):
+	XLevel = DG[path[0]][path[1]]['level']
+	YLevel = DG[path[1]][path[2]]['level']
+	ZLevel = DG[path[0]][path[2]]['level']
+
+	XOpinion = TVSLTran(XLevel)
+	YOpinion = TVSLTran(YLevel)
+	ZOpinion = TVSLTran(ZLevel)
+
+	#Brooke will do the writing
+
+# returns nodes start, dest, mid1 and mid2 where there is an edge start->dest and
+# nodes mid1 and one mid2 such that there are edges start->mid1->dest and start->mid2->dest and
+# mid1 != mid2
+def getNodesWithCorrectTopologyForCombining():
+	print
+
+# write the trust vectors to the file in the order X (disc(start->mid1, mid1->dest)),
+# Y (disc(start->mid2, mid2->dest)), Z (start->dest)
+def writeEdgeWeightsToFileForCombining(start, mid1, mid2, dest):
+	print
 
 
 #read in the file
 readCleanDotFile()
 
-usersX = getNodesXInDegree(150)
-print "Calculating the public opinion for %d users" %len(usersX.keys())
-calculateOpinionsAndWriteToFile(2, usersX, 1)
-print
-usersY = getNodesYInDegree(20)
-print "Calculating the public opinion for %d users" %len(usersY.keys())
-calculateOpinionsAndWriteToFile(2, usersY, 2)
+getNodesWithCorrectTopologyForTransitivity()
+
+
+#usersX = getNodesXInDegree(150)
+#print "Calculating the public opinion for %d users" %len(usersX.keys())
+#calculateOpinionsAndWriteToFile(2, usersX, 1)
+#print
+#usersY = getNodesYInDegree(20)
+#print "Calculating the public opinion for %d users" %len(usersY.keys())
+#calculateOpinionsAndWriteToFile(2, usersY, 2)
 
 
 
