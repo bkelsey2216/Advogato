@@ -340,10 +340,10 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 # returns nodes start, dest and middle where there is an edge start->dest and at least
 # one middle such that there are edges start->middle->dest
 def getNodesWithCorrectTopologyForTransitivity():
-	for node in DG.nodes():
-		for pred in DG.predecessors(node):
-			paths = nx.all_simple_paths(DG,pred,node,2)
-			for path in paths:
+	for dest in DG.nodes():
+		for pred in DG.predecessors(dest):
+			allPaths = nx.all_simple_paths(DG,pred,dest,2)
+			for path in allPaths:
 				if len(path) == 3:
 					writeEdgeWeightsToFileForTransitivity(path)
 
@@ -365,18 +365,33 @@ def writeEdgeWeightsToFileForTransitivity(path):
 # nodes mid1 and one mid2 such that there are edges start->mid1->dest and start->mid2->dest and
 # mid1 != mid2
 def getNodesWithCorrectTopologyForCombining():
-	print
+	for dest in DG.nodes():
+		for pred in DG.predecessors(dest):
+			allPaths = nx.all_simple_paths(DG,pred,dest,2)
+			allPathsList = []
+			for path in allPaths:
+				if len(path) == 3:
+					allPathsList.append(path)
+			if len(allPathsList) >= 2:
+				path1 = allPathsList[0]
+				path2 = allPathsList[1]
+
+				print "path1 " + str(path1)
+				print "path2 " + str(path2)
+
+				writeEdgeWeightsToFileForCombining(path1,path2)
+
 
 # write the trust vectors to the file in the order X (disc(start->mid1, mid1->dest)),
 # Y (disc(start->mid2, mid2->dest)), Z (start->dest)
-def writeEdgeWeightsToFileForCombining(start, mid1, mid2, dest):
+def writeEdgeWeightsToFileForCombining(path1, path2):
 	print
 
 
 #read in the file
 readCleanDotFile()
 
-getNodesWithCorrectTopologyForTransitivity()
+getNodesWithCorrectTopologyForCombining()
 
 
 #usersX = getNodesXInDegree(150)
