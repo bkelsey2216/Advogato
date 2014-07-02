@@ -50,8 +50,7 @@ def TVSLTran(trust):     #transfer edge attribute to opinion
             # rd.gauss creates a normal distribution/probablility density centered about
             # 1 (median/mean = 1) with a sigma squared of 0.25 (sigma/standard deviation = 0.5). 
             # This means that on average, the rate is 0.5 away from the mean.
-            rate = 1
-            #rate = rd.gauss(1, 0.25) # rate = 1 <--- true????
+            rate = rd.gauss(1, 0.25) # rate = 1 <--- true????
 
         result = np.array([1,1,1,1], dtype=float)
 

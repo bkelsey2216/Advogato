@@ -350,6 +350,7 @@ def getNodesWithCorrectTopologyForTransitivity():
 
 # write the trust vectors to the file in the order 
 # X (start->middle), Y (middle->dest), Z (start->dest)
+# output file = TransitiveOutput.csv
 def writeEdgeWeightsToFileForTransitivity(path):
 	XLevel = DG[path[0]][path[1]]['level']
 	YLevel = DG[path[1]][path[2]]['level']
@@ -359,7 +360,11 @@ def writeEdgeWeightsToFileForTransitivity(path):
 	YOpinion = TVSLTran(YLevel)
 	ZOpinion = TVSLTran(ZLevel)
 
-	#Brooke will do the writing
+	with open('TransitiveOutput.csv', 'a') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
+		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
+		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 
 # returns nodes start, dest, mid1 and mid2 where there is an edge start->dest and
 # nodes mid1 and one mid2 such that there are edges start->mid1->dest and start->mid2->dest and
@@ -384,8 +389,22 @@ def getNodesWithCorrectTopologyForCombining():
 
 # write the trust vectors to the file in the order X (disc(start->mid1, mid1->dest)),
 # Y (disc(start->mid2, mid2->dest)), Z (start->dest)
+<<<<<<< HEAD
 def writeEdgeWeightsToFileForCombining(path1, path2):
 	print
+=======
+# output file = combinedTransitiveOutput.csv
+def writeEdgeWeightsToFileForCombining(start, mid1, mid2, dest):
+	XOpinion = TVSLTran(XLevel)
+	YOpinion = TVSLTran(YLevel)
+	ZOpinion = TVSLTran(ZLevel)
+
+	with open('combinedTransitiveOutput.csv', 'a') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
+		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
+		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
+>>>>>>> FETCH_HEAD
 
 
 #read in the file
