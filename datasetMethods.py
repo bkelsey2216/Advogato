@@ -11,6 +11,7 @@ from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import TVSLExp #compute expected belief
 from TVSL3 import comb #combining operation
 from TVSL3 import disc
+import random
 
 # global variables
 DG = nx.DiGraph()
@@ -424,6 +425,10 @@ def writeForCombining(path1, path2):
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 
+# For every node in the first 1000 nodes this method checks the length of the
+# shortest path to every other node in the graph. It creates a distribution
+# where each entry represents the length of a shortest path and 0 indicates
+# no path. It outputs this distribution to the file smallworld.txt.
 def smallWorldProblem():
 	distribution = []
 	for i in range(0,50):
@@ -440,10 +445,94 @@ def smallWorldProblem():
 	print distribution
 	distWrite(distribution,"smallworld.txt")
 
+
+
+# This method randomly finds 1000 pairs of nodes with shortest path numHops between 
+# them. It calculates the trust between these nodes using 3VSL. It outputs the resulting 
+# trust vector to str(numHops) + distance.csv
+def doesNeutralityIncreaseWithDistance(numHops):
+	numberOfPairs = 0
+	additionToPathLength = 1
+
+	with open(str(numHops) + 'distance.csv', 'wb') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		
+		while numberOfPairs < 1000:
+			rand = random.randint(0,len(DG.nodes())-1)
+			node = DG.nodes()[rand]
+			trustorNodes = getTrustorsOfExactHop(node, numHops)
+			if len(trustorNodes) > 0:
+				rand = random.randint(0,len(trustorNodes)-1)
+				trustor = trustorNodes[rand]			
+	
+				# fill tvslDG with all the edges which occur in paths of length numHops + additionToPathLength
+				# from trustor to node
+				tvslDG = nx.DiGraph()	
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
+				for p in path:
+					for i in range(0, len(p)-1):
+						tvslDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
+				
+				currentOpinion = TVSLAlgr(svslDG, trustor, node, numHops + additionToPathLength, 0)
+				print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
+				
+				# big file writing statement
+				toWrite.writerow([currentOpinion[0], currentOpinion[1], 
+				currentOpinion[2], currentOpinion[3]])
+
+				numberOfPairs += 1
+
+
+
+# This function traverses all nodes in the graph to find pairs A,B such that A->B and B->A are
+# both edges that exist in the dataset. Taking care to not repeat pairs, the function appends these
+# pairs to a 'listofReciprocates'. It then forms a sample population of 1000 such reciprocative relationships
+# using random.sample, and returns this sublist to the function caller.
+def findReciprocatingTrust():
+	listofReciprocates = []
+	for node in DG.nodes():
+		listofNeighbors = DG.neighbors(node)
+		for neighbor in listofNeighbors:
+			if DG.has_edge(neighbor, node):
+				newPair = [node, neighbor]
+				checknewPair = [neighbor, node]
+				if (newPair not in listofReciprocates) and (checknewPair not in listofReciprocates):
+					listofReciprocates.append(newPair)
+
+	sampleRelationships = random.sample(listofReciprocates, 1000)
+
+	return sampleRelationships
+
+# This function takes the random sample of mutual trusting nodes, finds their respective opinions
+# by indexing into the graph edge weights, transforms these edge weights into an opinion using TVSLTran,
+# and writes these two opinions onto one line of a .csv file. This .csv file will be the input to
+# MATLAB code computing the expected belief for a CDF.
+def computeTrustDifference():
+	#open the file and write nothing, clearing the file
+	open('reciprocativeTrust.csv', 'w').close()
+	relationships = findReciprocatingTrust()
+	for pair in relationships:
+		levelAB = DG[pair[0]][pair[1]]['level']
+		levelBA = DG[pair[1]][pair[0]]['level']
+		trustAB = TVSLTran(levelAB)
+		trustBA = TVSLTran(levelBA)
+
+		with open('reciprocativeTrust.csv', 'a') as csvfile:
+			toWrite = csv.writer(csvfile, delimiter = ',')
+			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]
+
 #read in the file
 readCleanDotFile()
+print "one"
+doesNeutralityIncreaseWithDistance(1)
+print "two"
+doesNeutralityIncreaseWithDistance(2)
+print "three"
+doesNeutralityIncreaseWithDistance(3)
+print "four"
+doesNeutralityIncreaseWithDistance(4)
 
-smallWorldProblem()
+#smallWorldProblem()
 #testTrustTransitivity()
 #print "transitivity complete"
 #testTrustCombining()

@@ -3,10 +3,10 @@ digraph G {
    C -> A [level="Observer"];
    D -> A [level="Master"];
    D -> C [level="Observer"];
-   /*F -> A [level="Observer"];
-   G -> D [level="Observer"];
-   H -> C [level="Observer"];
-   G -> E [level="Observer"];
-   K -> J [level="Observer"];
-   Q -> R [level="Master"];*/
+   C -> B [level="Observer"];
+   X -> Y [level="Observer"];
+   Z -> X [level="Observer"];
+   Y -> Z [level="Observer"];
+   W -> Y [level="Observer"];
+   A -> Z [level="Master"];
 }
