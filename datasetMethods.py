@@ -5,6 +5,7 @@ import pygraphviz
 import matplotlib.pyplot as plt
 from collections import defaultdict
 from decimal import Decimal
+import random
 import csv
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
@@ -445,6 +446,7 @@ def smallWorldProblem():
 	print distribution
 	distWrite(distribution,"smallworld.txt")
 
+<<<<<<< HEAD
 
 
 # This method randomly finds 1000 pairs of nodes with shortest path numHops between 
@@ -484,6 +486,8 @@ def doesNeutralityIncreaseWithDistance(numHops):
 
 
 
+=======
+>>>>>>> FETCH_HEAD
 # This function traverses all nodes in the graph to find pairs A,B such that A->B and B->A are
 # both edges that exist in the dataset. Taking care to not repeat pairs, the function appends these
 # pairs to a 'listofReciprocates'. It then forms a sample population of 1000 such reciprocative relationships
@@ -519,6 +523,7 @@ def computeTrustDifference():
 
 		with open('reciprocativeTrust.csv', 'a') as csvfile:
 			toWrite = csv.writer(csvfile, delimiter = ',')
+<<<<<<< HEAD
 			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]
 
 #read in the file
@@ -533,6 +538,22 @@ print "four"
 doesNeutralityIncreaseWithDistance(4)
 
 #smallWorldProblem()
+=======
+			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2], trustBA[3]])
+
+#read in the file
+readCleanDotFile()
+
+computeTrustDifference()
+
+#print findReciprocatingTrust()
+
+# testTrustTransitivity()
+# print "transitivity complete"
+# testTrustCombining()
+# print "combining complete"
+
+>>>>>>> FETCH_HEAD
 #testTrustTransitivity()
 #print "transitivity complete"
 #testTrustCombining()
