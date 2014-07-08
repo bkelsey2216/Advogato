@@ -453,7 +453,7 @@ def findReciprocatingTrust():
 			if DG.has_edge(neighbor, node):
 				newPair = [node, neighbor]
 				checknewPair = [neighbor, node]
-				if newPair and checknewPair not in listofReciprocates:
+				if (newPair not in listofReciprocates) and (checknewPair not in listofReciprocates):
 					listofReciprocates.append(newPair)
 
 	sampleRelationships = random.sample(listofReciprocates, 1000)
@@ -465,8 +465,9 @@ def findReciprocatingTrust():
 # and writes these two opinions onto one line of a .csv file. This .csv file will be the input to
 # MATLAB code computing the expected belief for a CDF.
 def computeTrustDifference():
+	#open the file and write nothing, clearing the file
+	open('reciprocativeTrust.csv', 'w').close()
 	relationships = findReciprocatingTrust()
-
 	for pair in relationships:
 		levelAB = DG[pair[0]][pair[1]]['level']
 		levelBA = DG[pair[1]][pair[0]]['level']
@@ -480,7 +481,6 @@ def computeTrustDifference():
 #read in the file
 readCleanDotFile()
 
-<<<<<<< HEAD
 computeTrustDifference()
 
 #print findReciprocatingTrust()
@@ -489,13 +489,11 @@ computeTrustDifference()
 # print "transitivity complete"
 # testTrustCombining()
 # print "combining complete"
-=======
-smallWorldProblem()
+
 #testTrustTransitivity()
 #print "transitivity complete"
 #testTrustCombining()
 #print "combining complete"
->>>>>>> FETCH_HEAD
 
 
 
