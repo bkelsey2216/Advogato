@@ -28,7 +28,7 @@ subObserverDG = nx.DiGraph()
 numberOfNodesToPlot = 200
 
 ##This method reads a "clean" (no self loops or nodes which point to nothing) .dot file
-##from 'CLEAN-advogato-graph-latest.dot'
+##from 'advogato-fixed-numbers.dot'
 ##When finished
 ##DG = a DiGraph of all the edges
 def readCleanDotFile():
@@ -45,6 +45,7 @@ def readCleanDotFile():
 			toRemove.append(node)
 	DG.remove_nodes_from(toRemove)
 
+#make smaller graphs for each level in order to display and visualize
 ##masterDG = a DiGraph of all of the edges ranked master
 ##journeyerDG, apprenticeDG, observerDG = similar to masterDG
 ##listOfNodesForSubgraph = a list of the first numberOfNodesToPlot nodes in the graph
@@ -424,6 +425,21 @@ def writeForCombining(path1, path2):
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 
+def smallWorldProblem():
+	distribution = []
+	for i in range(0,50):
+		distribution.append(0)
+
+	for source in DG.nodes()[0:1000]:
+		for dest in DG.nodes():
+			if source != dest:
+				if nx.has_path(DG,source,dest) == False:
+					distribution[0] +=1
+				else:
+					distribution[nx.shortest_path_length(DG, source, dest)] +=1
+
+	print distribution
+	distWrite(distribution,"smallworld.txt")
 
 # This function traverses all nodes in the graph to find pairs A,B such that A->B and B->A are
 # both edges that exist in the dataset. Taking care to not repeat pairs, the function appends these
@@ -464,6 +480,7 @@ def computeTrustDifference():
 #read in the file
 readCleanDotFile()
 
+<<<<<<< HEAD
 computeTrustDifference()
 
 #print findReciprocatingTrust()
@@ -472,6 +489,13 @@ computeTrustDifference()
 # print "transitivity complete"
 # testTrustCombining()
 # print "combining complete"
+=======
+smallWorldProblem()
+#testTrustTransitivity()
+#print "transitivity complete"
+#testTrustCombining()
+#print "combining complete"
+>>>>>>> FETCH_HEAD
 
 
 
