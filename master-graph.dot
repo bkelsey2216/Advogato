@@ -4,7 +4,6 @@ digraph G {
    B -> D [level="Master"];
    D -> A [level="Observer"];
    C -> A [level="Observer"];
-<<<<<<< HEAD
    D -> A [level="Master"];
    D -> C [level="Observer"];
    C -> B [level="Observer"];
@@ -13,11 +12,4 @@ digraph G {
    Y -> Z [level="Observer"];
    W -> Y [level="Observer"];
    A -> Z [level="Master"];
-=======
-   /*G -> D [level="Observer"];
-   H -> C [level="Observer"];
-   G -> E [level="Observer"];
-   K -> J [level="Observer"];
-   Q -> R [level="Master"];*/
->>>>>>> FETCH_HEAD
 }

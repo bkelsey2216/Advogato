@@ -12,6 +12,8 @@ from TVSL3 import TVSLExp #compute expected belief
 from TVSL3 import comb #combining operation
 from TVSL3 import disc
 import random
+import scipy as sp
+import numpy as np
 
 # global variables
 DG = nx.DiGraph()
@@ -341,39 +343,6 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
 					publicOpinion[2], publicOpinion[3]])
 
-# Finds all the paths in the graph with the topology
-# start -> dest and start -> middle -> dest.
-# Write the trust vectors to the output file 
-# TransitiveOutput.csv
-# in the order X (start->middle), Y (middle->dest), Z (start->dest)
-def testTrustTransitivity():
-	#open the file and write nothing, clearing the file
-	open('TransitiveOutput.csv', 'w').close()
-	for dest in DG.nodes():
-		for pred in DG.predecessors(dest):
-			allPaths = nx.all_simple_paths(DG,pred,dest,2)
-			for path in allPaths:
-				if len(path) == 3:
-					writeForTransitivity(path)
-
-
-# helper method for testTrustTransitivity to calculate the 
-# trust vectors and write the vectors to the file
-def writeForTransitivity(path):
-	XLevel = DG[path[0]][path[1]]['level']
-	YLevel = DG[path[1]][path[2]]['level']
-	ZLevel = DG[path[0]][path[2]]['level']
-
-	XOpinion = TVSLTran(XLevel)
-	YOpinion = TVSLTran(YLevel)
-	ZOpinion = TVSLTran(ZLevel)
-
-	with open('TransitiveOutput.csv', 'a') as csvfile:
-		toWrite = csv.writer(csvfile, delimiter = ',')
-		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
-		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
-		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
-
 
 # Finds all the nodes start and dest in the graph with the topology
 # start -> dest and start -> mid1 -> dest and start->mid2->dest where mid1 != mid2
@@ -424,6 +393,72 @@ def writeForCombining(path1, path2):
 		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
+
+
+# This method tests CoCitation, Coupling and Transitivity as
+# outlined in the Matiri paper.
+# All of these require a topolpology with egdes node -> node2,
+# node -> node3 and node2 -> node3
+# The only difference between the outputs is which node is 
+# considdered X, Y and Z
+def testCocitationCouplingAndTransitivity():
+	#open the files and write nothing, clearing the file
+	open('CoCitation.csv', 'w').close()
+	open('Coupling.csv', 'w').close()
+	open('Propagation.csv', 'w').close()
+
+	numberOfSets = 0
+	while numberOfSets < 1000:
+		rand = random.randint(0,len(DG.nodes())-1)
+		node1 = DG.nodes()[rand]
+		neighbors = DG.neighbors(node1)
+		if len(neighbors) > 2:
+			rand1 = random.randint(0,len(neighbors)-1)
+			rand2 = random.randint(0,len(neighbors)-1)
+			
+			#make sure rand1 != rand2
+			while rand1 == rand2:
+				rand2 = random.randint(0,len(neighbors)-1)
+			node2 = neighbors[rand1]
+			node3 = neighbors[rand2]
+
+			#if the correct topology is present
+			#ie. there exist edges
+			# node -> node2
+			# node -> node3
+			# node2 -> node3
+			if DG.has_edge(node2,node3):
+				numberOfSets +=1
+
+				#co-citatoin
+				XLevel = DG[node1][node2]['level']
+				YLevel = DG[node1][node3]['level']
+				ZLevel = DG[node2][node3]['level']
+				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"CoCitation.csv")
+				#coupling
+				XLevel = DG[node2][node3]['level']
+				YLevel = DG[node1][node3]['level']
+				ZLevel = DG[node1][node2]['level']
+				#propogation(transitivity)
+				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"Coupling.csv")
+				XLevel = DG[node1][node2]['level']
+				YLevel = DG[node2][node3]['level']
+				ZLevel = DG[node1][node3]['level']
+				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"Propagation.csv")							
+
+# Helper method for writing 3 levels to a file
+# Useful for testing cocitaion and coupling and propagation
+def writeTriangleOfTrust(XLevel,YLevel,ZLevel,filename):
+	XOpinion = TVSLTran(XLevel)
+	YOpinion = TVSLTran(YLevel)
+	ZOpinion = TVSLTran(ZLevel)
+
+	with open(filename, 'a') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
+		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
+		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
+	
 
 # For every node in the first 1000 nodes this method checks the length of the
 # shortest path to every other node in the graph. It creates a distribution
@@ -519,18 +554,12 @@ def computeTrustDifference():
 
 		with open('reciprocativeTrust.csv', 'a') as csvfile:
 			toWrite = csv.writer(csvfile, delimiter = ',')
-			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]
+			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]])
 
-#read in the file
+
 readCleanDotFile()
-print "one"
-doesNeutralityIncreaseWithDistance(1)
-print "two"
-doesNeutralityIncreaseWithDistance(2)
-print "three"
-doesNeutralityIncreaseWithDistance(3)
-print "four"
-doesNeutralityIncreaseWithDistance(4)
+testCocitationCouplingAndTransitivity()
+
 
 #smallWorldProblem()
 #testTrustTransitivity()
