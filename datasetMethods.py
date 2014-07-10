@@ -556,10 +556,44 @@ def computeTrustDifference():
 			toWrite = csv.writer(csvfile, delimiter = ',')
 			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]])
 
+# This function selects random pairs of nodes and checks whether a path exists between them.
+# If a path does exist, it computes the length of the shortest path and gets a list of nodes on
+# the shortest path. The opinions along this path are then discounted into one final opinion
+# connecting the original pair of nodes. The final opinion and path length are written into
+# a line of a .csv file for Experiment 4 data analysis.
+def makeOpinionFile():	
+	pairsList = []
+	#open and close file to make blank
+	open('opinionsList.csv', 'w').close()
+
+	# file format: [pairOpinion[0], pairOpinion[1], pairOpinion[2], pairOpinion[3], pathLength]
+
+	#need a sample of 1000 opinions. hopefully running for 50000 iterations will produce a list
+	# that has at least 1000 opinions with expected belief over 0.75
+	for i in range(0, 100000):
+		newPair = random.sample(DG.nodes(), 2)
+		if newPair not in pairsList:
+			print str(len(pairsList))
+			if nx.has_path(DG, newPair[0], newPair[1]):
+				pairsList.append(newPair)
+				pathLength = nx.shortest_path_length(DG, newPair[0], newPair[1])
+				path = nx.shortest_path(DG, newPair[0], newPair[1])
+				cert = DG[path[0]][path[1]]['level']
+				pairOpinion = TVSLTran(cert)
+
+				print newPair
+				print path
+				for x in range(1, len(path)-1):
+					nextCert = DG[path[x]][path[x+1]]['level']
+					nextOpinion = TVSLTran(nextCert)
+					pairOpinion = disc(pairOpinion, nextOpinion)
+
+				with open('opinionsList.csv', 'a') as csvfile:
+					toWrite = csv.writer(csvfile, delimiter = ',')
+					toWrite.writerow([pathLength, pairOpinion[0], pairOpinion[1], pairOpinion[2], pairOpinion[3]])
 
 readCleanDotFile()
 testCocitationCouplingAndTransitivity()
-
 
 #smallWorldProblem()
 #testTrustTransitivity()
