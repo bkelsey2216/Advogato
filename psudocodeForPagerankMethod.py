@@ -52,3 +52,7 @@ def localPartitioningAttempt(alpha, beta):
 def calculateRandomWalkMatrix(A):
 	D = kjfndsiuffiuhadf
 	return (eye())
+
+
+
+

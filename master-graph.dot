@@ -12,4 +12,5 @@ digraph G {
    Y -> Z [level="Observer"];
    W -> Y [level="Observer"];
    A -> Z [level="Master"];
+   Z -> A [level="Master"];   
 }
