@@ -14,6 +14,7 @@ from TVSL3 import disc
 import random
 import scipy as sp
 import numpy as np
+import operator
 
 # global variables
 DG = nx.DiGraph()
@@ -28,6 +29,7 @@ subJourneyerDG = nx.DiGraph()
 subApprenticeDG = nx.DiGraph()
 subObserverDG = nx.DiGraph()
 numberOfNodesToPlot = 200
+nodeIntDict = {}
 
 ##This method reads a "clean" (no self loops or nodes which point to nothing) .dot file
 ##from 'advogato-fixed-numbers.dot'
@@ -35,7 +37,8 @@ numberOfNodesToPlot = 200
 ##DG = a DiGraph of all the edges
 def readCleanDotFile():
 	global DG
-	DG = nx.DiGraph(nx.read_dot('advogato-fixed-numbers.dot'))
+	global nodeIntDict
+	DG = nx.DiGraph(nx.read_dot("advogato-fixed-numbers.dot"))
 	
 	#remove all of the self loop edges
 	DG.remove_edges_from(DG.selfloop_edges())
@@ -46,6 +49,12 @@ def readCleanDotFile():
 		if DG.in_degree(node) == 0 and DG.out_degree(node) == 0:
 			toRemove.append(node)
 	DG.remove_nodes_from(toRemove)
+
+	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  
+	nodeIntList = DGInts.nodes()
+	nodeIntDict = {}	
+	for n in nodeIntList:
+		nodeIntDict[(DGInts.node[n]['old_name'])] = n
 
 #make smaller graphs for each level in order to display and visualize
 ##masterDG = a DiGraph of all of the edges ranked master
@@ -592,8 +601,111 @@ def makeOpinionFile():
 					toWrite = csv.writer(csvfile, delimiter = ',')
 					toWrite.writerow([pathLength, pairOpinion[0], pairOpinion[1], pairOpinion[2], pairOpinion[3]])
 
-readCleanDotFile()
-testCocitationCouplingAndTransitivity()
+#I still do not know what alpha and beta should be set to
+def localPartitioningAttempt(alpha, beta, node):
+	gamma = alpha + beta - alpha * beta
+	
+	#This returns the transition matrix, which I think is the random walk matrix
+	M = nx.google_matrix(DG)
+	print "about to page rank"
+
+	# Compute the two global page rank vectors
+	prBeta  = nx.pagerank(DG, alpha=beta)
+ 	prGamma = nx.pagerank(DG, alpha=gamma)
+
+ 	#starting vector for local page rank with all probability on node
+ 	localDict = dict.fromkeys(DG.nodes(), 0)
+ 	localDict[node] = 1
+
+ 	localPR = nx.pagerank(DG, alpha=gamma, nstart=localDict, personalization=localDict)
+ 	
+ 	#linear combination
+ 	#this would maybe be faster if I used actual arrays instead of dictionaries
+ 	p = {}
+ 	for key in localPR.keys():
+ 		p[key] = (alpha/gamma)*localPR[key] + (((1-alpha)*beta)/gamma)*prGamma[key]
+ 		p[key] = p[key]/prBeta[key]
+ 	
+ 	#create a list of tuples sorted in non-increasing order by value
+ 	sortedP = sorted(p.iteritems(), key = operator.itemgetter(1), reverse=True)
+ 	sortedLocalPR = sorted(localPR.iteritems(), key = operator.itemgetter(1), reverse=True)
+ 	print "node is " + str(node)
+ 	print "sortedLocalPR is "
+  	print sortedLocalPR[0:20]	
+ 	print "sortedP" 
+ 	print sortedP[0:20]
+
+ 	print "Conductance Loop"
+ 	S = []
+ 	notS = DG.nodes()
+ 	j = 1
+ 	S.append(sortedP[j][0])
+ 	notS.remove(sortedP[j][0])
+ 	minConducance = calculateConductance(S, notS, prBeta, M)
+ 	minJ = j
+ 	for j in range(2,len(sortedP)):
+ 		S.append(sortedP[j][0])
+ 		notS.remove(sortedP[j][0])
+ 		tempConductance = calculateConductance(S, notS, prBeta, M)
+ 		#print "cond " + str(tempConductance)
+ 		if tempConductance < minConducance:
+ 			minConducance = tempConductance
+ 			minJ = j
+ 	print minJ
+ 	print minConducance
+
+
+ 	minSet = sortedP[0:j]
+ 	print "minset"
+ 	print minSet
+ 	print "length of minset " + str(len(minSet))
+ 	return minSet 	
+ 	"""
+ 	pos=nx.spring_layout(DG)
+ 	nx.draw_networkx_edges(DG,pos)
+ 	nx.draw_networkx_nodes(DG,node_color=p.)
+
+ 	"""
+
+
+def calculateConductance(S, notS, prBeta, M):
+	print "prBeta "+ str(prBeta)
+	global nodeIntDict
+	#print "M"
+	#print M
+	top = 0
+	for i in S:
+		for j in notS:
+			top += prBeta[i]*M[nodeIntDict[i],nodeIntDict[j]]
+	#print "S "+ str(len(S))
+	#print "notS "+ str(len(notS))
+
+	bottom = 0
+	for s in S:
+		bottom += prBeta[s] 
+	
+	conductance = top/bottom
+	print "conductance " + str(conductance)
+	return conductance
+
+
+
+def makeAToyGraph():
+	global DG
+	DG = nx.gnm_random_graph(50, 0, directed = True)
+	global nodeIntDict
+	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  
+	nodeIntList = DGInts.nodes()
+	nodeIntDict = {}	
+	for n in nodeIntList:
+		nodeIntDict[(DGInts.node[n]['old_name'])] = n
+
+
+#readCleanDotFile()
+makeAToyGraph()
+
+localPartitioningAttempt(.5,.5,DG.nodes()[12])
+#testCocitationCouplingAndTransitivity()
 
 #smallWorldProblem()
 #testTrustTransitivity()
@@ -611,6 +723,12 @@ testCocitationCouplingAndTransitivity()
 #print "Calculating the public opinion for %d users" %len(usersY.keys())
 #calculateOpinionsAndWriteToFile(2, usersY, 2)
 
+"""
+How to test:
+Make visual graphs
+It is really slow
+It might just put everything into one 
+"""
 
 
 
