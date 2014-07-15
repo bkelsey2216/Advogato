@@ -3,6 +3,7 @@ import networkx as nx
 import string
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 import csv
+import random
 
 
 ## This method returns a networkx graph of the .dot file specified by filename
@@ -110,3 +111,14 @@ def removeNumbers(inFileName, outFileName):
 		line = string.replace(line, "8","eight")
 		line = string.replace(line, "9","nine")
 		o.write(line)
+
+# Returns the nodes of a triangle in the graph
+# where A -> B, A -> C, B -> C
+def findRandomTriangle(graph):
+	while True:
+		A = random.choice(graph.nodes())
+		neighbors = graph.neighbors(A)
+		if len(neighbors) >= 2:
+			(B,C) = random.sample(neighbors,2)
+			if graph.has_edge(B,C):
+				return (A,B,C)

@@ -58,11 +58,11 @@ def writeForPropogation(path):
 # Write the trust vectors to the output file 
 # ComposingOutput.csv
 # in the order: X (disc(A->B, B->D)), Y (disc(A->C, C->D)), Z (A->D)
-def testTrustComposing():
+def testTrustComposing(numberOfReps=1000):
 	#open the file and write nothing, clearing the file
 	open('OutputExp2/ComposingOutput.csv', 'w').close()
 	composingCounter = 0
-	while composingCounter < 1000:
+	while composingCounter < numberOfReps:
 		D = random.choice(DG.nodes())
 		if DG.predecessors(D):
 			A = random.choice(DG.predecessors(D))
@@ -110,12 +110,12 @@ def writeForComposing(path1, path2):
 # Creates a distribution of the shortest distance between nodes
 # Samples 1000 nodes
 # file[0] contains the number of nodes where no path exists
-def smallWorldProblem():
+def smallWorldProblem(numberOfReps=1000):
 	distribution = []
 	for i in range(0,50):
 		distribution.append(0)
 
-	for source in DG.nodes()[0:1000]:
+	for source in DG.nodes()[0:numberOfReps]:
 		for D in DG.nodes():
 			if source != D:
 				if nx.has_path(DG,source,D) == False:

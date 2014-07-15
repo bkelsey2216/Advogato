@@ -1,6 +1,6 @@
 from GeneralMethods import readDotFile
-from GeneralMethods import getTrustorsOfExactHop
 from GeneralMethods import writeTriangleOfTrust
+from GeneralMethods import findRandomTriangle
 import networkx as nx
 import os
 import csv
@@ -24,49 +24,24 @@ def testCocitationCouplingAndTransitivity(numberOfReps = 1000):
 
 	numberOfSets = 0
 	while numberOfSets < numberOfReps:
-		A = random.choice(DG.nodes())
-		neighbors = DG.neighbors(A)
-		if len(neighbors) >= 2:
-			(B,C) = random.sample(neighbors,2)
-			if newDG.has_edge(B,C):
-				return (A,B,C)
-
-		rand = random.randint(0,len(DG)-1)
-		A = DG.nodes()[rand]
-		neighbors = DG.neighbors(A)
-		if len(neighbors) > 2:
-			rand1 = random.randint(0,len(neighbors)-1)
-			rand2 = random.randint(0,len(neighbors)-1)
-			
-			#make sure rand1 != rand2
-			while rand1 == rand2:
-				rand2 = random.randint(0,len(neighbors)-1)
-			B = neighbors[rand1]
-			C = neighbors[rand2]
-
-			#if the correct topology is present
-			#ie. there exist edges
-			# node -> B
-			# node -> C
-			# B -> C
-			if DG.has_edge(B,C):
-				numberOfSets +=1
-
-				#co-citatoin
-				XLevel = DG[A][B]['level']
-				YLevel = DG[A][C]['level']
-				ZLevel = DG[B][C]['level']
-				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/CoCitation.csv")
-				#coupling
-				XLevel = DG[B][C]['level']
-				YLevel = DG[A][C]['level']
-				ZLevel = DG[A][B]['level']
-				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Coupling.csv")
-				#propogation			
-				XLevel = DG[A][B]['level']
-				YLevel = DG[B][C]['level']
-				ZLevel = DG[A][C]['level']
-				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Propagation.csv")							
+		(A,B,C) = findRandomTriangle(DG)
+		numberOfSets +=1
+		
+		#co-citatoin
+		XLevel = DG[A][B]['level']
+		YLevel = DG[A][C]['level']
+		ZLevel = DG[B][C]['level']
+		writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/CoCitation.csv")
+		#coupling
+		XLevel = DG[B][C]['level']
+		YLevel = DG[A][C]['level']
+		ZLevel = DG[A][B]['level']
+		writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Coupling.csv")
+		#propogation			
+		XLevel = DG[A][B]['level']
+		YLevel = DG[B][C]['level']
+		ZLevel = DG[A][C]['level']
+		writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Propagation.csv")							
 
 
 	

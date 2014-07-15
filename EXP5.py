@@ -1,5 +1,6 @@
 from GeneralMethods import readDotFile
 from GeneralMethods import writeTriangleOfTrust
+from GeneralMethods import findRandomTriangle
 import networkx as nx
 import os
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
@@ -10,16 +11,7 @@ global oldDG
 global newDG
 
 
-# Returns the nodes of a triangle in newDG
-# where A -> B, A -> C, B -> C
-def findRandomTriangle():
-	while True:
-		A = random.choice(newDG.nodes())
-		neighbors = newDG.neighbors(A)
-		if len(neighbors) >= 2:
-			(B,C) = random.sample(neighbors,2)
-			if newDG.has_edge(B,C):
-				return (A,B,C)
+
 
 # This method finds triangles which have the form A -> B, A -> C, B -> C
 # in newDG but are missing exactly one of these edges in oldDG
@@ -28,7 +20,7 @@ def testCouplingOverTime(desiredTriangles = 1000):
 	open('OutputExp5/Coupling.csv', 'w').close()
 	couplingCounter = 0
 	while couplingCounter < desiredTriangles:
-		(A, B, C) = findRandomTriangle()
+		(A, B, C) = findRandomTriangle(newDG)
 		if (oldDG.has_edge(A,B)==False) and oldDG.has_edge(A,C) and oldDG.has_edge(B,C):
 			couplingCounter+=1
 			XLevel = newDG[B][C]['level']
@@ -43,7 +35,7 @@ def testCocitationOverTime(desiredTriangles = 1000):
 	open('OutputExp5/CoCitation.csv', 'w').close()
 	cocitationCounter = 0
 	while cocitationCounter < desiredTriangles: 
-		(A, B, C) = findRandomTriangle()
+		(A, B, C) = findRandomTriangle(newDG)
 		if oldDG.has_edge(A,B) and oldDG.has_edge(A,C) and (oldDG.has_edge(B,C) == False):
 			cocitationCounter+=1
 			XLevel = newDG[A][B]['level']
@@ -58,7 +50,7 @@ def testTransitivityOverTime(desiredTriangles = 1000):
 	open('OutputExp5/Propagation.csv', 'w').close()
 	propogationCounter = 0
 	while  propogationCounter < desiredTriangles:
-		(A, B, C) = findRandomTriangle()
+		(A, B, C) = findRandomTriangle(newDG)
 		if oldDG.has_edge(A,B) and (oldDG.has_edge(A,C) == False) and oldDG.has_edge(B,C):
 			propogationCounter+=1
 			XLevel = newDG[A][B]['level']
@@ -87,7 +79,7 @@ def testCocitationCouplingAndTransitivityOverTime(desiredTriangles = 1000):
 	while (cocitationCounter < desiredTriangles or couplingCounter < desiredTriangles 
 			or propogationCounter < desiredTriangles):
 
-		(A, B, C) = findRandomTriangle()
+		(A, B, C) = findRandomTriangle(newDG)
 		
 		if (oldDG.has_edge(A,B) and (oldDG.has_edge(A,C) == False) and 
 			oldDG.has_edge(B,C) and propogationCounter < desiredTriangles):

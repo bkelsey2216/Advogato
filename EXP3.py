@@ -12,7 +12,7 @@ import random
 # both edges that exist in the dataset. Taking care to not repeat pairs, the function appends these
 # pairs to a 'listofSymms'. It then forms a sample population of 1000 such symmetrical relationships
 # using random.sample, and returns this sublist to the function caller.
-def findSymmetricalTrust():
+def findSymmetricalTrust(numberOfReps=1000):
 	listofSymms = []
 	for node in DG:
 		listofNeighbors = DG.neighbors(node)
@@ -23,7 +23,7 @@ def findSymmetricalTrust():
 				if (newPair not in listofSymms) and (checknewPair not in listofSymms):
 					listofSymms.append(newPair)
 
-	sampleRelationships = random.sample(listofSymms, 1000)
+	sampleRelationships = random.sample(listofSymms, numberOfReps)
 
 	return sampleRelationships
 
@@ -51,13 +51,13 @@ def computeTrustDifference():
 # This method randomly finds 1000 pairs of nodes with shortest path numHops between 
 # them. It calculates the trust between these nodes using 3VSL. It outputs the resulting 
 # trust vector to str(numHops) + distance.csv
-def decayOfTrustVsShortestDistance(numHops, additionToPathLength = 1):
+def decayOfTrustVsShortestDistance(numHops, additionToPathLength = 1, numberOfReps = 1000):
 	numberOfPairs = 0
 
 	with open("OutputExp3/" + str(numHops) + 'distance.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
 		
-		while numberOfPairs < 1000:
+		while numberOfPairs < numberOfReps:
 			node = random.choice(DG.nodes())
 			trustorNodes = getTrustorsOfExactHop(DG, node, numHops)
 			if trustorNodes:		
@@ -87,5 +87,5 @@ if os.path.exists('OutputExp3') == False:
 #computeTrustDifference()
 decayOfTrustVsShortestDistance(1)
 decayOfTrustVsShortestDistance(2)
-decayOfTrustVsShortestDistance(3)
-decayOfTrustVsShortestDistance(4)
+#decayOfTrustVsShortestDistance(3)
+#decayOfTrustVsShortestDistance(4)
