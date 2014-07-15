@@ -1,5 +1,6 @@
-from EXP0 import readDotFile
-from EXP0 import getTrustorsOfExactHop
+from GeneralMethods import readDotFile
+from GeneralMethods import getTrustorsOfExactHop
+from GeneralMethods import writeTriangleOfTrust
 import networkx as nx
 import os
 import csv
@@ -53,25 +54,14 @@ def testCocitationCouplingAndTransitivity():
 				XLevel = DG[node2][node3]['level']
 				YLevel = DG[node1][node3]['level']
 				ZLevel = DG[node1][node2]['level']
-				#propogation(transitivity)
 				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Coupling.csv")
+				#propogation			
 				XLevel = DG[node1][node2]['level']
 				YLevel = DG[node2][node3]['level']
 				ZLevel = DG[node1][node3]['level']
 				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Propagation.csv")							
 
-# Helper method for writing 3 levels to a file
-# Useful for testing cocitaion and coupling and propagation
-def writeTriangleOfTrust(XLevel,YLevel,ZLevel,filename):
-	XOpinion = TVSLTran(XLevel)
-	YOpinion = TVSLTran(YLevel)
-	ZOpinion = TVSLTran(ZLevel)
 
-	with open(filename, 'a') as csvfile:
-		toWrite = csv.writer(csvfile, delimiter = ',')
-		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
-		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
-		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 	
 
 # This function selects random pairs of nodes and checks whether a path exists between them.

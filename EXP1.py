@@ -1,9 +1,9 @@
 ## Natalie Pollard & Brooke Kelsey
 
-from EXP0 import distWrite
-from EXP0 import readDotFile
-from EXP0 import getNodeIntDict
-from EXP0 import getTrustorsOfExactHop
+from GeneralMethods import distWrite
+from GeneralMethods import readDotFile
+from GeneralMethods import getNodeIntDict
+from GeneralMethods import getTrustorsOfExactHop
 import networkx as nx
 import os
 import csv

@@ -1,5 +1,9 @@
 ## Natalie Pollard & Brooke Kelsey
 import networkx as nx
+import string
+from TVSL3 import TVSLTran #transfer edge attributes to opinion
+import csv
+
 
 ## This method returns a networkx graph of the .dot file specified by filename
 ## It removes all the self loops and nodes with no edges
@@ -75,11 +79,24 @@ def getTrustorsOfExactHop(DG, node, numHops):
 
 	return trustorNodes
 
+# Helper method for writing 3 levels to a file
+# Useful for testing cocitaion and coupling and propagation
+def writeTriangleOfTrust(XLevel,YLevel,ZLevel,filename):
+	XOpinion = TVSLTran(XLevel)
+	YOpinion = TVSLTran(YLevel)
+	ZOpinion = TVSLTran(ZLevel)
+
+	with open(filename, 'a') as csvfile:
+		toWrite = csv.writer(csvfile, delimiter = ',')
+		toWrite.writerow([XOpinion[0], XOpinion[1], XOpinion[2], XOpinion[3], 
+		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
+		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
+
 #This code removes numerical values from the .dot file because 
 #the networkx read_dot method does not play well with numerical values
 def removeNumbers(inFileName, outFileName):
-	f = open('filename', 'r')
-	o = open('outFileName', 'w')
+	f = open(inFileName, 'r')
+	o = open(outFileName, 'w')
 
 	for line in f:
 		line = string.replace(line, "0","zero")

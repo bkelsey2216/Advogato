@@ -13,7 +13,7 @@ from TVSL3 import comb #combining operation
 #the networkx read_dot method does not play well with numerical values
 def removeNumbers():
     f = open('advogato-graph-latest.dot', 'r')
-    o = open('advogato-fixed-numbers.dot', 'w')
+    o = open('data.dot', 'w')
 
     for line in f:
         line = string.replace(line, "0","zero")

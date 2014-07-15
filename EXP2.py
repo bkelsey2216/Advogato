@@ -1,5 +1,5 @@
 ## Natalie Pollard & Brooke Kelsey
-from EXP0 import readDotFile
+from GeneralMethods import readDotFile
 
 import networkx as nx
 import os
@@ -7,7 +7,7 @@ import csv
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import disc
-from EXP0 import distWrite
+from GeneralMethods import distWrite
 
 global DG
 

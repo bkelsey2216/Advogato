@@ -1,5 +1,5 @@
-from EXP0 import readDotFile
-from EXP0 import getTrustorsOfExactHop
+from GeneralMethods import readDotFile
+from GeneralMethods import getTrustorsOfExactHop
 import networkx as nx
 import os
 import csv
