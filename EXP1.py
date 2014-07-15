@@ -122,17 +122,18 @@ def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
 			trustorNodes = getTrustorsOfExactHop(DG, node, numHops)
 
 			for trustor in trustorNodes:
-				pubOpnDG = nx.DiGraph()
-
-				# fill pubOpnDG	with all the edges which occur in paths of length numHops + additionToPathLength
-				# from trustor to node	
-				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
-				for p in path:
-					for i in range(0, len(p)-1):
-						pubOpnDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
-
 				if trustor != node:
-					currentOpinion = TVSLAlgr(pubOpnDG, trustor, node, numHops + additionToPathLength, 0)
+					subDG = nx.DiGraph()
+
+					# fill subD with all the edges which occur in paths of length numHops + additionToPathLength
+					# from trustor to node	
+					path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
+					for p in path:
+						for i in range(0, len(p)-1):
+							subDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
+
+
+					currentOpinion = TVSLAlgr(subDG, trustor, node, numHops + additionToPathLength, 0)
 					print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
 					# big file writing statement
 					toWrite.writerow([groupID, nodeIntDict[node], userDict[node], 
@@ -145,13 +146,13 @@ if os.path.exists('OutputExp1') == False:
 	print "Making the directory OutputExp1"
 	os.mkdir("OutputExp1")
 
-DG = readDotFile("master-graph.dot")
-
+DG = readDotFile("data.dot")
+"""
 writeReachableDistribution(1)
 writeReachableDistribution(2)
 writeReachableDistribution(3)
 writeDegreeDistribution()
-
+"""
 usersX = getNodesXInDegree(150)
 print "Calculating the public opinion for %d users" %len(usersX.keys())
 calculateOpinionsAndWriteToFile(2, usersX, 1)

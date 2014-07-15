@@ -59,7 +59,7 @@ def decayOfTrustVsShortestDistance(numHops):
 		toWrite = csv.writer(csvfile, delimiter = ',')
 		
 		while numberOfPairs < 1000:
-			rand = random.randint(0,len(DG.nodes())-1)
+			rand = random.randint(0,len(DG)-1)
 			node = DG.nodes()[rand]
 			trustorNodes = getTrustorsOfExactHop(DG,node, numHops)
 			if len(trustorNodes) > 0:

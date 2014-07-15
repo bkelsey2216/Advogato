@@ -8,21 +8,26 @@ from TVSL3 import TVSLTran #transfer edge attributes to opinion
 from TVSL3 import TVSLAlgr #trust assess algr
 from TVSL3 import disc
 from GeneralMethods import distWrite
+import random
 
 global DG
 
+######### The funcitonality of this method is now included in
+######### testCocitationCouplingAndTransitivity() of EXP4
 
+# /->B->\
+#A------>D
 # Finds all the paths in the graph with the topology
-# start -> dest and start -> middle -> dest.
+# A -> D and A -> B -> D.
 # Write the trust vectors to the output file 
 # PropogationOutput.csv
-# in the order X (start->middle), Y (middle->dest), Z (start->dest)
+# in the order X (A->B), Y (B->D), Z (A->D)
 def testTrustPropogation():
 	#open the file and write nothing, clearing the file
 	open('OutputExp2/PropogationOutput.csv', 'w').close()
-	for dest in DG.nodes():
-		for pred in DG.predecessors(dest):
-			allPaths = nx.all_simple_paths(DG,pred,dest,2)
+	for D in DG.nodes():
+		for A in DG.predecessors(D):
+			allPaths = nx.all_simple_paths(DG,A,D,2)
 			for path in allPaths:
 				if len(path) == 3:
 					writeForPropogation(path)
@@ -45,27 +50,33 @@ def writeForPropogation(path):
 		YOpinion[0], YOpinion[1], YOpinion[2], YOpinion[3], ZOpinion[0], 
 		ZOpinion[1], ZOpinion[2], ZOpinion[3]])
 
-
-# Finds all the nodes start and dest in the graph with the topology
-# start -> dest and start -> mid1 -> dest and start->mid2->dest where mid1 != mid2
+# /->B->\
+#A------>D
+# \->C->/
+# Finds all the nodes A and D in the graph with the topology
+# A->D and A->B->D and A->C->D where B != C
 # Write the trust vectors to the output file 
 # ComposingOutput.csv
-# in the order: X (disc(start->mid1, mid1->dest)), Y (disc(start->mid2, mid2->dest)), Z (start->dest)
+# in the order: X (disc(A->B, B->D)), Y (disc(A->C, C->D)), Z (A->D)
 def testTrustComposing():
 	#open the file and write nothing, clearing the file
 	open('OutputExp2/ComposingOutput.csv', 'w').close()
-	for dest in DG.nodes():
-		for pred in DG.predecessors(dest):
-			allPaths = nx.all_simple_paths(DG,pred,dest,2)
-			allPathsList = []
-			for path in allPaths:
-				if len(path) == 3:
-					allPathsList.append(path)
-			if len(allPathsList) >= 2:
-				path1 = allPathsList[0]
-				path2 = allPathsList[1]
+	composingCounter = 0
+	while composingCounter < 1000:
+		D = random.choice(DG.nodes())
+		if DG.predecessors(D):
+			A = random.choice(DG.predecessors(D))
 
-				writeForComposing(path1,path2)
+			#generator for all paths with 2 or less edges
+			allPaths = nx.all_simple_paths(DG, A, D, 2)
+			#List of all paths with exactly 2 egdes
+			pathsOfLengthList = [p for p in allPaths if len(p) == 3]
+			
+			#if the correct topology is present
+			if len(pathsOfLengthList) >= 2:
+				paths = random.sample(pathsOfLengthList,2)
+				writeForComposing(paths[0],paths[1])
+				composingCounter+=1
 
 
 # helper method for testTrustCombining to calculate the 
@@ -105,27 +116,29 @@ def smallWorldProblem():
 		distribution.append(0)
 
 	for source in DG.nodes()[0:1000]:
-		for dest in DG.nodes():
-			if source != dest:
-				if nx.has_path(DG,source,dest) == False:
+		for D in DG.nodes():
+			if source != D:
+				if nx.has_path(DG,source,D) == False:
 					distribution[0] +=1
 				else:
-					distribution[nx.shortest_path_length(DG, source, dest)] +=1
+					distribution[nx.shortest_path_length(DG, source, D)] +=1
 
 	distWrite(distribution,"OutputExp2/smallworld.txt")
 
 
 
 
-DG = readDotFile("master-graph.dot")
+DG = readDotFile("data.dot")
 
 if os.path.exists('OutputExp2') == False:
 	print "Making the directory OutputExp2"
 	os.mkdir("OutputExp2")
 
-testTrustPropogation()
+#testTrustPropogation()
+print "okay"
 testTrustComposing()
-smallWorldProblem()
+print "yay"
+#smallWorldProblem()
 
 
 
