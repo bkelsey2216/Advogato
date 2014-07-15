@@ -12,21 +12,28 @@ import random
 
 # This method tests CoCitation, Coupling and Transitivity as
 # outlined in the Matiri paper.
-# All of these require a topolpology with egdes node -> node2,
-# node -> node3 and node2 -> node3
+# All of these require a topolpology with egdes node -> B,
+# node -> C and B -> C
 # The only difference between the outputs is which node is 
 # considdered X, Y and Z
-def testCocitationCouplingAndTransitivity():
+def testCocitationCouplingAndTransitivity(numberOfReps = 1000):
 	#open the files and write nothing, clearing the file
 	open('OutputExp4/CoCitation.csv', 'w').close()
 	open('OutputExp4/Coupling.csv', 'w').close()
 	open('OutputExp4/Propagation.csv', 'w').close()
 
 	numberOfSets = 0
-	while numberOfSets < 1000:
-		rand = random.randint(0,len(DG.nodes())-1)
-		node1 = DG.nodes()[rand]
-		neighbors = DG.neighbors(node1)
+	while numberOfSets < numberOfReps:
+		A = random.choice(DG.nodes())
+		neighbors = DG.neighbors(A)
+		if len(neighbors) >= 2:
+			(B,C) = random.sample(neighbors,2)
+			if newDG.has_edge(B,C):
+				return (A,B,C)
+
+		rand = random.randint(0,len(DG)-1)
+		A = DG.nodes()[rand]
+		neighbors = DG.neighbors(A)
 		if len(neighbors) > 2:
 			rand1 = random.randint(0,len(neighbors)-1)
 			rand2 = random.randint(0,len(neighbors)-1)
@@ -34,31 +41,31 @@ def testCocitationCouplingAndTransitivity():
 			#make sure rand1 != rand2
 			while rand1 == rand2:
 				rand2 = random.randint(0,len(neighbors)-1)
-			node2 = neighbors[rand1]
-			node3 = neighbors[rand2]
+			B = neighbors[rand1]
+			C = neighbors[rand2]
 
 			#if the correct topology is present
 			#ie. there exist edges
-			# node -> node2
-			# node -> node3
-			# node2 -> node3
-			if DG.has_edge(node2,node3):
+			# node -> B
+			# node -> C
+			# B -> C
+			if DG.has_edge(B,C):
 				numberOfSets +=1
 
 				#co-citatoin
-				XLevel = DG[node1][node2]['level']
-				YLevel = DG[node1][node3]['level']
-				ZLevel = DG[node2][node3]['level']
+				XLevel = DG[A][B]['level']
+				YLevel = DG[A][C]['level']
+				ZLevel = DG[B][C]['level']
 				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/CoCitation.csv")
 				#coupling
-				XLevel = DG[node2][node3]['level']
-				YLevel = DG[node1][node3]['level']
-				ZLevel = DG[node1][node2]['level']
+				XLevel = DG[B][C]['level']
+				YLevel = DG[A][C]['level']
+				ZLevel = DG[A][B]['level']
 				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Coupling.csv")
 				#propogation			
-				XLevel = DG[node1][node2]['level']
-				YLevel = DG[node2][node3]['level']
-				ZLevel = DG[node1][node3]['level']
+				XLevel = DG[A][B]['level']
+				YLevel = DG[B][C]['level']
+				ZLevel = DG[A][C]['level']
 				writeTriangleOfTrust(XLevel,YLevel,ZLevel,"OutputExp4/Propagation.csv")							
 
 

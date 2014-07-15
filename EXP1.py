@@ -18,9 +18,9 @@ global DG
 # file[x] = y means that there are x nodes that can reach exactly y other nodes
 # within numHops
 def writeReachableDistribution(numHops):
-	statsArray = [0] * len(DG.nodes())
+	statsArray = [0] * len(DG)
 
-	for node in DG.nodes():
+	for node in DG:
 		listOfReachables = []
 		getListOfNodesReachableInNHops(numHops, 0, listOfReachables, node)
 		numberOfNodesReachable = len(listOfReachables)
@@ -45,7 +45,7 @@ def getListOfNodesReachableInNHops(numberOfHops, currentDepth, listOfReachables,
 # Writes a file such that file[x] = y means that there are x nodes with an in degree of y
 # in the graph
 def writeDegreeDistribution():
-	statsArray = [0] * len(DG.nodes())
+	statsArray = [0] * len(DG)
 
 	for node in DG:		
 		statsArray[DG.in_degree(node)] += 1
@@ -100,12 +100,9 @@ def computePublicOpinion(node):
 # numHops away. It outputs these opinions in the format 
 # [groupID (1 = X, 2 = Y); trusteeID; inDegree of trustee; trustorID; trustor's opinion; public opinion]
 # to the file groupID + "output.csv"
-def calculateOpinionsAndWriteToFile(numHops, userDict, groupID):
-	# This variable is the additional length wich can be added to numhops
-	# (The one you suggested be 3 in your instructions)
-	# Altering this variable will significantly impact runtime
-	additionToPathLength = 1
-
+# AdditionToPathLength is the additional hops which will be used to compute
+# private opinions. Increasing it will significantly impact runtime
+def writePublicAndPrivateOpinionsToFile(numHops, userDict, groupID, additionToPathLength=1):
 	nodeIntDict = getNodeIntDict(DG)
 
 	with open('OutputExp1/' + str(groupID) + 'output.csv', 'wb') as csvfile:
@@ -147,16 +144,15 @@ if os.path.exists('OutputExp1') == False:
 	os.mkdir("OutputExp1")
 
 DG = readDotFile("data.dot")
-"""
+
 writeReachableDistribution(1)
 writeReachableDistribution(2)
 writeReachableDistribution(3)
 writeDegreeDistribution()
-"""
 usersX = getNodesXInDegree(150)
 print "Calculating the public opinion for %d users" %len(usersX.keys())
-calculateOpinionsAndWriteToFile(2, usersX, 1)
+writePublicAndPrivateOpinionsToFile(2, usersX, 1)
 print
 usersY = getNodesYInDegree(20)
 print "Calculating the public opinion for %d users" %len(usersY.keys())
-calculateOpinionsAndWriteToFile(2, usersY, 2)
+writePublicAndPrivateOpinionsToFile(2, usersY, 2)

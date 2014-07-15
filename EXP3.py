@@ -14,7 +14,7 @@ import random
 # using random.sample, and returns this sublist to the function caller.
 def findSymmetricalTrust():
 	listofSymms = []
-	for node in DG.nodes():
+	for node in DG:
 		listofNeighbors = DG.neighbors(node)
 		for neighbor in listofNeighbors:
 			if DG.has_edge(neighbor, node):
@@ -51,31 +51,26 @@ def computeTrustDifference():
 # This method randomly finds 1000 pairs of nodes with shortest path numHops between 
 # them. It calculates the trust between these nodes using 3VSL. It outputs the resulting 
 # trust vector to str(numHops) + distance.csv
-def decayOfTrustVsShortestDistance(numHops):
+def decayOfTrustVsShortestDistance(numHops, additionToPathLength = 1):
 	numberOfPairs = 0
-	additionToPathLength = 1
 
 	with open("OutputExp3/" + str(numHops) + 'distance.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
 		
 		while numberOfPairs < 1000:
-			rand = random.randint(0,len(DG)-1)
-			node = DG.nodes()[rand]
-			trustorNodes = getTrustorsOfExactHop(DG,node, numHops)
-			if len(trustorNodes) > 0:
-				rand = random.randint(0,len(trustorNodes)-1)
-				trustor = trustorNodes[rand]			
-	
-				# fill tvslDG with all the edges which occur in paths of length numHops + additionToPathLength
-				# from trustor to node
-				tvslDG = nx.DiGraph()	
-				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
+			node = random.choice(DG.nodes())
+			trustorNodes = getTrustorsOfExactHop(DG, node, numHops)
+			if trustorNodes:		
+				trustor = random.choice(trustorNodes)
+				# fill subDG with all the edges which occur in paths of length numHops + additionToPathLength
+				subDG = nx.DiGraph()	
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)
 				for p in path:
 					for i in range(0, len(p)-1):
-						tvslDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
+						subDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 				
-				currentOpinion = TVSLAlgr(DG, trustor, node, numHops + additionToPathLength, 0)
-				print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
+				currentOpinion = TVSLAlgr(subDG, trustor, node, numHops + additionToPathLength, 0)
+				#print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
 				
 				# big file writing statement
 				toWrite.writerow([currentOpinion[0], currentOpinion[1], 
@@ -83,13 +78,13 @@ def decayOfTrustVsShortestDistance(numHops):
 
 				numberOfPairs += 1
 
-DG = readDotFile("master-graph.dot")
+DG = readDotFile("data.dot")
 
 if os.path.exists('OutputExp3') == False:
 	print "Making the directory OutputExp3"
 	os.mkdir("OutputExp3")
 
-computeTrustDifference()
+#computeTrustDifference()
 decayOfTrustVsShortestDistance(1)
 decayOfTrustVsShortestDistance(2)
 decayOfTrustVsShortestDistance(3)

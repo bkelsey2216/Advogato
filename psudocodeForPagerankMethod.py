@@ -15,7 +15,7 @@ def localPartitioningAttempt(alpha, beta):
 
 # Local Computation:
 # 1. Pick a starting vertex v.
-	for node in DG.nodes(): ????????
+	for node in DG: ????????
 # 2. Compute prW (gamma, v), using LocalPR.
 	inputVector = []
 	for i in range (0,len(DG.nodes)):
