@@ -51,7 +51,7 @@ def testCocitationCouplingAndTransitivity(numberOfReps = 1000):
 # the shortest path. The opinions along this path are then discounted into one final opinion
 # connecting the original pair of nodes. The final opinion and path length are written into
 # a line of a .csv file for Experiment 4 data analysis.
-def makeHighExpBeliefSample():	
+def makeHighExpBeliefSample(numberOfReps = 10000, additionToPathLength = 1):	
 	pairsList = []
 	#open and close file to make blank
 	open('OutputExp4/opinionsList.csv', 'w').close()
@@ -60,19 +60,19 @@ def makeHighExpBeliefSample():
 
 	#need a sample of 1000 opinions. ideally, running for 50000 iterations will produce a list
 	# that has at least 1000 opinions with expected belief over 0.75
-	for i in range(0, 10000):
+	for i in range(0, numberOfReps):
 		newPair = random.sample(DG.nodes(), 2)
 		if newPair not in pairsList:
 
 			if nx.has_path(DG, newPair[0], newPair[1]):
 				pairOpnDG = nx.DiGraph()
 				pathLength = nx.shortest_path_length(DG, newPair[0], newPair[1])
-				paths = nx.all_simple_paths(DG, source=newPair[0], target=newPair[1], cutoff=pathLength+ 1)
+				paths = nx.all_simple_paths(DG, source=newPair[0], target=newPair[1], cutoff=pathLength+ additionToPathLength)
 				for path in paths:
 					nodeList = []
 					for i in range(0, len(path)-1):
 						pairOpnDG.add_edge(path[i], path[i+1], level=DG[path[i]][path[i+1]]['level'])
-				pairOpinion = TVSLAlgr(pairOpnDG, newPair[0], newPair[1], pathLength+1, 0)
+				pairOpinion = TVSLAlgr(pairOpnDG, newPair[0], newPair[1], pathLength+additionToPathLength, 0)
 				print pathLength
 				print pairOpinion
 
@@ -85,7 +85,6 @@ if os.path.exists('OutputExp4') == False:
 	os.mkdir("OutputExp4")
 
 DG = readDotFile("master-graph.dot")
-
 testCocitationCouplingAndTransitivity()
 makeHighExpBeliefSample()
 

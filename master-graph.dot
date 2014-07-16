@@ -1,16 +1,14 @@
 digraph G {
-   B -> A [level="Observer"];
-   B -> C [level="Observer"];
-   B -> D [level="Master"];
-   D -> A [level="Observer"];
-   C -> A [level="Observer"];
-   D -> A [level="Master"];
-   D -> C [level="Observer"];
-   C -> B [level="Observer"];
-   X -> Y [level="Observer"];
-   Z -> X [level="Observer"];
-   Y -> Z [level="Observer"];
-   W -> Y [level="Observer"];
-   A -> Z [level="Master"];
-   Z -> A [level="Master"];   
+	
+   one -> end [level="Master"];
+   ohno -> one [level="Master"];
+   theProblem -> ohno [level="Master"];
+   four -> end [level="Master"];   
+   five -> four [level="Master"];
+   ohno -> five [level="Master"];
+   A -> B [level="Master"]; 
+   B -> C [level="Master"]; 
+   C -> end [level="Master"]; 
+ 
+
 }

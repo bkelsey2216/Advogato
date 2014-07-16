@@ -134,11 +134,9 @@ if os.path.exists('OutputExp2') == False:
 	print "Making the directory OutputExp2"
 	os.mkdir("OutputExp2")
 
-#testTrustPropogation()
-print "okay"
+testTrustPropogation()
 testTrustComposing()
-print "yay"
-#smallWorldProblem()
+smallWorldProblem()
 
 
 

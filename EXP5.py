@@ -11,8 +11,6 @@ global oldDG
 global newDG
 
 
-
-
 # This method finds triangles which have the form A -> B, A -> C, B -> C
 # in newDG but are missing exactly one of these edges in oldDG
 # It writes the trust vector of the missing edge to the coupling file

@@ -1,5 +1,4 @@
 from GeneralMethods import readDotFile
-from GeneralMethods import getTrustorsOfExactHop
 import networkx as nx
 import os
 import csv
@@ -48,6 +47,8 @@ def computeTrustDifference():
 			toWrite.writerow([trustAB[0], trustAB[1], trustAB[2], trustAB[3], trustBA[0], trustBA[1], trustBA[2]])
 
 
+
+
 # This method randomly finds 1000 pairs of nodes with shortest path numHops between 
 # them. It calculates the trust between these nodes using 3VSL. It outputs the resulting 
 # trust vector to str(numHops) + distance.csv
@@ -59,7 +60,19 @@ def decayOfTrustVsShortestDistance(numHops, additionToPathLength = 1, numberOfRe
 		
 		while numberOfPairs < numberOfReps:
 			node = random.choice(DG.nodes())
-			trustorNodes = getTrustorsOfExactHop(DG, node, numHops)
+			
+			# get trustors of exact hop
+			# get a bfs edge generator of edges pointing to node
+			bfsGenerator = nx.bfs_edges(DG,node, reverse = True)
+			trustorNodes = []
+
+			for edge in bfsGenerator:
+				pathLength = nx.shortest_path_length(DG, edge[1], node)
+				if pathLength > numHops:
+					break
+				elif pathLength == numHops:
+					trustorNodes.append(edge[1])
+
 			if trustorNodes:		
 				trustor = random.choice(trustorNodes)
 				# fill subDG with all the edges which occur in paths of length numHops + additionToPathLength

@@ -62,11 +62,34 @@ def getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth, listOfReachers, d
 			listOfReachers.append(n)
 			getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth+1, listOfReachers, n)
 
+from collections import defaultdict, deque
+def getNodesReachableInNHops(G, source, numHops, reverse = False):
+	if reverse:
+		neighbors = G.predecessors_iter
+	else:
+		neighbors = G.neighbors_iter
+	visisted = set([source])
+	#create a queue tuples containing the source and its neighbors
+	queue = dequeue([(source,neighbors(source))])
+	while queue:
+		parent, children = queue[0]
+		try:
+			child = next(children)
+			if child not in visisted:
+				yield parent, child
+				visisted.add(child)
+				queue.append((child, neighbors(child)))
+		except StopIteration:
+			queue.popleft()
+
+
+
 
 # returns all nodes with shortest path exaclty numHops from node
 def getTrustorsOfExactHop(DG, node, numHops):
 	trustorNodes = []
 	getSourcesUsingDestInNHops(DG, numHops, 0, trustorNodes, node)
+	print trustorNodes
 	toRemove = []
 
 	# If shortest path between the trustor and the node is not 
@@ -122,3 +145,7 @@ def findRandomTriangle(graph):
 			(B,C) = random.sample(neighbors,2)
 			if graph.has_edge(B,C):
 				return (A,B,C)
+
+
+
+
