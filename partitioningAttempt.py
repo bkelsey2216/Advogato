@@ -15,14 +15,22 @@ import random
 import scipy as sp
 import numpy as np
 import operator
+from  GeneralMethods import readDotFile 
+from  GeneralMethods import getNodeIntDict
 
+global DG
+global nodeIntDict
 
 #I still do not know what alpha and beta should be set to
 def localPartitioningAttempt(alpha, beta, node):
 	gamma = alpha + beta - alpha * beta
+	global nodeIntDict
+	nodeIntDict = getNodeIntDict(DG)
 	
 	#This returns the transition matrix, which I think is the random walk matrix
 	M = nx.google_matrix(DG)
+	print "M"
+	print M
 	print "about to page rank"
 
 	# Compute the two global page rank vectors
@@ -54,15 +62,15 @@ def localPartitioningAttempt(alpha, beta, node):
  	print "Conductance Loop"
  	S = []
  	notS = DG.nodes()
- 	j = 1
+ 	j = 0
  	S.append(sortedP[j][0])
  	notS.remove(sortedP[j][0])
- 	minConducance = calculateConductance(S, notS, prBeta, M)
+ 	minConducance = calculateConductance(S, notS)
  	minJ = j
  	for j in range(2,len(sortedP)):
  		S.append(sortedP[j][0])
  		notS.remove(sortedP[j][0])
- 		tempConductance = calculateConductance(S, notS, prBeta, M)
+ 		tempConductance = calculateConductance(S, notS)
  		#print "cond " + str(tempConductance)
  		if tempConductance < minConducance:
  			minConducance = tempConductance
@@ -80,24 +88,28 @@ def localPartitioningAttempt(alpha, beta, node):
  	pos=nx.spring_layout(DG)
  	nx.draw_networkx_edges(DG,pos)
  	nx.draw_networkx_nodes(DG,node_color=p.)
-
  	"""
 
 
-def calculateConductance(S, notS, prBeta, M):
+def calculateConductance(S, notS):
 	global nodeIntDict
 	#print "M"
 	#print M
-	top = 0
+	top = 1
 	for i in S:
 		for j in notS:
-			top += prBeta[i]*M[nodeIntDict[i],nodeIntDict[j]]
-	#print "S "+ str(len(S))
-	#print "notS "+ str(len(notS))
+			#top += prBeta[i]*M[nodeIntDict[i],nodeIntDict[j]]
+			if (i,j) in DG.edges():
+				top += 1
+	#print "S "+ str((S))
+	#print "notS "+ str((notS))
 
-	bottom = 0
-	for s in S:
-		bottom += prBeta[s] 
+	bottom = 1
+	for i in S:
+		for j in S:
+			if(i,j) in DG.edges():
+				bottom += 1
+
 	
 	conductance = top/bottom
 	print "conductance " + str(conductance)
@@ -106,19 +118,17 @@ def calculateConductance(S, notS, prBeta, M):
 
 
 def makeAToyGraph():
-	global DG
-	DG = nx.gnm_random_graph(50, 0, directed = True)
-	global nodeIntDict
-	DGInts = nx.convert_node_labels_to_integers(DG,label_attribute='old_name')  
-	nodeIntList = DGInts.nodes()
-	nodeIntDict = {}	
-	for n in nodeIntList:
-		nodeIntDict[(DGInts.node[n]['old_name'])] = n
+	return nx.gnm_random_graph(50, 0, directed = True)
 
+print "okay"
+#DG = readDotFile("data.dot")
+DG = makeAToyGraph()
+#DG.add_edge(0,1)
+#DG.add_edge(1,2)
+print DG.edges()
 
-makeAToyGraph()
-
-localPartitioningAttempt(.5,.5,DG.nodes()[12])
+print "okay"
+localPartitioningAttempt(.5,.85,DG.nodes()[0])
 
 
 

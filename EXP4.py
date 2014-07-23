@@ -84,7 +84,7 @@ if os.path.exists('OutputExp4') == False:
 	print "Making the directory OutputExp4"
 	os.mkdir("OutputExp4")
 
-DG = readDotFile("master-graph.dot")
+DG = readDotFile("data.dot")
 testCocitationCouplingAndTransitivity()
 makeHighExpBeliefSample()
 

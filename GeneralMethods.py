@@ -49,59 +49,6 @@ def distWrite(distArray, filename):
 
 	outFile.close()
 
-#This method performs a recursive depth first search to add all the nodes which have edges
-#pointing to a specicied node within a specified distance
-#current depth should be set to zero
-#listOfReachers should be an empty list
-def getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth, listOfReachers, destination):
-	if currentDepth == numberOfHops:
-		return listOfReachers
-
-	for n in DG.predecessors(destination):
-		if not n in listOfReachers:
-			listOfReachers.append(n)
-			getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth+1, listOfReachers, n)
-
-from collections import defaultdict, deque
-def getNodesReachableInNHops(G, source, numHops, reverse = False):
-	if reverse:
-		neighbors = G.predecessors_iter
-	else:
-		neighbors = G.neighbors_iter
-	visisted = set([source])
-	#create a queue tuples containing the source and its neighbors
-	queue = dequeue([(source,neighbors(source))])
-	while queue:
-		parent, children = queue[0]
-		try:
-			child = next(children)
-			if child not in visisted:
-				yield parent, child
-				visisted.add(child)
-				queue.append((child, neighbors(child)))
-		except StopIteration:
-			queue.popleft()
-
-
-
-
-# returns all nodes with shortest path exaclty numHops from node
-def getTrustorsOfExactHop(DG, node, numHops):
-	trustorNodes = []
-	getSourcesUsingDestInNHops(DG, numHops, 0, trustorNodes, node)
-	print trustorNodes
-	toRemove = []
-
-	# If shortest path between the trustor and the node is not 
-	# numHops then remove it from trustorNodes
-	for trustor in trustorNodes:
-		if nx.shortest_path_length(DG, trustor, node) != numHops:
-			toRemove.append(trustor)	
-
-	for removeNode in toRemove:
-		trustorNodes.remove(removeNode)
-
-	return trustorNodes
 
 # Helper method for writing 3 levels to a file
 # Useful for testing cocitaion and coupling and propagation
@@ -145,6 +92,15 @@ def findRandomTriangle(graph):
 			(B,C) = random.sample(neighbors,2)
 			if graph.has_edge(B,C):
 				return (A,B,C)
+
+def getTrustorsOfExactHop(DG, node, numHops):
+	reverseDG = DG.reverse()
+	dictOfPathLengths = nx.single_source_shortest_path_length(reverseDG, node, cutoff = numHops)
+	return [x for x in dictOfPathLengths.keys() if dictOfPathLengths[x] == numHops]
+
+def getTrusteesOfExactHop(DG, node, numHops):
+	dictOfPathLengths = nx.single_source_shortest_path_length(DG, node, cutoff = numHops)
+	return [x for x in dictOfPathLengths.keys() if dictOfPathLengths[x] == numHops]
 
 
 

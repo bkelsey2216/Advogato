@@ -49,6 +49,8 @@ def computeTrustDifference():
 
 
 
+#Used to find if less distance => more trust
+#
 # This method randomly finds 1000 pairs of nodes with shortest path numHops between 
 # them. It calculates the trust between these nodes using 3VSL. It outputs the resulting 
 # trust vector to str(numHops) + distance.csv
@@ -61,17 +63,7 @@ def decayOfTrustVsShortestDistance(numHops, additionToPathLength = 1, numberOfRe
 		while numberOfPairs < numberOfReps:
 			node = random.choice(DG.nodes())
 			
-			# get trustors of exact hop
-			# get a bfs edge generator of edges pointing to node
-			bfsGenerator = nx.bfs_edges(DG,node, reverse = True)
-			trustorNodes = []
-
-			for edge in bfsGenerator:
-				pathLength = nx.shortest_path_length(DG, edge[1], node)
-				if pathLength > numHops:
-					break
-				elif pathLength == numHops:
-					trustorNodes.append(edge[1])
+			trustorNodes = getTrustorsOfExactHop(DG, node, numHops)
 
 			if trustorNodes:		
 				trustor = random.choice(trustorNodes)
@@ -97,8 +89,8 @@ if os.path.exists('OutputExp3') == False:
 	print "Making the directory OutputExp3"
 	os.mkdir("OutputExp3")
 
-#computeTrustDifference()
+computeTrustDifference()
 decayOfTrustVsShortestDistance(1)
 decayOfTrustVsShortestDistance(2)
-#decayOfTrustVsShortestDistance(3)
-#decayOfTrustVsShortestDistance(4)
+decayOfTrustVsShortestDistance(3)
+decayOfTrustVsShortestDistance(4)

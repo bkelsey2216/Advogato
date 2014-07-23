@@ -3,7 +3,7 @@
 from GeneralMethods import distWrite
 from GeneralMethods import readDotFile
 from GeneralMethods import getNodeIntDict
-from GeneralMethods import getTrustorsOfExactHop
+#from GeneralMethods import getTrustorsOfExactHop
 import networkx as nx
 import os
 import csv
@@ -20,29 +20,32 @@ global DG
 def writeReachableDistribution(numHops):
 	statsArray = [0] * len(DG)
 
+	#count the number of nodes node can reach
 	for node in DG.nodes():
-		bfsGenerator = nx.bfs_edges(DG,node)
-		numberOfNodesReachable = 0
-		for edge in bfsGenerator:
-			if nx.shortest_path_length(DG, node, edge[1]) > numHops:
-				break
-			numberOfNodesReachable+=1
-
-
+		numberOfNodesReachable = len(nx.single_source_shortest_path_length(DG,node, cutoff = numHops))
 		statsArray[numberOfNodesReachable] += 1
 
 	distWrite(statsArray, "OutputExp1/reachableDistribution" + str(numHops) + ".txt")
 
-
 # Writes a file such that file[x] = y means that there are x nodes with an in degree of y
 # in the graph
-def writeDegreeDistribution():
+def writeInDegreeDistribution():
 	statsArray = [0] * len(DG)
 
 	for node in DG:		
 		statsArray[DG.in_degree(node)] += 1
 
-	distWrite(statsArray, "OutputExp1/degreeOfNodesDistribution.txt")
+	distWrite(statsArray, "OutputExp1/inDegreeOfNodesDistribution.txt")
+
+# Writes a file such that file[x] = y means that there are x nodes with an out degree of y
+# in the graph
+def writeOutDegreeDistribution():
+	statsArray = [0] * len(DG)
+
+	for node in DG:		
+		statsArray[DG.out_degree(node)] += 1
+
+	distWrite(statsArray, "OutputExp1/outDegreeOfNodesDistribution.txt")
 
 
 
@@ -96,6 +99,7 @@ def computePublicOpinion(node):
 # private opinions. Increasing it will significantly impact runtime
 def writePublicAndPrivateOpinionsToFile(numHops, userDict, groupID, additionToPathLength=1):
 	nodeIntDict = getNodeIntDict(DG)
+	reverseDG = DG.reverse()
 
 	with open('OutputExp1/' + str(groupID) + 'output.csv', 'wb') as csvfile:
 		toWrite = csv.writer(csvfile, delimiter = ',')
@@ -109,39 +113,30 @@ def writePublicAndPrivateOpinionsToFile(numHops, userDict, groupID, additionToPa
 
 			# get trustors of exact hop
 			# get a bfs edge generator of edges pointing to node
-			# I think this will be faster -Natalie
-			bfsGenerator = nx.bfs_edges(DG,node, reverse = True)
-			trustorNodes = []
-
-			for edge in bfsGenerator:
-				pathLength = nx.shortest_path_length(DG, edge[1], node)
-				if pathLength > numHops:
-					break
-				elif pathLength == numHops:
-					trustorNodes.append(edge[1])
-		
+			dictOfPathLengths = nx.single_source_shortest_path_length(reverseDG, node, cutoff = numHops)
+			trustorNodes = [x for x in dictOfPathLengths.keys() if dictOfPathLengths[x] == numHops]
 
 			for trustor in trustorNodes:
 				if trustor == node:
-					print "so that can happen!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-				if trustor != node:
-					subDG = nx.DiGraph()
+					print "Something has gone horribly wrong"
 
-					# fill subD with all the edges which occur in paths of length numHops + additionToPathLength
-					# from trustor to node	
-					path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
-					for p in path:
-						for i in range(0, len(p)-1):
-							subDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
+				subDG = nx.DiGraph()
+
+				# fill subD with all the edges which occur in paths of length numHops + additionToPathLength
+				# from trustor to node	
+				path = nx.all_simple_paths(DG, source=trustor, target=node, cutoff=numHops + additionToPathLength)			
+				for p in path:
+					for i in range(0, len(p)-1):
+						subDG.add_edge(p[i], p[i+1], level=DG[p[i]][p[i+1]]['level'])
 
 
-					currentOpinion = TVSLAlgr(subDG, trustor, node, numHops + additionToPathLength, 0)
-					#print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
-					# big file writing statement
-					toWrite.writerow([groupID, nodeIntDict[node], userDict[node], 
-					nodeIntDict[trustor], currentOpinion[0], currentOpinion[1], 
-					currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
-					publicOpinion[2], publicOpinion[3]])
+				currentOpinion = TVSLAlgr(subDG, trustor, node, numHops + additionToPathLength, 0)
+				#print trustor + "'s opinion of " + node + " is " + str(currentOpinion)
+				# big file writing statement
+				toWrite.writerow([groupID, nodeIntDict[node], userDict[node], 
+				nodeIntDict[trustor], currentOpinion[0], currentOpinion[1], 
+				currentOpinion[2], currentOpinion[3], publicOpinion[0], publicOpinion[1], 
+				publicOpinion[2], publicOpinion[3]])
 
 
 if os.path.exists('OutputExp1') == False:
@@ -150,14 +145,17 @@ if os.path.exists('OutputExp1') == False:
 
 DG = readDotFile("data.dot")
 
-#writeReachableDistribution(1)
-#writeReachableDistribution(2)
-#writeReachableDistribution(3)
-#writeDegreeDistribution()
-#usersX = getNodesXInDegree(150)
-#print "Calculating the public opinion for %d users" %len(usersX.keys())
-#writePublicAndPrivateOpinionsToFile(2, usersX, 1)
-#print
+
+"""
+writeReachableDistribution(1)
+writeReachableDistribution(2)
+writeReachableDistribution(3)
+writeDegreeDistribution()
+"""
+usersX = getNodesXInDegree(150)
+print "Calculating the public opinion for %d users" %len(usersX.keys())
+writePublicAndPrivateOpinionsToFile(2, usersX, 1)
+print
 usersY = getNodesYInDegree(10)
 print "Calculating the public opinion for %d users" %len(usersY.keys())
 writePublicAndPrivateOpinionsToFile(2, usersY, 2)
