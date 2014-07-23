@@ -24,7 +24,7 @@ def PageRankNibble(LoadGraph, seed, alpha, eps):
     r[seed] = 1
     while Queue:
         for n in Queue:
-        #    print('current  node being processed is: ' + str(n))
+            #print('current  node being processed is: ' + n)
             while r[n] >= eps*LoadGraph.degree(n):
                 # if its residual value is greater than threshold, recall push operation
                 ppr, r = Push(ppr,r,n, alpha, LoadGraph)
@@ -33,13 +33,13 @@ def PageRankNibble(LoadGraph, seed, alpha, eps):
                 for nb in LoadGraph.neighbors(n):
                     if r[nb] >=  eps*LoadGraph.degree(nb) and (nb not in Queue):
                         Queue.append(nb)
-        #                print('Adding node: ' + str(Queue))
+                        #print('Adding node: ' + str(Queue))
         # when going through with the whole queue is done, check with 
         #r value of nodes in the queue. If smaller than threshold, remove it. 
         for node in Queue:
             if r[node] < eps*LoadGraph.degree(node):
                 Queue.remove(node)
-        #        print('Removing node: ' + str(Queue))
+                #print('Removing node: ' + str(Queue))
         #print('Queue of current round: ' + str(Queue))
         
         #check those nodes whose r values are non zero

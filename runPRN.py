@@ -8,39 +8,36 @@ import random
 from GeneralMethods import readDotFile 
 from GeneralMethods import getTrustorsOfExactHop
 
-#DG = readDotFile('/home/loenix/Documents/advogato_graph/advogato-graph-2014-03-16.dot')
-DG = readDotFile('data.dot')
-#DG = nx.DiGraph(nx.read_dot('/home/loenix/Documents/advogato_graph/advogato-graph-2014-03-16.dot'))
+def runPRN():
+	#DG = readDotFile('/home/loenix/Documents/advogato_graph/advogato-graph-2014-03-16.dot')
+	DG = readDotFile('advogato-graph-latest.dot')
+	#DG = nx.DiGraph(nx.read_dot('/home/loenix/Documents/advogato_graph/advogato-graph-2014-03-16.dot'))
 
-#DG = nx.DiGraph()
-#DG.add_nodes_from([0,20])
-#print DG
+	Eps = 0.000001  #set up epsilon
+	alpha = 0.15  # set alpha
 
+	#pick up a nodes far enough from the seed
+	#so that the subgraph on which APPR run will 
+	#will be large enough
 
-Eps = 0.000001  #set up epsilon
-alpha = 0.15  # set alpha
-
-#pick up a nodes far enough from the seed
-#so that the subgraph on which APPR run will 
-#will be large enough
-
-numHops = 4
-rand = random.randint(0,len(DG.nodes())-1)
-Seed = DG.nodes()[rand]
-remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
+	numHops = 4
+	rand = random.randint(0,len(DG.nodes())-1)
+	Seed = DG.nodes()[rand]
+	remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
 
 
-while remoteSeed == 0 :
-    Seed = DG.nodes()[rand]
-    remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
+	while remoteSeed == 0 :
+	    Seed = DG.nodes()[rand]
+	    remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
 
-#now got a seed which has 4 hop neighbor, run APPR
+	#now got a seed which has 4 hop neighbor, run APPR
 
-print('seed is:' + str(Seed))
-print('nb of seed is: ' + str(DG.neighbors(Seed)))
-#since the algr works on undirected graph
-DG.to_undirected()
-PR = PageRankNibble(DG, Seed, alpha, Eps)
-#using the ranked nodes to form a subgraph. 
-H = DG.subgraph(PR)
-nx.write_dot(H, 'pprResult.dot')
+	#print('seed is:' + Seed)
+	#print('nb of seed is: ' + str(DG.neighbors(Seed)))
+	#since the algr works on undirected graph
+	DG.to_undirected()
+	PR = PageRankNibble(DG, Seed, alpha, Eps)
+	#using the ranked nodes to form a subgraph. 
+	H = DG.subgraph(PR)
+	nx.write_dot(H, 'pprResult.dot')
+	return H

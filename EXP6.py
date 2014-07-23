@@ -7,6 +7,10 @@ from GeneralMethods import readDotFile
 from GeneralMethods import getTrustorsOfExactHop
 from GeneralMethods import getTrusteesOfExactHop
 from TVSL3 import TVSLAlgr #trust assess algr
+from runPRN import runPRN
+
+global externalDG
+global clusterDG
 
 if os.path.exists('OutputExp6') == False:
 	print "Making the directory OutputExp6"
@@ -94,6 +98,50 @@ def outOfCluster(DG, cluster, numHops = 2, additionToPathLength = 1, numberOfRep
 			toWrite.writerow([currentOpinion[0],currentOpinion[1],currentOpinion[2],currentOpinion[3]])
 			currentRep += 1
 			print "trustee " + str(trustee)
+
+def pickRandEdges():
+	global externalDG
+	global clusterDG
+	open('OutputExp6/clusterOpinions.csv', 'w').close()
+	open('OutputExp6/nonClusterOpinions.csv', 'w').close()
+
+	print 'creating Cluster graph with PRN'
+	clusterDG = runPRN()
+	print 'creating nonCluster graph'
+	externalDG = readDotFile('advogato-graph-latest.dot')
+	clusterEdges = clusterDG.edges()
+	clusterNodes = clusterDG.nodes()
+	externalDG.remove_edges_from(clusterEdges)
+	externalDG.remove_nodes_from(clusterNodes)
+
+	externalEdges = externalDG.edges()
+
+	for i in range(0,1000):
+		randClusterEdge = random.sample(clusterEdges, 1)
+		randExtEdge = random.sample(externalEdges, 1)
+
+		clusterOpn = TVSLTran(clusterDG[randClusterEdge[0][0]][randClusterEdge[0][1]]['level'])
+		externalOpn = TVSLTran(externalDG[randExtEdge[0][0]][randExtEdge[0][1]]['level'])
+
+		# print 'Cluster Opinion '
+		# print clusterOpn
+		# print 'nonCluster Opinion ' 
+		# print externalOpn
+
+		with open('OutputExp6/clusterOpinions.csv', 'a') as csvfile:
+			toWrite = csv.writer(csvfile, delimiter = ',')
+			toWrite.writerow([clusterOpn[0], clusterOpn[1], clusterOpn[2], clusterOpn[3]])
+
+		with open('OutputExp6/nonClusterOpinions.csv', 'a') as csvfile:
+			toWrite = csv.writer(csvfile, delimiter = ',')
+			toWrite.writerow([externalOpn[0], externalOpn[1], externalOpn[2], externalOpn[3]])
+
+
+if os.path.exists('OutputExp6') == False:
+	print "Making the directory OutputExp6"
+	os.mkdir("OutputExp6")
+
+pickRandEdges()
 
 print "within"
 withinCluster(DG, H, 2)
