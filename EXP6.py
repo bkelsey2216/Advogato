@@ -7,6 +7,7 @@ from GeneralMethods import readDotFile
 from GeneralMethods import getTrustorsOfExactHop
 from GeneralMethods import getTrusteesOfExactHop
 from TVSL3 import TVSLAlgr #trust assess algr
+from TVSL3 import TVSLTran
 from runPRN import runPRN
 
 global externalDG
@@ -23,12 +24,10 @@ def withinCluster(DG, cluster, numHops = 2, additionToPathLength = 1, numberOfRe
 		while currentRep < numberOfReps:
 			# Choose a random node and a another random node IN THE CLUSTER which it trusts with min distance numHops
 			node = random.choice(cluster.nodes())
-			print "The node is " + str(node)
 			trustees = getTrusteesOfExactHop(cluster, node, numHops)
 			if trustees:
 
 				trustee = random.choice(trustees)
-				print "trustee " + str(trustee)
 
 				#calcuate the opinion from node to trustee and write to a file
 				subDG = nx.DiGraph()	
@@ -51,7 +50,6 @@ def outOfCluster(DG, cluster, numHops = 2, additionToPathLength = 1, numberOfRep
 		while currentRep < numberOfReps:
 			# Choose a random node and a another random node which it trusts with min distance numHops
 			node = random.choice(cluster.nodes())
-			print "The node is " + str(node)
 			trustees = getTrusteesOfExactHop(DG, node, numHops)
 			if not trustees:
 				continue
@@ -73,7 +71,6 @@ def outOfCluster(DG, cluster, numHops = 2, additionToPathLength = 1, numberOfRep
 			
 			toWrite.writerow([currentOpinion[0],currentOpinion[1],currentOpinion[2],currentOpinion[3]])
 			currentRep += 1
-			print "trustee " + str(trustee)
 
 def pickRandEdges():
 	global externalDG
@@ -93,16 +90,15 @@ def pickRandEdges():
 	externalEdges = externalDG.edges()
 
 	for i in range(0,1000):
+		if len(clusterEdges) < 2:
+			print "cluster too small to sample from, aborting..."
+			break
 		randClusterEdge = random.sample(clusterEdges, 1)
 		randExtEdge = random.sample(externalEdges, 1)
 
 		clusterOpn = TVSLTran(clusterDG[randClusterEdge[0][0]][randClusterEdge[0][1]]['level'])
 		externalOpn = TVSLTran(externalDG[randExtEdge[0][0]][randExtEdge[0][1]]['level'])
 
-		# print 'Cluster Opinion '
-		# print clusterOpn
-		# print 'nonCluster Opinion ' 
-		# print externalOpn
 
 		with open('OutputExp6/clusterOpinions.csv', 'a') as csvfile:
 			toWrite = csv.writer(csvfile, delimiter = ',')
@@ -119,9 +115,7 @@ if os.path.exists('OutputExp6') == False:
 
 
 DG = readDotFile('advogato-graph-latest.dot')
-H = runPRN
-for i in range (0,100):
-	print "size of H " + len(runPRN().nodes())
+H = runPRN()
 
 pickRandEdges()
 

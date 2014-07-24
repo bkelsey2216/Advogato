@@ -36,7 +36,7 @@ Gvol = 102
 # G is graph as dictionary-of-sets
 alpha=0.99
 tol=0.01
-seed=[1]
+seed=[10]
 
 x = {} # Store x, r as dictionaries
 r = {} # initialize residual

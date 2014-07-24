@@ -4,12 +4,20 @@ import string
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 import csv
 import random
+import os
 
 
 ## This method returns a networkx graph of the .dot file specified by filename
 ## It removes all the self loops and nodes with no edges
 def readDotFile(fileName):
-	DG = nx.DiGraph(nx.read_dot(fileName))
+
+	#if there is no clean file (i.e. some usernames start with digits, producing an error)
+	#run removeNumbers to avoid this error
+	if os.path.exists('CLEAN-'+fileName) == False:
+		print 'Creating clean .dot file'
+		removeNumbers(fileName,'CLEAN-'+fileName)
+
+	DG = nx.DiGraph(nx.read_dot('CLEAN-'+fileName))
 
 	#remove all of the self loop edges
 	DG.remove_edges_from(DG.selfloop_edges())
