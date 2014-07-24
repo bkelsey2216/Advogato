@@ -3,28 +3,24 @@ import networkx as nx
 import string
 from TVSL3 import TVSLTran #transfer edge attributes to opinion
 import csv
+import random
 
 
 ## This method returns a networkx graph of the .dot file specified by filename
 ## It removes all the self loops and nodes with no edges
 def readDotFile(fileName):
-	#DG = nx.DiGraph(nx.read_dot('/home/loenix/Documents/advogato_graph/advogato-graph-2014-03-16.dot'))
-	#print('reading graph....')
-	cleanFileName = 'advogato-latest-clean.dot'
-	removeNumbers(fileName, cleanFileName)
-	DG = nx.DiGraph(nx.read_dot(cleanFileName))
-	#print('removing self-loop....')
+	DG = nx.DiGraph(nx.read_dot(fileName))
+
 	#remove all of the self loop edges
 	DG.remove_edges_from(DG.selfloop_edges())
-	
+
 	#remove all nodes with no edges
-	#print('removing isolate nodes....')
 	toRemove = []
 	for node in DG:
 		if DG.in_degree(node) == 0 and DG.out_degree(node) == 0:
 			toRemove.append(node)
 	DG.remove_nodes_from(toRemove)
-	#print('preprocessing done, here we go!')
+
 	return DG
 
 ## This method returns a dictionary with the nodes in graph as keys and 
@@ -53,36 +49,6 @@ def distWrite(distArray, filename):
 
 	outFile.close()
 
-#This method performs a recursive depth first search to add all the nodes which have edges
-#pointing to a specicied node within a specified distance
-#current depth should be set to zero
-#listOfReachers should be an empty list
-def getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth, listOfReachers, destination):
-	if currentDepth == numberOfHops:
-		return listOfReachers
-
-	for n in DG.predecessors(destination):
-		if not n in listOfReachers:
-			listOfReachers.append(n)
-			getSourcesUsingDestInNHops(DG, numberOfHops, currentDepth+1, listOfReachers, n)
-
-
-# returns all nodes with shortest path exaclty numHops from node
-def getTrustorsOfExactHop(DG, node, numHops):
-	trustorNodes = []
-	getSourcesUsingDestInNHops(DG, numHops, 0, trustorNodes, node)
-	toRemove = []
-
-	# If shortest path between the trustor and the node is not 
-	# numHops then remove it from trustorNodes
-	for trustor in trustorNodes:
-		if nx.shortest_path_length(DG, trustor, node) != numHops:
-			toRemove.append(trustor)	
-
-	for removeNode in toRemove:
-		trustorNodes.remove(removeNode)
-
-	return trustorNodes
 
 # Helper method for writing 3 levels to a file
 # Useful for testing cocitaion and coupling and propagation
@@ -115,3 +81,24 @@ def removeNumbers(inFileName, outFileName):
 		line = string.replace(line, "8","eight")
 		line = string.replace(line, "9","nine")
 		o.write(line)
+
+# Returns the nodes of a triangle in the graph
+# where A -> B, A -> C, B -> C
+def findRandomTriangle(graph):
+	while True:
+		A = random.choice(graph.nodes())
+		neighbors = graph.neighbors(A)
+		if len(neighbors) >= 2:
+			(B,C) = random.sample(neighbors,2)
+			if graph.has_edge(B,C):
+				return (A,B,C)
+
+def getTrustorsOfExactHop(DG, node, numHops):
+	reverseDG = DG.reverse()
+	dictOfPathLengths = nx.single_source_shortest_path_length(reverseDG, node, cutoff = numHops)
+	return [x for x in dictOfPathLengths.keys() if dictOfPathLengths[x] == numHops]
+
+def getTrusteesOfExactHop(DG, node, numHops):
+	dictOfPathLengths = nx.single_source_shortest_path_length(DG, node, cutoff = numHops)
+	return [x for x in dictOfPathLengths.keys() if dictOfPathLengths[x] == numHops]
+

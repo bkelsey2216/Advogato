@@ -11,32 +11,8 @@ from runPRN import runPRN
 
 global externalDG
 global clusterDG
+global DG
 
-if os.path.exists('OutputExp6') == False:
-	print "Making the directory OutputExp6"
-	os.mkdir("OutputExp6")
-DG = readDotFile('data.dot')
-
-Eps = 0.000001  #set up epsilon
-alpha = 0.15  # set alpha
-
-#pick up a nodes far enough from the seed
-#so that the subgraph on which APPR run will 
-#will be large enough
-
-numHops = 4
-rand = random.randint(0,len(DG.nodes())-1)
-Seed = DG.nodes()[rand]
-remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
-
-
-while remoteSeed == 0 :
-    Seed = DG.nodes()[rand]
-    remoteSeed =  getTrustorsOfExactHop(DG, Seed, numHops)
-
-PR = PageRankNibble(DG, Seed, alpha, Eps)
-print "the length of PR is " + str(len(PR))
-H = DG.subgraph(PR)
 
 def withinCluster(DG, cluster, numHops = 2, additionToPathLength = 1, numberOfReps = 1000):
 	with open('OutputExp6/WithinCluster.csv', 'w') as csvfile:
@@ -140,6 +116,12 @@ def pickRandEdges():
 if os.path.exists('OutputExp6') == False:
 	print "Making the directory OutputExp6"
 	os.mkdir("OutputExp6")
+
+
+DG = readDotFile('advogato-graph-latest.dot')
+H = runPRN
+for i in range (0,100):
+	print "size of H " + len(runPRN().nodes())
 
 pickRandEdges()
 
